@@ -1,0 +1,44 @@
+<div class="row-fluid NavigationHeader">
+			<!-- Navigation bar  -->
+	<div class="navbar navbar-fixed-top navbar-inverse">
+		<div class="navbar-inner">
+			<div class="container">
+				<%= link_to "FIT", root_path, id:"logo" %>
+				<nav>
+					<ul class="nav">
+						<li><%= link_to "Home", '#', class: "NavigationItemLink" %></li>
+						<li><%= link_to "About", '#', class: "NavigationItemLink" %></li>
+					</ul>
+					<ul class="nav pull-right">
+						<li><%= link_to "Guy with very long name", '#' %></li>
+						<li id="fat-menu" class="dropdown-toggle">
+							<a href='#' data-toggle="dropdown">
+								Roles<b class="caret"></b>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="#">Author</a></li>
+								<li><a href="#">Moderator</a></li>
+								<li><a href="#">Superviser</a></li>
+								<li><a href="#">Inspector</a></li>
+							</ul>
+						</li>
+						<li id="fat-menu" class="dropdown-toggle">
+							<a href='#' data-toggle="dropdown">
+								Inspections <b class="caret"></b>
+							</a>	
+							<ul class="dropdown-menu">
+								<%= dropdown_inspection_stub_for %>
+							</ul>
+						</li>
+						<li class="divider-vertical"></li>
+						<li>
+							<button type="submit" class="btn">
+								<i class="icon-wrench"></i> 
+							</button>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,272 @@
+// Place all the styles related to the Artifacts controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.ArtifactInspection{
+	 
+}
+.ArtifactPreview, .CommentTable, .modal-body{
+	min-height: 450px;
+}
+/*body{
+	margin-top:4em;
+}
+.NavigationHeader{
+	position: absolute;
+	top:0px;
+}*/
+body .modal{
+	width: 1100px;
+	height:auto;
+	
+	margin-left:-550px;
+}
+
+.Artifact{
+	border: 1px solid #a4b1c9;
+	/*margin: 0px 0px 10px 0px;*/
+	width: 9em;
+	/*height: 4em;*/
+	position: relative;
+	margin-bottom: 0px; /*overriding bootstrap properties for well, since or artifact also well*/
+}
+.Artifacts .thumbnail{
+	border-color: transparent;
+	padding: 0px;
+}
+.ArtifactsPanel{
+	/*padding: 10px;*/
+	/*min-width: 220px;*/
+	/*width: 31%;*/
+	/*max-width: 31%;*/
+/*	overflow-x: none;
+	overflow-y: hidden;*/
+	/*background:#dddddd;*/
+	/*border: 1px solid #cccccc;*/
+	-moz-border-radius:5px 5px 5px 5px;
+	-webkit-border-radius:5px 5px 5px 5px;
+	border-radius:5px;
+
+}
+.ArtifactsRowContainer{
+	/*max-width: 410px; */
+	max-height: 500px;
+	overflow-x: none;
+	overflow-y: hidden;
+}
+.ArtifactsRowContainer:hover{
+	overflow-x: none;
+	overflow-y: auto;
+}
+.ArtifactActionPanel, .InspectionActionPanel{
+	display:none;
+	background-color: rgba(40,29,35,0.5);
+	width:100%;
+	text-align: center;
+	border-radius:2px 2px 0px 0px;
+	height:34px;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	z-index: 1;
+
+}
+/*.Artifact-onhover>ul{
+	list-style: none;
+	list-style-type: none; 
+
+}*/
+
+.ArtifactName{
+	word-wrap: break-word;
+	width: 100%;
+}
+.ActionPanel>.ActionElement, .InspectionActionPanel>.ActionElement, .ACTRActionPanel>.ActionElement{
+	border:1px solid rgba(40,29,35,0);
+	/*background-color: rgba(92,81,79,0.5);*/
+	border-radius: 2px 2px 2px 2px;
+
+}
+.ArtifactActionPanel>.ActionElement:hover, .InspectionActionPanel>.ActionElement:hover, .ACTRActionPanel>.ActionElement:hover{
+	/*border:1px solid rgba(10,19,15,1);*/
+	background-color: rgba(92,81,79,0.5);
+	border-radius: 2px 2px 2px 2px;
+
+}
+.Artifact-Header [class *="ActionElement"]:first-child{
+	/*the same margin as for thumbnail*/
+	margin-left: 20px;
+}
+.Artifact-Header>.ActionElement{
+	border:1px solid rgba(40,29,35,0);
+	/*background-color: rgba(92,81,79,0.5);*/
+	border-radius: 2px 2px 2px 2px;
+
+}
+.Artifact-Header>.ActionElement:hover{
+	/*border:1px solid rgba(10,19,15,1);*/
+	background-color: rgba(200,200,200,0.5);
+	border-radius: 2px 2px 2px 2px;
+
+}
+.InspectionItem , .InspectionItemExpanded{
+	border: 1px solid #cccccc;
+	position: relative;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+}
+.ImportantInformation{
+	border: 1px solid #cccccc;
+}
+.IIContent{
+	display:none;
+
+}
+.IIHeader{
+	text-align: center;
+}
+.liquid{
+	margin: 0px 0px 10px 0px;
+}
+.Status{
+	width:6em;
+	
+}
+.Footer{
+	background-color: #8F0000;
+	color: white;
+	text-align: center;
+	border-radius:5px;
+	margin: 10px 0px 0px 0px;
+}
+
+.chevron-fletching{
+	position: absolute;
+	left:0px;
+	top: 0px;
+	width:0;
+	height: 0;
+	border-top: 15px solid green;
+	border-bottom: 15px solid green;
+	border-left: 15px solid transparent;
+	
+}
+.chevron-body{
+	position: absolute;
+	left:15px;
+	top: 0px;
+	width:80px;
+	height: 30px;
+	background-color: green;
+
+	text-align: center;
+	/*line-height: 30px;*/
+}
+.chevron-head{
+	position: absolute;
+	left:95px;
+	top: 0px;
+	width:0;
+	height: 0;
+	border-top: 15px solid transparent;
+	border-bottom: 15px solid transparent;
+	border-left: 15px solid green;
+	
+}
+.chevron{
+	position: relative;
+	color: white;
+	/*border:1px solid black;*/
+}
+
+.ArtifactComments{
+
+	/*max-width: 500px;*/
+}
+
+.CommentsHeader{
+	position:relative;
+
+}
+.CommentsClose{
+	display: none;
+	background-color: rgba(40,29,35,0.5);
+	border:1px solid transparent;
+	border-radius: 2px 2px 2px 2px;
+	position: absolute;
+	color:white;
+	right:0px;
+	top: 0px;
+	width: 3em;
+	height: 1em;
+	line-height: 1em;
+}
+.CommentsClose:hover{
+	background-color: rgba(0,0,0,0.5);
+	color:orange;
+}
+/*ACTR stands for Artifact Comments Table's Row*/
+.ACTR{
+
+}
+/*ACTR stands for Artifact Comments Table's Cell*/
+.ACTC{
+	position: relative;
+}
+.ACTRActionPanel{
+	position: absolute;
+	right:0px;
+	top: 0px;
+	z-index: 1;
+	display:none;
+	background-color: rgba(40,29,35,0.5);
+	height:100%;
+	width: 40px;
+	text-align: center;
+	border-radius:0px 2px 2px 0px;
+
+}
+.ArtifactResposible{
+	position: absolute;
+	left:200px;
+	top: 0px;
+	width: 300px;
+	z-index: 1;
+	background-color: rgba(40,29,35,0.9);
+	color:white;
+	max-height: 430px;
+	overflow-y:hidden;
+	border-radius: 0px 5px 5px 0px;
+}
+
+.ArtifactsPanel{
+	position:relative;
+}
+.ArtifactResposible:hover{
+	overflow-y:auto;
+}
+.Responsible, .Responsible-Selected{
+/*	padding: 0px 0px 2px 2px;*/
+	/*border: 2px solid transparent;*/
+	/*max-height: */
+	border-radius: 2px 2px 2px 2px;
+}
+
+.Responsible:hover{
+	background-color: rgba(92,81,79,0.5);
+	/*color:orange;*/
+}
+.Responsible-Selected{
+	background-color: rgba(92,201,79,0.5);
+}
+.ResponsibleConfirmation{
+	line-height: 2em;
+	text-align: center;
+}
+.ResponsibleConfirmation>span:hover{
+	color:orange;
+}
+.InspectionSelected{
+	max-height: 500px;
+
+}
