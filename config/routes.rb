@@ -3,6 +3,12 @@ ActualFIT::Application.routes.draw do
 
   root to: 'main_page#home'
   
+  # get "artifacts/artifacts"
+
+  # get "chat/chat"
+
+  get "main_page/home"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
