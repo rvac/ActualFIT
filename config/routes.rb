@@ -1,4 +1,6 @@
 ActualFIT::Application.routes.draw do
+  get "remark/_remark_table"
+
   resources :users
 
   root to: 'main_page#home'
