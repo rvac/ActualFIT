@@ -1,10 +1,13 @@
 ActualFIT::Application.routes.draw do
-  get "remark/_remark_table"
+
 
   resources :users
-
-  root to: 'main_page#home'
+  resources :sessions, only: [:new, :create, :destroy]
   
+  root to: 'main_page#home'
+  match '/signup', to: 'users#new'
+  match '/signin', to: 'sessions#new'
+  match '/signout', to: 'sessions#destroy', via: :delete
   # get "artifacts/artifacts"
 
   # get "chat/chat"

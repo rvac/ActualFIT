@@ -5,7 +5,7 @@
 .ArtifactInspection{
 	 
 }
-.ArtifactPreview, .CommentTable, .modal-body{
+.ArtifactPreview, .CommentTable{
 	min-height: 450px;
 }
 /*body{
@@ -15,12 +15,6 @@
 	position: absolute;
 	top:0px;
 }*/
-body .modal{
-	width: 1100px;
-	height:auto;
-	
-	margin-left:-550px;
-}
 
 .Artifact{
 	border: 1px solid #a4b1c9;
@@ -29,6 +23,11 @@ body .modal{
 	/*height: 4em;*/
 	position: relative;
 	margin-bottom: 0px; /*overriding bootstrap properties for well, since or artifact also well*/
+}
+.Artifacts {
+	/*For mozilla does not work without this statement((*/
+	max-height: 450px;
+	
 }
 .Artifacts .thumbnail{
 	border-color: transparent;
@@ -58,7 +57,7 @@ body .modal{
 	overflow-x: none;
 	overflow-y: auto;
 }
-.ArtifactActionPanel, .InspectionActionPanel{
+.ArtifactActionPanel{
 	display:none;
 	background-color: rgba(40,29,35,0.5);
 	width:100%;
@@ -79,15 +78,18 @@ body .modal{
 
 .ArtifactName{
 	word-wrap: break-word;
+	-moz-text-align:justify;
+	-ms-word-wrap: break-word;
+	word-wrap: break-word;
 	width: 100%;
 }
-.ActionPanel>.ActionElement, .InspectionActionPanel>.ActionElement, .ACTRActionPanel>.ActionElement{
+.ActionPanel>.ActionElement, .ACTRActionPanel>.ActionElement{
 	border:1px solid rgba(40,29,35,0);
 	/*background-color: rgba(92,81,79,0.5);*/
 	border-radius: 2px 2px 2px 2px;
 
 }
-.ArtifactActionPanel>.ActionElement:hover, .InspectionActionPanel>.ActionElement:hover, .ACTRActionPanel>.ActionElement:hover{
+.ArtifactActionPanel>.ActionElement:hover, .ACTRActionPanel>.ActionElement:hover{
 	/*border:1px solid rgba(10,19,15,1);*/
 	background-color: rgba(92,81,79,0.5);
 	border-radius: 2px 2px 2px 2px;
@@ -109,30 +111,12 @@ body .modal{
 	border-radius: 2px 2px 2px 2px;
 
 }
-.InspectionItem , .InspectionItemExpanded{
-	border: 1px solid #cccccc;
-	position: relative;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	border-radius:5px;
-}
+
 .ImportantInformation{
 	border: 1px solid #cccccc;
 }
-.IIContent{
-	display:none;
 
-}
-.IIHeader{
-	text-align: center;
-}
-.liquid{
-	margin: 0px 0px 10px 0px;
-}
-.Status{
-	width:6em;
-	
-}
+
 .Footer{
 	background-color: #8F0000;
 	color: white;
@@ -213,6 +197,7 @@ body .modal{
 /*ACTR stands for Artifact Comments Table's Cell*/
 .ACTC{
 	position: relative;
+	
 }
 .ACTRActionPanel{
 	position: absolute;
