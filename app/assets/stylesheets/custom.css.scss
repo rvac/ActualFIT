@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 
-body input, textarea, select, .uneditable-input {
+input, textarea, select, .uneditable-input {
   border: 1px solid #bbb;
   width: 100%;
   padding: 10px;
@@ -24,8 +24,10 @@ input {
   }
 }
 
-body .field_with_errors {
+.field_with_errors {
   @extend .control-group;
   @extend .error;
   
 }
+
+

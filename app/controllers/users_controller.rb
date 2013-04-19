@@ -17,6 +17,7 @@ class UsersController < ApplicationController
 			# redirect_to current_user(@user)
 
 		else
+			
 			render 'new'
 		end
 	end
