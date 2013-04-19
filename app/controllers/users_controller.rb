@@ -7,6 +7,7 @@ class UsersController < ApplicationController
 	end
 	def show
 		@user = User.find(params[:id])
+		@chat_messages = @user.chat_messages
 	end
 	def create
 		@user = User.new(params[:user])
@@ -17,7 +18,7 @@ class UsersController < ApplicationController
 			# redirect_to current_user(@user)
 
 		else
-			
+
 			render 'new'
 		end
 	end

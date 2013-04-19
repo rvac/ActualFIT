@@ -5,6 +5,13 @@
 			<h1>
 				<%= @user.name %>
 			</h1>
+			<h3>Chat messages (<%= @user.chat_messages.count %>)</h3>
+			<% if @user.chat_messages.any? %>
+				<ol class="chat_messages"> 
+					<%= render @chat_messages %>
+				</ol>
+
+			<% end %>
 		</section>
 	</aside>
 </div>

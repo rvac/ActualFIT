@@ -3,7 +3,7 @@ ActualFIT::Application.routes.draw do
 
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
-  
+  resources :chat_messages, only: [:create, :destroy]
   root to: 'main_page#home'
   match '/signup', to: 'users#new'
   match '/signin', to: 'sessions#new'
