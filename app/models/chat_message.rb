@@ -12,12 +12,13 @@
 
 class ChatMessage < ActiveRecord::Base
   attr_accessible :content, :user_id, :inspection_id
+  # add validation of the user id
   belongs_to :user
   belongs_to :inspection
 
 
-  # validates :inspection_id, presence: true
-  # validates :user_id, presence: true
+  validates :inspection_id, presence: true
+  validates :user_id, presence: true
   validates :content, presence: true
   default_scope order: 'chat_messages.created_at ASC'
 end

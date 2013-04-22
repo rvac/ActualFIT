@@ -9,6 +9,8 @@
 #  file          :binary(52428800)
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  filename      :string(255)
+#  content_type  :string(255)
 #
 
 require 'spec_helper'

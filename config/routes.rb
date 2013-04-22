@@ -4,7 +4,7 @@ ActualFIT::Application.routes.draw do
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
   resources :chat_messages, only: [:create, :destroy]
-  resources :atrifacts
+  resources :artifacts, only: [:new, :create, :destroy, :show]
   resources :inspections
 
   
@@ -13,6 +13,7 @@ ActualFIT::Application.routes.draw do
   match '/signup', to: 'users#new'
   match '/signin', to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
+  match '/upload_file', to: 'artifacts#new'
   # get "artifacts/artifacts"
 
   # get "chat/chat"

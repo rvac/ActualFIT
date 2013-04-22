@@ -3,8 +3,11 @@ class InspectionsController < ApplicationController
 		@inspection = Inspection.new
 	end
 	
+
 	def create
-		@inspection = Inspection.new(params[:inspection])
+
+		@inspection = Inspection.new
+		@inspection.file = params[:inspection]
 		if @inspection.save
 			flash[:success] = "inpection created"
 			redirect_to root_url

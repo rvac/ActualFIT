@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130421202632) do
+ActiveRecord::Schema.define(:version => 20130422201908) do
 
   create_table "artifacts", :force => true do |t|
     t.string   "name"
@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(:version => 20130421202632) do
     t.binary   "file",          :limit => 52428800
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
+    t.string   "filename"
+    t.string   "content_type"
   end
 
   add_index "artifacts", ["inspection_id"], :name => "index_artifacts_on_inspection_id"
