@@ -1,4 +1,6 @@
 class RemarkController < ApplicationController
-  def _remark_table
-  end
+	before_filter :signed_in_user
+	
+	def _remark_table
+	end
 end

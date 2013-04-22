@@ -1,4 +1,7 @@
 class ArtifactsController < ApplicationController
-  def artifacts
-  end
+	before_filter :signed_in_user
+	
+  	def create
+
+  	end
 end

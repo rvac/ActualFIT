@@ -4,7 +4,12 @@ ActualFIT::Application.routes.draw do
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
   resources :chat_messages, only: [:create, :destroy]
+  resources :atrifacts
+  resources :inspections
+
+  
   root to: 'main_page#home'
+  match '/new_inspection', to: 'inspections#new'
   match '/signup', to: 'users#new'
   match '/signin', to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete

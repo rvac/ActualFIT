@@ -14,7 +14,7 @@
 class User < ActiveRecord::Base
 	attr_accessible :email, :name, :password, :password_confirmation
 	has_secure_password
-	has_many :chat_messages, dependent: :destroy
+	has_many :chat_messages
 
 	before_save { email.downcase! }
 	before_save :create_remember_token

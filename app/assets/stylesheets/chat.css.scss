@@ -34,13 +34,10 @@
 .MessageWindow{
 	height: 70%; /*don forget to substract border of parent*/
 }
-.UserDigest{
-	text-align: right;
-}
 
 .MessageWindowInner{
 	overflow-x: none;
-	overflow-y: hidden;
+	overflow-y: scroll;
 	/*Remove this crap after find out how to compensate bubble chanes when 
 	scroll bar appear*/
 	padding-right: 17px; 
@@ -48,10 +45,10 @@
 }
 .MessageWindowInner:hover{
 	overflow-x: none;
-	overflow-y: auto;
+	overflow-y: scroll;
 	/*Remove this crap after find out how to compensate bubble chanes when 
-	scroll bar appear*/
-	padding-right: 0px;
+	scroll bar appear. If there is no overflow that shit happens*/
+	/*padding-right: 0px;*/
 	
 }
 
@@ -67,6 +64,10 @@
 }
 .AuthorDigest{
 	color: #212318;
+}
+/*Here current user is ment*/
+.UserDigest{
+	text-align: right;
 }
 
 .ChatTypeBox, ChatTypeBox:hover{

@@ -1,17 +1,18 @@
 # == Schema Information
 #
-# Table name: chat_messages
+# Table name: artifacts
 #
 #  id            :integer          not null, primary key
-#  content       :string(255)
-#  user_id       :integer
+#  name          :string(255)
+#  comment       :string(255)
+#  inspection_id :integer
+#  file          :binary(52428800)
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  inspection_id :integer
 #
 
 require 'spec_helper'
 
-describe ChatMessage do
+describe Artifact do
   pending "add some examples to (or delete) #{__FILE__}"
 end

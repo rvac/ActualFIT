@@ -26,14 +26,18 @@
 							</li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-									<span class="CurrentInspection">Inpection 1</span>
+									<span class="CurrentInspection">
+										<%= current_inspection.name%></span>
 									<b class="caret"></b>
 								</a>
 								<ul class="dropdown-menu">
-									<li><a href="#">Inspection 1</a></li>
-									<li><a href="#">Inspection 2</a></li>
-									<li><a href="#">Inspection 3</a></li>
-									<li><a href="#">Inspection 4</a></li>
+									<% Inspection.all.each do |insp| %>
+										<li><%= link_to insp.name, '#' %></li>
+									<% end %>
+									<li class="divider"></li>
+									<li>
+										<%= link_to "Create an inspection", new_inspection_path %>
+									</li>
 								</ul>
 							<li>
 

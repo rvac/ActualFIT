@@ -1,4 +1,6 @@
 class ChatController < ApplicationController
-  def chat
-  end
+	before_filter :signed_in_user
+	
+	def chat
+	end
 end

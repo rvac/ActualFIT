@@ -11,16 +11,37 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130419084920) do
+ActiveRecord::Schema.define(:version => 20130421202632) do
+
+  create_table "artifacts", :force => true do |t|
+    t.string   "name"
+    t.string   "comment"
+    t.integer  "inspection_id"
+    t.binary   "file",          :limit => 52428800
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+  end
+
+  add_index "artifacts", ["inspection_id"], :name => "index_artifacts_on_inspection_id"
 
   create_table "chat_messages", :force => true do |t|
     t.string   "content"
     t.integer  "user_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "inspection_id"
+  end
+
+  add_index "chat_messages", ["user_id", "created_at"], :name => "index_chat_messages_on_user_id_and_created_at"
+
+  create_table "inspections", :force => true do |t|
+    t.string   "name"
+    t.string   "comment"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
-  add_index "chat_messages", ["user_id", "created_at"], :name => "index_chat_messages_on_user_id_and_created_at"
+  add_index "inspections", ["name"], :name => "index_inspections_on_name"
 
   create_table "users", :force => true do |t|
     t.string   "name"
