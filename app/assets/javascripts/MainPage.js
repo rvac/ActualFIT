@@ -110,9 +110,9 @@ $(document).ready(function(){
 		
 	});
 
-	$(".ActionElement").click(function(){
-		alert("action taken");
-	});
+	// $(".ActionElement").click(function(){
+	// 	alert("action taken");
+	// });
 
 	$(".ACTR").hover(function(){
 		var ap = $(this).children(".ACTC").children(".ACTRActionPanel")

@@ -32,7 +32,7 @@
 								</a>
 								<ul class="dropdown-menu">
 									<% Inspection.all.each do |insp| %>
-										<li><%= link_to insp.name, '#' %></li>
+										<li><%= link_to insp.name, insp %></li>
 									<% end %>
 									<li class="divider"></li>
 									<li>

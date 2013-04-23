@@ -1,8 +1,14 @@
 class InspectionsController < ApplicationController
+	before_filter :signed_in_user
+
 	def new
 		@inspection = Inspection.new
 	end
 	
+	def show
+		@inspection = Inspection.find(params[:id])
+		@chat_messages = @inspection.chat_messages
+	end
 
 	def create
 
