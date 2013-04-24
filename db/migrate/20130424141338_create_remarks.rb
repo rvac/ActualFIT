@@ -11,4 +11,4 @@ class CreateRemarks < ActiveRecord::Migration
       t.timestamps
     end
   end
-endw
+end
