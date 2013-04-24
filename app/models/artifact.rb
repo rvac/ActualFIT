@@ -16,7 +16,7 @@
 class Artifact < ActiveRecord::Base
   attr_accessible :comment, :inspection_id, :name
   belongs_to :inspection
-
+  has_many :remarks
   
   validates :inspection_id, presence: false
   # validates :name, presence: true

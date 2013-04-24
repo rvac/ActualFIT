@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130424142314) do
+ActiveRecord::Schema.define(:version => 20130424184356) do
 
   create_table "artifacts", :force => true do |t|
     t.string   "name"
@@ -55,14 +55,13 @@ ActiveRecord::Schema.define(:version => 20130424142314) do
 
   create_table "remarks", :force => true do |t|
     t.string   "location"
-    t.string   "string"
     t.string   "content"
-    t.string   "user_id"
-    t.string   "integer"
-    t.string   "inspection_id"
+    t.integer  "user_id"
+    t.integer  "inspection_id"
     t.string   "remark_type"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "artifact_id"
   end
 
   create_table "users", :force => true do |t|

@@ -1,6 +1,7 @@
 class ArtifactsController < ApplicationController
 	before_filter :signed_in_user
-	
+	respond_to :html, :js
+
 	def new
 		@artifact = Artifact.new
 	end
@@ -15,8 +16,13 @@ class ArtifactsController < ApplicationController
 		return if params[:artifact].blank?
 
 		@artifact = Artifact.new
-		@artifact.uploaded_file = params[:artifact]
-
+		incoming_file = params[:artifact][:datafile]
+		# @uploaded_file = incoming_file 
+		@artifact.filename = incoming_file.original_filename
+	  	@artifact.content_type = incoming_file.content_type
+	  	@artifact.name = params[:artifact][:name]
+	  	@artifact.file = incoming_file.read
+	  	@artifact.inspection_id = 1
 		if @artifact.save
 			flash[:success] = "Artifact #{@artifact.name} uploaded"
 			redirect_to root_url
@@ -35,6 +41,7 @@ class ArtifactsController < ApplicationController
       end
       redirect_to root_url
   end
+
 
   def update
     #here and update happens. Probably some popup/modal, that says that we can edit name, comments or change the file itself

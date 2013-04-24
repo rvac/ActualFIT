@@ -3,50 +3,48 @@
 	<div class="CommentTable22">
 		<table class="table table-striped table-hover">
 			<caption class="CommentsHeader">
-				<strong>Artifact Z Comment</strong> 
+				<strong>Artifact Remark</strong> 
 				<div class="CommentsClose"><strong>hide</strong></div>
 			</caption>
 			<thead>
 				<tr>
 					<th>Location</th>
-					<th>Comment</th>
+					<th>Remark</th>
+					<th>Type</th>
 					<th>Author</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr class="ACTR">
-				  	<td>1</td>
-				  	<td>Surname pronosiations sucks. Loreum ipsum ficksum doloreum rectum artum. Quick red fox jumps over lazy sheep</td>
-				  	<td  class="ACTC">Alex 									 	<div class="ACTRActionPanel">						
-						<%= image_tag('icon_32/delete_32.png', alt:"stub", class: "ActionElement") %>
-					</div></td>
-
-				</tr>
-				<tr  class="ACTR">
-					<td>22</td>
-					<td>Looks nice</td>
-					<td  class="ACTC">John
-						<div class="ACTRActionPanel">						
-						<%= image_tag('icon_32/delete_32.png', alt:"stub", class: "ActionElement") %>
-					</div>
-					</td>
-
-				</tr>
-				<tr  class="ACTR">
-					<td>33</td>
-				  	<td>Bullshit</td>
-				  	<td class="ACTC">Mr. Trollolo									 	<div class="ACTRActionPanel">						
-						<%= image_tag('icon_32/delete_32.png', alt:"stub", class: "ActionElement") %>
-					</div></td>
-			
-				</tr>
+				<% if current_inspection.remarks.any?%>
+				<% current_inspection.remarks.each do |r| %>
+					<tr class="ACTR">
+					  	<td>
+					  		<%= r.location %>
+					  	</td>
+					  	<td>
+					  		<%= r.content %>
+					  	</td>
+					  	<td>
+					  		<%= r.remark_type %>
+					  	</td>
+					  	<td  class="ACTC">
+					  		<%  author =  User.find(r.user_id) %>
+					  		<%= author.name %>
+					  		<%= remarksActionPanel r %>
+					  	</td>
+					</tr>
+				<% end %>
+				<% end %>
 			</tbody>
 		</table>
 	</div>
-	<div class="input-append row-fluid">
-		<input class="span2" id="appendedInputButton" type="text">
-		<input class="span8" id="appendedInputButton" type="text">
-		
-		<button class="btn"  type="button">Submit</button>
+	<div class="input-append row-fluid">	
+			<%= form_for current_user.remarks.build, remote: true do |f| %>
+				<%= f.text_field :location, class: "span2", id: "appendedInputButton" %>
+				<%= f.text_field :content, class: "span6", id: "appendedInputButton" %>
+				<%= f.text_field :remark_type, class: "span2", id: "appendedInputButton" %>
+				<%= f.hidden_field :inspection_id, {value: current_inspection.id} %>
+				<%= f.submit "Submit", class: "btn" %>
+			<% end %>
 	</div>
 </div>

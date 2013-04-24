@@ -6,7 +6,8 @@ ActualFIT::Application.routes.draw do
   resources :chat_messages, only: [:create, :destroy]
   resources :artifacts, only: [:new, :create, :destroy, :show]
   resources :inspections
-
+  resources :inspection_teams
+  resources :remarks
   
   root to: 'main_page#home'
   match '/new_inspection', to: 'inspections#new'
