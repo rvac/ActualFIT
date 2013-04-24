@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130422201908) do
+ActiveRecord::Schema.define(:version => 20130424142314) do
 
   create_table "artifacts", :force => true do |t|
     t.string   "name"
@@ -36,14 +36,34 @@ ActiveRecord::Schema.define(:version => 20130422201908) do
 
   add_index "chat_messages", ["user_id", "created_at"], :name => "index_chat_messages_on_user_id_and_created_at"
 
-  create_table "inspections", :force => true do |t|
+  create_table "inspection_teams", :force => true do |t|
     t.string   "name"
-    t.string   "comment"
+    t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
+  create_table "inspections", :force => true do |t|
+    t.string   "name"
+    t.string   "comment"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.integer  "inspection_team_id"
+  end
+
   add_index "inspections", ["name"], :name => "index_inspections_on_name"
+
+  create_table "remarks", :force => true do |t|
+    t.string   "location"
+    t.string   "string"
+    t.string   "content"
+    t.string   "user_id"
+    t.string   "integer"
+    t.string   "inspection_id"
+    t.string   "remark_type"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name"

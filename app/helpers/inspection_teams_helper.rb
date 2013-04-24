@@ -1,0 +1,2 @@
+module InspectionTeamsHelper
+end

@@ -1,0 +1,2 @@
+class InspectionTeamsController < ApplicationController
+end
