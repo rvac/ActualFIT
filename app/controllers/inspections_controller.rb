@@ -8,6 +8,7 @@ class InspectionsController < ApplicationController
 	def show
 		@inspection = Inspection.find(params[:id])
 		@chat_messages = @inspection.chat_messages
+		store_location
 	end
 
 	def create

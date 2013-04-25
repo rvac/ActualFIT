@@ -1,12 +1,13 @@
+
 <div class="row">
 	<div class="span6 offset3">
-		<h1>Upload a new artifact</h1>
+		<h1>Edit <%= @artifact.name %></h1>
 			<!--make something with shared errors, since this is is inpection, user stuff does not work anymore-->
 			<%= form_for @artifact do |f| %>
 	    			<%= f.file_field :datafile %>
-	    			<%= f.text_field :name, placeholder: "place custom name" %>
-	    			<%= f.text_field :comment, placeholder: "add comment if you want" %>
-	    			<%= f.submit "Upload", class: "btn btn-primary" %>
+	    			<%= f.text_field :name, value: @artifact.name %>
+	    			<%= f.text_field :comment, value: @artifact.comment %>
+	    			<%= f.submit "Edit", class: "btn btn-primary" %>
 			<% end %>
 		
 	</div>

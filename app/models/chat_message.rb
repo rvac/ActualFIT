@@ -19,6 +19,6 @@ class ChatMessage < ActiveRecord::Base
 
   validates :inspection_id, presence: true
   validates :user_id, presence: true
-  validates :content, presence: true
+  validates :content, presence: true, length: { maximum: 4080 }
   default_scope order: 'chat_messages.created_at ASC'
 end

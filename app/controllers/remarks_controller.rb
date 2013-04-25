@@ -21,7 +21,7 @@ class RemarksController < ApplicationController
 		else
 			flash.now[:error] = "Remark can not be deleted"
 		end
-	    redirect_to root_url
+	    # redirect_back_or root_url
 	end
 
 end

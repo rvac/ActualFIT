@@ -25,13 +25,11 @@ class Artifact < ActiveRecord::Base
   # validates :content_type, presence: true
 
 
-  def uploaded_file=(incoming_file)
-  	self.filename = incoming_file.original_filename
-  	self.content_type = incoming_file.content_type
-  	self.name = "test file name"
-  	self.file = incoming_file.read
-  	self.inspection_id = 1
-  end
+  # def uploaded_file=(incoming_file)
+  # 	self.filename = incoming_file.original_filename
+  # 	self.content_type = incoming_file.content_type
+  # 	self.file = incoming_file.read
+  # end
 
   def filename=(new_filename)
   	write_attribute :filename, sanitize_filename(new_filename)
