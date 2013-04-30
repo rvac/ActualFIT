@@ -19,7 +19,8 @@
 .Artifact{
 	border: 1px solid #a4b1c9;
 	/*margin: 0px 0px 10px 0px;*/
-	width: 9em;
+	width: 11em;
+	padding: 5px;
 	/*height: 4em;*/
 	position: relative;
 	margin-bottom: 0px; /*overriding bootstrap properties for well, since or artifact also well*/
@@ -77,11 +78,12 @@
 }*/
 
 .ArtifactName{
+	
 	word-wrap: break-word;
 	-moz-text-align:justify;
 	-ms-word-wrap: break-word;
 	word-wrap: break-word;
-	width: 100%;
+	word-break: break-all;
 }
 .Artifact-Header [class *="ActionElement"]:first-child{
 	/*the same margin as for thumbnail*/
@@ -260,3 +262,6 @@
 
 }
 
+.ArtifactIcon {
+	
+}

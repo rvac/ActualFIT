@@ -1,1 +1,12 @@
 $("#remarks").html("<%= escape_javascript(render('remarks/remarks_table')) %>");
+$(".ACTR").hover(function(){
+		var ap = $(this).children(".ACTC").children(".ACTRActionPanel")
+		var rHeight = $(this).css("height");
+		ap.css("line-height", rHeight);
+		propsTimeout = window.setTimeout(fadeInContent,1000,ap);
+		// slideDownProps($(this));
+	},function(){
+		window.clearTimeout(propsTimeout);
+		var ap = $(this).children(".ACTC").children(".ACTRActionPanel")
+		fadeOutContent(ap);
+	});

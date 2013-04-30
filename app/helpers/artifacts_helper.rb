@@ -2,35 +2,41 @@ module ArtifactsHelper
 	def artifactActionPanel(artifact)
 		
 		actionPanel_content = '<div class="ArtifactActionPanel">'
-		actionPanel_content << link_to(image_tag('icon_32/pencil_32.png', alt:"edit"), edit_artifact_path(artifact), class: "ActionElement")										
-		actionPanel_content << link_to(image_tag('icon_32/save_32.png', alt:"save on disk"), artifact, class: "ActionElement")										
-		actionPanel_content << link_to(image_tag('icon_32/delete_32.png', alt:"delete"), artifact, confirm: "Are you sure?", method: :delete, class: "ActionElement")	
+		actionPanel_content << link_to(image_tag('icon_32/pencil_32.png', alt:"edit"), 
+			edit_artifact_path(artifact), class: "ActionElement")										
+		actionPanel_content << link_to(image_tag('icon_32/save_32.png', alt:"save on disk"), 
+			artifact, class: "ActionElement")										
+		actionPanel_content << link_to(image_tag('icon_32/delete_32.png', alt:"delete"), 
+			artifact, confirm: "Are you sure?", method: :delete, class: "ActionElement")	
 		actionPanel_content << '</div>'
 
 		actionPanel_content.html_safe
 	end
 
 	def artifact_icon(artifact)
-		if artifact.filename[/\.((docx)|(doc)|(rtf)|(txt)|(wpd)|(wps)|(log)|(msg)|(odt)|(fodt)|(pages)|(tex))\z/i]
-			return image_tag('icon_32/text.png', alt:"text-file")
+		if artifact.filename[/\.((docx)|(doc))\z/i]
+			return image_tag('Free-file-icons-master/32px/doc.png', alt:"text-file", class: "ArtifactIcon")
 		end
 		if artifact.filename[/\.(pdf)\z/i]
-			return image_tag('icon_32/pdf.png', alt:"pdf")
+			return image_tag('Free-file-icons-master/32px/pdf.png', alt:"pdf", class: "ArtifactIcon")
 		end
-		if artifact.filename[/\.((xls)|(xlsx)|(xlr)|(csv)|(ods)|(fods))\z/i]
-			return image_tag('icon_32/spreadsheet.png', alt:"spreadsheets-file")
+		if artifact.filename[/\.(xls)\z/i]
+			return image_tag('Free-file-icons-master/32px/xls.png', alt:"xls-file", class: "ArtifactIcon")
 		end
-		if artifact.filename[/\.((ppt)|(pptx)|(odp)|(fodp))\z/i]
-			return image_tag('icon_32/presentation.png', alt:"presentataion-file")
+		if artifact.filename[/\.(xlsx)\z/i]
+			return image_tag('Free-file-icons-master/32px/xlsx.png', alt:"xlsx-file", class: "ArtifactIcon")
 		end
-		if artifact.filename[/\.((png)|(jpg)|(gif)|(tiff)|(bmp)|(jpeg))\z/i]		
-			return image_tag('icon_32/graphics.png', alt:"graphics-file")		
+		if artifact.filename[/\.((ppt)|(pptx))\z/i]
+			return image_tag('Free-file-icons-master/32px/ppt.png', alt:"presentataion-file", class: "ArtifactIcon")
+		end
+		if artifact.filename[/\.(png)\z/i]		
+			return image_tag('Free-file-icons-master/32px/png.png', alt:"graphics-file", class: "ArtifactIcon")	
 		end
 		if artifact.filename[/\.((zip)|(rar)|(tar)|(bzip)|(gzip)|(7z))\z/i]		
-			return image_tag('icon_32/archive.png', alt:"archive-file")			
+			return image_tag('Free-file-icons-master/32px/zip.png', alt:"archive-file", class: "ArtifactIcon")		
 		end
-		if artifact.filename[/\.((png)|(jpg)|(gif)|(tiff)|(bmp)|(jpeg))\z/i]	
-			return image_tag('icon_32/graphics.png', alt:"graphics-file")		
+		if artifact.filename[/\.(xml)\z/i]	
+			return image_tag('Free-file-icons-master/32px/xml.png', alt:"xml-file", class: "ArtifactIcon")	
 		end
 
 	end

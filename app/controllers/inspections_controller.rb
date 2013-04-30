@@ -8,6 +8,7 @@ class InspectionsController < ApplicationController
 	def show
 		@inspection = Inspection.find(params[:id])
 		@chat_messages = @inspection.chat_messages
+		@artifacts = @inspection.artifacts
 		store_location
 	end
 
@@ -22,4 +23,5 @@ class InspectionsController < ApplicationController
 			render 'new'
 		end
 	end 
+
 end

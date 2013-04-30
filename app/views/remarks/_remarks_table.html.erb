@@ -42,6 +42,8 @@
 			<%= form_for current_user.remarks.build, remote: true do |f| %>
 				<%= f.text_field :location, class: "span2", id: "appendedInputButton" %>
 				<%= f.text_field :content, class: "span6", id: "appendedInputButton" %>
+				
+
 				<%= f.text_field :remark_type, class: "span2", id: "appendedInputButton" %>
 				<%= f.hidden_field :inspection_id, {value: current_inspection.id} %>
 				<%= f.submit "Submit", class: "btn" %>

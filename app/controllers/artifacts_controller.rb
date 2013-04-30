@@ -79,7 +79,11 @@ class ArtifactsController < ApplicationController
       redirect_back_or root_url
   end
 
-
-
-
+ #  	def download_all
+ #  		params[:ids].each do |id|
+ #  	  		@artifact = Artifact.find(id)
+ #  	  		send_data @artifact.file, filename: @artifact.filename,
+	# 				 type: @artifact.content_type
+	# 	end
+	# end
 end

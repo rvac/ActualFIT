@@ -11,6 +11,7 @@ ActualFIT::Application.routes.draw do
   
   root to: 'main_page#home'
   match '/new_inspection', to: 'inspections#new'
+  
   match '/signup', to: 'users#new'
   match '/signin', to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
