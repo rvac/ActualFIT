@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
 						uniqueness: { case_sensitive: false }
 	validates :password, presence: true, length: { minimum: 6 }
 	validates :password_confirmation, presence: true
-	validates :role, presence: true, format: {with: VALID_ROLE_REGEX}
+	validates :role, format: {with: VALID_ROLE_REGEX}
 	private 
 		def create_remember_token
 		  #create the token here
