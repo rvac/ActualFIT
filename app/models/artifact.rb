@@ -14,6 +14,7 @@
 #
 
 class Artifact < ActiveRecord::Base
+  resourcify
   attr_accessible :comment, :inspection_id, :name
   belongs_to :inspection
   has_many :remarks

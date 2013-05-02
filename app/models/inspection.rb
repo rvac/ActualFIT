@@ -11,6 +11,7 @@
 #
 
 class Inspection < ActiveRecord::Base
+  resourcify
   attr_accessible :comment, :name
   has_many :artifacts
   has_many :chat_messages

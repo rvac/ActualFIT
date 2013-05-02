@@ -14,6 +14,7 @@
 #
 
 class Remark < ActiveRecord::Base
+  resourcify
   attr_accessible :content, :inspection_id, :location,
   			 :remark_type, :user_id, :artifact_id
   belongs_to :user
