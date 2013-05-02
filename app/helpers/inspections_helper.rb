@@ -1,7 +1,7 @@
 module InspectionsHelper
 	def current_inspection
 		# stub for now, since I have no idea how to make it in ruby
-		@current_inspection = Inspection.first
+		@current_inspection = Inspection.first #find(params[:id])
 	end
 
 	def current_inspection?(inspection)

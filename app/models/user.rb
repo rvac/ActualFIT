@@ -12,6 +12,8 @@
 #
 
 class User < ActiveRecord::Base
+  rolify
+
 	attr_accessible :email, :name, :password, :password_confirmation
 	has_secure_password
 	has_many :chat_messages
@@ -20,23 +22,22 @@ class User < ActiveRecord::Base
 	
 	before_save { email.downcase! }
 	before_save :create_remember_token
-	before_save :default_values
+
 	validates :name, presence: true, length: {maximum: 50}
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-	VALID_ROLE_REGEX = /\A(user\s?)?(admin\s?)?(moderator\s?)?(supervisor\s?)?(author\s?)?(scribe\s?)?\z/
+
 	validates :email, presence: true,
 						format: {with: VALID_EMAIL_REGEX},
 						uniqueness: { case_sensitive: false }
 	validates :password, presence: true, length: { minimum: 6 }
 	validates :password_confirmation, presence: true
-	validates :role, format: {with: VALID_ROLE_REGEX}
-	private 
+
+
+  private
 		def create_remember_token
 		  #create the token here
 		  self.remember_token = SecureRandom.urlsafe_base64
 		end
 
-		def default_values
-			self.role ||= 'user'
-		end
+
 end
