@@ -32,11 +32,11 @@
 						<div class="row-fluid Message">
 
 							<% if current_user?(imauthor) %>
-								<div class="span10 pull-right well well-small MessageInner">
+								<div class="pull-right well well-small MessageInner">
 									<p><%= msg.content %></p>
 								</div>
 							<% else %>
-								<div class="span10 well well-small MessageInner">
+								<div class="pull-left well well-small MessageInner">
 									<p><%= msg.content %></p>
 								</div>
 							<% end %>
