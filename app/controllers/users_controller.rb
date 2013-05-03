@@ -11,6 +11,8 @@ class UsersController < ApplicationController
 	end
 	def create
 		@user = User.new(params[:user])
+
+    @user.add_role params[:role].to_sym if ["author", "inspector", "moderator", "scribe", "admin", "supervisor"].include?(params[:role])
 		if @user.save
 	    	sign_in @user
 			flash[:success] = "Welcome aboard!"

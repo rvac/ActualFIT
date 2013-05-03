@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
 	has_many :chat_messages
 	has_many :inspection_teams
 	has_many :remarks
+  has_many :artifacts
 	
 	before_save { email.downcase! }
 	before_save :create_remember_token

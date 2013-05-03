@@ -60,11 +60,12 @@ class ArtifactsController < ApplicationController
 	  	@artifact.comment = params[:artifact][:comment]
 	  	@artifact.file = incoming_file.read
 	  	@artifact.inspection_id = 1 #current_inspection
+      @artifact.user_id = current_user.id
 		if @artifact.save
 			flash[:success] = "Artifact #{@artifact.name} uploaded"
 			redirect_back_or root_url
 		else
-			flash[:error] = "A problem occured, artifact can not be uploaded. Try once more"
+			flash[:error] = "A problem occurred, artifact can not be uploaded. Try once more"
 			render 'new'
 		end
 	end

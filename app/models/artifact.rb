@@ -15,8 +15,9 @@
 
 class Artifact < ActiveRecord::Base
   resourcify
-  attr_accessible :comment, :inspection_id, :name
+  attr_accessible :comment, :inspection_id, :name, :user_id
   belongs_to :inspection
+  belongs_to :user
   has_many :remarks
   
   validates :inspection_id, presence: false

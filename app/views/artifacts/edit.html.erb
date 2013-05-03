@@ -1,4 +1,4 @@
-
+<% if can? :edit, @artifact %>
 <div class="row">
 	<div class="span6 offset3">
 		<h1>Edit <%= @artifact.name %></h1>
@@ -11,3 +11,4 @@
 			<% end %>
 	</div>
 </div>
+<% end %>

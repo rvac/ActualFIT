@@ -48,7 +48,7 @@
 		</div>
 	</div>
 
-
+    <% if can? :create, ChatMessage %>
 	<div class="row-fluid SendMessage">
 		<div class="span12 SendMessageInner">
 			<%= form_for current_user.chat_messages.build, remote: true do |f| %>
@@ -63,4 +63,5 @@
 			<% end %>	
 		</div>
 	</div>
+    <% end %>
 </div>

@@ -1,3 +1,4 @@
+<% if can? :create, Artifact %>
 <div class="row">
 	<div class="span6 offset3">
 		<h1>Upload a new artifact</h1>
@@ -5,9 +6,12 @@
 			<%= form_for @artifact do |f| %>
 	    			<%= f.file_field :datafile %>
 	    			<%= f.text_field :name, placeholder: "place custom name" %>
-	    			<%= f.text_field :comment, placeholder: "add comment if you want" %>
-	    			<%= f.submit "Upload", class: "btn btn-primary" %>
+
+                    <%= f.text_field :comment, placeholder: "add comment if you want" %>
+
+                    <%= f.submit "Upload", class: "btn btn-primary" %>
 			<% end %>
 		
 	</div>
 </div>
+<% end %>
