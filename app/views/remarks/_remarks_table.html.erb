@@ -17,7 +17,8 @@
 			<tbody>
 				<% if current_inspection.remarks.any?%>
 				<% current_inspection.remarks.each do |r| %>
-					<tr class="ACTR">
+					<tr>
+
 					  	<td>
 					  		<%= r.location %>
 					  	</td>
@@ -27,11 +28,16 @@
 					  	<td>
 					  		<%= r.remark_type %>
 					  	</td>
-					  	<td  class="ACTC">
+					  	<td>
+                          <div class="ACTR">
+                          <div class="ACTC">
 					  		<%  author =  User.find(r.user_id) %>
 					  		<%= author.name %>
 					  		<%= remarksActionPanel r %>
+                          </div>
+                          </div>
 					  	</td>
+
 					</tr>
 				<% end %>
 				<% end %>
