@@ -12,7 +12,7 @@
 class InspectionTeam < ActiveRecord::Base
   attr_accessible :name, :user_id
   has_many :inspections
-  belongs_to :user
+  has_many :users
 
   validates :name, presence: true
   

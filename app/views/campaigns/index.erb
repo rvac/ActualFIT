@@ -1,0 +1,15 @@
+<div class="row-fluid ArtifactsRowContainer">
+  <div class="span12 Artifacts">
+
+    <% if @campaigns.any? %>
+
+        <% @campaigns.each do |c| %>
+            <% if can? :read, c %>
+
+                <%= render 'campaigns/campaign', campaign: c %>
+
+            <% end %>
+        <% end %>
+    <% end %>
+  </div> <!--span12-->
+</div>

@@ -15,4 +15,8 @@ class Role < ActiveRecord::Base
   belongs_to :resource, :polymorphic => true
   
   scopify
+
+  def self.possible_roles
+    possible_roles = ["author", "inspector", "moderator", "scribe", "admin", "supervisor"]
+  end
 end

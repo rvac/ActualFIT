@@ -19,20 +19,21 @@ class Ability
     end
 
     if user.has_role? :author
+      # only on inspection where he is allowed
       can :create, Artifact
-      can :edit, Artifact, :user_id => user.id
-      can :destroy, Artifact, :user_id => user.id
+      can :crud, Artifact, :user_id => user.id
     end
 
     if user.has_role? :moderator
+      # only on inspection where he is allowed
       can :crud, Remark
+      can :destroy, Artifact
     end
 
     if user.has_role? :inspector
       # Add management, that inspector or whoever can create only on inspection that he can
-      can :crud, Remark
       can :create, Remark
-
+      can :destroy, Remark, user_id: user.id
     end
   end
 

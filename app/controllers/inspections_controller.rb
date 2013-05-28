@@ -7,15 +7,19 @@ class InspectionsController < ApplicationController
 	end
 	
 	def show
-		#@inspection = Inspection.find(params[:id])
+		@inspection = Inspection.find(params[:id])
+    #@current_inspection = @inspection
 		@chat_messages = @inspection.chat_messages
 		@artifacts = @inspection.artifacts
+    @remarks = @inspection.remarks
 		store_location
 	end
 
 	def create
 
 		@inspection = Inspection.new(params[:inspection])
+    @inspection.active!
+    #@current_inspection = @inspection
 		# @inspection.file = params[:inspection]
 		if @inspection.save
 			flash[:success] = "inspection created"
@@ -23,6 +27,17 @@ class InspectionsController < ApplicationController
 		else
 			render 'new'
 		end
-	end 
+  end
+
+
+  #def refresh_chat
+  #  @inspection = Inspection.find(params[:id])
+  #  respond_to do |format|
+  #    format.js
+  #  end
+  #end
+
+  def destroy
+  end
 
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130503153108) do
+ActiveRecord::Schema.define(:version => 20130513130436) do
 
   create_table "artifacts", :force => true do |t|
     t.string   "name"
@@ -26,6 +26,13 @@ ActiveRecord::Schema.define(:version => 20130503153108) do
   end
 
   add_index "artifacts", ["inspection_id"], :name => "index_artifacts_on_inspection_id"
+
+  create_table "campaigns", :force => true do |t|
+    t.string   "name"
+    t.string   "comment"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "chat_messages", :force => true do |t|
     t.string   "content"
@@ -50,6 +57,8 @@ ActiveRecord::Schema.define(:version => 20130503153108) do
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
     t.integer  "inspection_team_id"
+    t.integer  "campaign_id"
+    t.string   "status"
   end
 
   add_index "inspections", ["name"], :name => "index_inspections_on_name"
@@ -80,9 +89,10 @@ ActiveRecord::Schema.define(:version => 20130503153108) do
     t.string   "name"
     t.string   "email"
     t.string   "password_digest"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
     t.string   "remember_token"
+    t.integer  "inspection_team_id"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

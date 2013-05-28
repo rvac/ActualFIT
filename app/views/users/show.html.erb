@@ -1,17 +1,28 @@
 
 <div class="row">
-	<aside class="span4">
-		<section>
-			<h1>
-				<%= @user.name %>
-			</h1>
-			<h3>Chat messages (<%= @user.chat_messages.count %>)</h3>
-			<% if @user.chat_messages.any? %>
-				<ol class="chat_messages"> 
-					<%= render @chat_messages %>
-				</ol>
+    <h1>
+		Hello, <%= @user.name %>
+	</h1>
 
-			<% end %>
-		</section>
-	</aside>
+    <div class="span4 pull-left">
+        <h3>Your chat messages (<%= @user.chat_messages.count %>)</h3>
+        <% if @user.chat_messages.any? %>
+            <ol class="chat_messages">
+              <%= render @chat_messages %>
+            </ol>
+        <% end %>
+    </div>
+
+    <div class="span4 pull-left">
+        <%  if @userTeams.any?    %>
+          <h3>Your teams and roles</h3>
+          <% @userTeams.each do |t| %>
+                <div class="row">
+                  <%= t.name %>: some_role_to_fill
+                </div>
+            <% end %>
+        <% else %>
+            <h3>You are not enrolled into any team, <%= link_to 'fix this', edit_user_path%></h3>
+        <% end %>
+    </div>
 </div>

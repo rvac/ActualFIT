@@ -11,6 +11,7 @@
 #  updated_at    :datetime         not null
 #  filename      :string(255)
 #  content_type  :string(255)
+#  user_id       :integer
 #
 
 class Artifact < ActiveRecord::Base

@@ -1,0 +1,27 @@
+<% if can? :create, Campaign %>
+    <div class="row">
+      <div class="span6 offset3">
+        <h1>Create new campaign</h1>
+        <!--make something with shared errors, since this is is inpection, user stuff does not work anymore-->
+        <%= form_for @campaign do |c| %>
+
+            <%- c.label :name %>
+            <%= c.text_field :name, placeholder: "place campaign name here" %>
+
+            <%= c.label :comment %>
+            <%= c.text_field :comment, placeholder: "add comment if you want" %>
+
+            <h3>Participating teams</h3>
+            <% @teams.each do |t| %>
+                <div class="row" style="margin-bottom:10px;">
+                <%= t.name %>
+                <%= check_box_tag "teamID[#{t.id}]" %>
+                </div>
+            <% end %>
+
+            <%= c.submit "Create", class: "btn btn-primary" %>
+        <% end %>
+
+      </div>
+    </div>
+<% end %>

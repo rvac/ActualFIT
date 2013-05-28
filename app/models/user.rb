@@ -2,13 +2,14 @@
 #
 # Table name: users
 #
-#  id              :integer          not null, primary key
-#  name            :string(255)
-#  email           :string(255)
-#  password_digest :string(255)
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  remember_token  :string(255)
+#  id                 :integer          not null, primary key
+#  name               :string(255)
+#  email              :string(255)
+#  password_digest    :string(255)
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  remember_token     :string(255)
+#  inspection_team_id :integer
 #
 
 class User < ActiveRecord::Base
@@ -17,7 +18,8 @@ class User < ActiveRecord::Base
 	attr_accessible :email, :name, :password, :password_confirmation
 	has_secure_password
 	has_many :chat_messages
-	has_many :inspection_teams
+  belongs_to :inspection_team
+  #has_and_belongs_to_many :inspection_teams
 	has_many :remarks
   has_many :artifacts
 	

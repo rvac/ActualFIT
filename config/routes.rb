@@ -8,10 +8,10 @@ ActualFIT::Application.routes.draw do
   resources :inspections
   resources :inspection_teams
   resources :remarks
-  
+  resources :campaigns
   root to: 'main_page#home'
   match '/new_inspection', to: 'inspections#new'
-  
+  match '/new_campaign', to: 'campaigns#new'
   match '/signup', to: 'users#new'
   match '/signin', to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete

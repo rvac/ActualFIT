@@ -1,14 +1,14 @@
 <div id="openedInspection"class="row-fluid InspectionSelected">
 
 	<div id="artifacts" class="ArtifactsPanel span4 pull-left">
-		<%= render 'artifacts/artifact_list' %>
+		<%= render 'artifacts/artifact_list', current_inspection: @inspection %>
 	</div>
 
 	<div id="remarks" class="ArtifactComments span4 pull-left">
-		<%= render 'remarks/remarks_table' %>
+		<%= render 'remarks/remarks_table', current_inspection: @inspection %>
 	</div>
 
 	<div id="chat" class="ChatContainer span4 pull-right">
-		<%= render 'chat_messages/chat' %>
+		<%= render 'chat_messages/chat', current_inspection: @inspection %>
 	</div>
 </div>

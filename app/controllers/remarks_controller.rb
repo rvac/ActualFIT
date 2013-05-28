@@ -1,10 +1,11 @@
 class RemarksController < ApplicationController
 	before_filter :signed_in_user
+  load_and_authorize_resource
 	respond_to :html, :js
 	
 	def create
 		@remark = current_user.remarks.build(params[:remark])
-
+    @inspection = Inspection.find(@remark.inspection_id)
 		if @remark.save
 			# flash[:success] = "Yahoo, we did it"
 			# respond_with root_url
@@ -16,6 +17,7 @@ class RemarksController < ApplicationController
 
 	def destroy
 		@remark = Remark.find(params[:id])
+    @inspection = Inspection.find(@remark.inspection_id)
 		if @remark.destroy
 			flash.now[:info] = "Remark deleted"
 		else

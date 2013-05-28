@@ -2,10 +2,10 @@
 <h1>Update your profile</h1>
 
 <div class="row">
-	<div class="span6 offset3">
+
 		<%= form_for (@user) do |f| %>
 			<%= render 'shared/error_messages' %>
-
+      <div class="span4 pull-left">
 			<%= f.label :name %>
 			<%= f.text_field :name %>
 
@@ -17,9 +17,44 @@
 
 			<%= f.label :password_confirmation %>
 			<%= f.password_field :password_confirmation %>
-			
+      </div>
+      <div class="span4 pull-left offset1">
+        <%  if @userTeams.any?    %>
+            <h3>Your teams and roles</h3>
+            <% @userTeams.each do |t| %>
+                <div class="row">
+                  <%= t.name %>: some_role_to_fill
+                </div>
+            <% end %>
+        <% end %>
+
+        <h3>New teams and roles</h3>
+        <%  if @campaigns.any?    %>
+
+            <%= grouped_collection_select(:campaign, :page_id, user.pages.map(&:type), :pages_by_type, :name, :id, :name ) %>
+            <%= select_tag "campaign", options_from_collection_for_select(@campaigns, 'id', 'name', @campaigns.last.id), style: "padding: 0px;" %>
+            <% j = 0 %>
+            <% @campaigns.each do |c| %>
+                <div class="row">
+                  <%= c.name %>
+                  <%= select_tag "teamID[#{j}]", options_from_collection_for_select(@teams[j],
+                                                           'id', 'name', @teams[j].first.id), style: "padding: 0px;" %>
+
+                  <%= select_tag "role[#{j}]", options_for_select(Role.possible_roles,
+                                                           Role.possible_roles), style: "padding: 0px;" %>
+                </div>
+
+                <% j+=1 %>
+            <% end %>
+        <% end %>
+
+      </div>
+
+
 			<% the_button = f.submit "Save changes", class: "btn btn-primary btn-large" %>
 			<%= content_tag(:div, the_button, style: "margin-bottom: 10px;") %>
 		<% end %>
-	</div>
+
+
+
 </div>
