@@ -4,40 +4,29 @@ class CampaignsController < ApplicationController
   def new
     @campaign = Campaign.new
     #may be add some filter that is only active teams/or not assigned to inspection or something like this
-    @teams = InspectionTeam.all
+
   end
 
   def create
     @campaign = Campaign.new(params[:campaign])
-    teamsID = params[:teamID].keys #this is to be changed accordingly, search for teams. add only real ones
-    # insert here some exception handler in case of teams not found. (fake ID are sent via form)
-    @teams = InspectionTeam.find(teamsID)
+    insp_names = params[:insp_names].split(',')
 
-
-    #@current_inspection = @inspection
-    # @inspection.file = params[:inspection]
     if @campaign.save
+      insp_names.each do |n|
+        i = @campaign.inspections.build(name: "#{@campaign.name} #{n}", comment: "Inspection for group #{n}", status: "active")
+        if i.save
+          # cool
+        else
+          #not-cool
+        end
 
-      fi = 0 # failded inspections counter
-      @teams.each do |i|
-         insp = Inspection.new(name: "Inspection, #{@campaign.name}", status: 'active')
-         insp.campaign_id = @campaign.id
-         insp.inspection_team_id = i.id
-         fi += 1 unless !insp.save
       end
-
-      if fi == 0
-        flash[:success] = "Campaign #{@campaign.name} successfully created"
-      else
-        flash[:error] = "Campaign #{@campaign.name} created with errors"
-      end
-
       redirect_to root_url
     else
-      @teams = InspectionTeam.all
       render 'new'
     end
   end
+
   def destroy
   end
 

@@ -19,7 +19,8 @@ class Inspection < ActiveRecord::Base
   has_many :chat_messages
   has_many :remarks
   belongs_to :campaign
-  belongs_to :inspection_team
+  has_many :participations
+  has_many :users, :through => :participations
 
   validates :name, presence: true
   VALID_STATUS_REGEX = /\A(active)|(archived)\z/i

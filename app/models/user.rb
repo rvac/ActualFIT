@@ -18,11 +18,11 @@ class User < ActiveRecord::Base
 	attr_accessible :email, :name, :password, :password_confirmation
 	has_secure_password
 	has_many :chat_messages
-  belongs_to :inspection_team
-  #has_and_belongs_to_many :inspection_teams
+  has_many :participations
+  has_many :inspections, :through => :participations
 	has_many :remarks
   has_many :artifacts
-	
+
 	before_save { email.downcase! }
 	before_save :create_remember_token
 

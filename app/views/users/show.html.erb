@@ -13,16 +13,17 @@
         <% end %>
     </div>
 
-    <div class="span4 pull-left">
-        <%  if @userTeams.any?    %>
-          <h3>Your teams and roles</h3>
-          <% @userTeams.each do |t| %>
+    <div class="span4 offset1 pull-left">
+       <% if @user.roles.any? %>
+
+            <% @user.roles.each do |r| %>
                 <div class="row">
-                  <%= t.name %>: some_role_to_fill
+                     <span><strong><%= r.name %></strong></span>
+                     <span><%= r.resource_type %></span>
+                     <span><%= r.resource_id %></span>
                 </div>
+
             <% end %>
-        <% else %>
-            <h3>You are not enrolled into any team, <%= link_to 'fix this', edit_user_path%></h3>
         <% end %>
     </div>
 </div>

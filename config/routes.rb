@@ -6,7 +6,7 @@ ActualFIT::Application.routes.draw do
   resources :chat_messages, only: [:create, :destroy]
   resources :artifacts
   resources :inspections
-  resources :inspection_teams
+  resources :ParticipationsController
   resources :remarks
   resources :campaigns
   root to: 'main_page#home'

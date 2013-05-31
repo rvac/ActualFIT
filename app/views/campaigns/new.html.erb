@@ -11,13 +11,8 @@
             <%= c.label :comment %>
             <%= c.text_field :comment, placeholder: "add comment if you want" %>
 
-            <h3>Participating teams</h3>
-            <% @teams.each do |t| %>
-                <div class="row" style="margin-bottom:10px;">
-                <%= t.name %>
-                <%= check_box_tag "teamID[#{t.id}]" %>
-                </div>
-            <% end %>
+            <%= text_field_tag :insp_names, value: '1A, 1B, 2A, 2B, 3A, 4A'%>
+
 
             <%= c.submit "Create", class: "btn btn-primary" %>
         <% end %>

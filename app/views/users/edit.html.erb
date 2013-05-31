@@ -19,32 +19,41 @@
 			<%= f.password_field :password_confirmation %>
       </div>
       <div class="span4 pull-left offset1">
-        <%  if @userTeams.any?    %>
+        <%  if @user.inspections.any?    %>
             <h3>Your teams and roles</h3>
-            <% @userTeams.each do |t| %>
+            <% @user.inspections.each do |i| %>
                 <div class="row">
-                  <%= t.name %>: some_role_to_fill
+                  <%= i.name %>:  obtain role from participation, to make my life easier
                 </div>
+      <% end %>
+      <% end %>
+        <h3>Temporary solution, shows roles</h3>
+        <% if @user.roles.any? %>
+
+            <% @user.roles.each do |r| %>
+                <div class="row">
+                  <span><strong><%= r.name %></strong></span>
+                  <span><%= r.resource_type %></span>
+                  <span><%= r.resource_id %></span>
+                </div>
+
             <% end %>
         <% end %>
 
         <h3>New teams and roles</h3>
         <%  if @campaigns.any?    %>
 
-            <%= grouped_collection_select(:campaign, :page_id, user.pages.map(&:type), :pages_by_type, :name, :id, :name ) %>
-            <%= select_tag "campaign", options_from_collection_for_select(@campaigns, 'id', 'name', @campaigns.last.id), style: "padding: 0px;" %>
-            <% j = 0 %>
+
             <% @campaigns.each do |c| %>
                 <div class="row">
                   <%= c.name %>
-                  <%= select_tag "teamID[#{j}]", options_from_collection_for_select(@teams[j],
-                                                           'id', 'name', @teams[j].first.id), style: "padding: 0px;" %>
+                  <%= select_tag "inspectionID[#{c.id}]", options_from_collection_for_select(c.inspections,
+                                                           'id', 'name', c.inspections.first.id), style: "padding: 0px;" %>
 
-                  <%= select_tag "role[#{j}]", options_for_select(Role.possible_roles,
-                                                           Role.possible_roles), style: "padding: 0px;" %>
+                  <%= select_tag "role[#{c.id}]", options_for_select(Role.possible_roles), style: "padding: 0px;" %>
                 </div>
 
-                <% j+=1 %>
+
             <% end %>
         <% end %>
 
