@@ -15,11 +15,11 @@
 class Inspection < ActiveRecord::Base
   resourcify
   attr_accessible :comment, :name , :status
-  has_many :artifacts
-  has_many :chat_messages
-  has_many :remarks
+  has_many :artifacts, :dependent => :destroy
+  has_many :chat_messages, :dependent => :destroy
+  has_many :remarks, :dependent => :destroy
   belongs_to :campaign
-  has_many :participations
+  has_many :participations, :dependent => :destroy
   has_many :users, :through => :participations
 
   validates :name, presence: true

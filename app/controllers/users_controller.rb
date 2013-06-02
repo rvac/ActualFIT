@@ -42,38 +42,36 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @campaigns = Campaign.all
 
-    #@inspections = []
+    if params[:edit_roles]
+      @campaigns.each do |c|
+        c.inspections.each do |i|
+          #trying to revoke all possible roles from user for all inspections
+          Role.possible_roles.each do |r|
+            @user.revoke r, i
+            puts "role revoked"
+          end
 
-    @campaigns.each do |c|
-      c.inspections.each do |i|
-        #trying to revoke all possible roles from user for all inspections
-        Role.possible_roles.each do |r|
-          @user.revoke r, i
-        end
 
-
-        # giving rights according to the result
-        # later check if it is possible to send via form some shit, like admin
-        if i.id == params[:inspectionID][c.id.to_s].to_i
-          if Role.possible_roles.include? params[:role][c.id.to_s]
-            @user.grant params[:role][c.id.to_s].to_sym, i
+          # giving rights according to the result
+          # later check if it is possible to send via form some shit, like admin
+          if i.id == params[:inspectionID][c.id.to_s].to_i
+            if Role.possible_roles.include? params[:role][c.id.to_s]
+              @user.grant params[:role][c.id.to_s].to_sym, i
+            end
           end
         end
       end
+      redirect_to @user
+    else
+      if @user.update_attributes(params[:user])
+        #handle a successful update
+        flash[:success] = "Profile updated"
+         sign_in @user
+         redirect_to @user
+      else
+         render 'edit'
+      end
     end
-
-
-
-
-	  if @user.update_attributes(params[:user])
-	     #handle a successful update
-	     flash[:success] = "Profile updated"
-	     sign_in @user
-	     redirect_to @user
-	  else
-	     render 'edit'
-	  end
-
 
     #redirect_to @user
 	end

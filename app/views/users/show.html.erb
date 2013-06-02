@@ -1,10 +1,10 @@
 
-<div class="row">
+<div class="row-fluid">
     <h1>
 		Hello, <%= @user.name %>
 	</h1>
 
-    <div class="span4 pull-left">
+    <div class="span6 pull-left" style="overflow-y: auto;">
         <h3>Your chat messages (<%= @user.chat_messages.count %>)</h3>
         <% if @user.chat_messages.any? %>
             <ol class="chat_messages">
@@ -13,11 +13,11 @@
         <% end %>
     </div>
 
-    <div class="span4 offset1 pull-left">
+    <div class="span6 pull-left">
        <% if @user.roles.any? %>
 
             <% @user.roles.each do |r| %>
-                <div class="row">
+                <div class="row-fluid">
                      <span><strong><%= r.name %></strong></span>
                      <span><%= r.resource_type %></span>
                      <span><%= r.resource_id %></span>
@@ -26,4 +26,8 @@
             <% end %>
         <% end %>
     </div>
+
+</div>
+<div class="row-fluid">
+<h3>Click <%= link_to "here", edit_user_path(@user) %>  to edit your profile</h3>
 </div>

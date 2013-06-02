@@ -1,5 +1,5 @@
 <% if can? :create, Campaign %>
-    <div class="row">
+    <div class="row-fluid">
       <div class="span6 offset3">
         <h1>Create new campaign</h1>
         <!--make something with shared errors, since this is is inpection, user stuff does not work anymore-->
@@ -11,7 +11,7 @@
             <%= c.label :comment %>
             <%= c.text_field :comment, placeholder: "add comment if you want" %>
 
-            <%= text_field_tag :insp_names, value: '1A, 1B, 2A, 2B, 3A, 4A'%>
+            <%= text_field_tag :insp_names, placeholder: '1A, 1B, 2A, 2B, 3A, 4A'%>
 
 
             <%= c.submit "Create", class: "btn btn-primary" %>

@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
 	attr_accessible :email, :name, :password, :password_confirmation
 	has_secure_password
 	has_many :chat_messages
-  has_many :participations
+  has_many :participations, :dependent => :destroy
   has_many :inspections, :through => :participations
 	has_many :remarks
   has_many :artifacts
