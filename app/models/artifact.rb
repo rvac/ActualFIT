@@ -16,7 +16,7 @@
 
 class Artifact < ActiveRecord::Base
   resourcify
-  attr_accessible :comment, :inspection_id, :name, :user_id
+  attr_accessible :comment, :inspection_id, :name, :user_id, :datafile
   belongs_to :inspection
   belongs_to :user
   has_many :remarks, :dependent => :destroy

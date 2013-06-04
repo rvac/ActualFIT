@@ -16,6 +16,7 @@
     <div class="span6 pull-left">
        <% if @user.roles.any? %>
 
+           <!-- Think of an idea how to check the roles in a smart way, may be by loking at join table? -->
             <% @user.roles.each do |r| %>
                 <div class="row-fluid">
                      <span><strong><%= r.name %></strong></span>

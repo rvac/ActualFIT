@@ -28,14 +28,17 @@
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 									<span class="CurrentInspection">
-										<%= Inspection.first.name%></span>
+										current inspection</span>
 									<b class="caret"></b>
 								</a>
 								<ul class="dropdown-menu">
-									<% Inspection.all.each do |insp| %>
+                                    <% inspections = Inspection.all %>
+                                    <% if inspections.any? %>
+									<% inspections.each do |insp| %>
 										<% if can? :read, insp %>
                                             <li><%= link_to insp.name, insp %></li>
                                         <% end %>
+									<% end %>
 									<% end %>
 
                                     <% if can? :create, Inspection %>

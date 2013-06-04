@@ -38,6 +38,7 @@ class InspectionsController < ApplicationController
   #end
 
   def destroy
+    #remove a roles connected to inspections when deleted
   end
 
 end

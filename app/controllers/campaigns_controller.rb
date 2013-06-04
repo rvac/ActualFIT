@@ -28,6 +28,7 @@ class CampaignsController < ApplicationController
   end
 
   def destroy
+    #remove a roles connected to campaign when deleted
   end
 
   def archive
