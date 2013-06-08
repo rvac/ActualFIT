@@ -1,4 +1,4 @@
-$("#remarks").html("<%= j render( :partial => 'remarks/remarks_table', locals: {current_inspection: @inspection}) %>");
+$("#remarks").html("<%= j render( :partial => 'remarks/remarks_table', locals: {inspection: @inspection}) %>");
 $(".ACTR").hover(function(){
 		var ap = $(this).children(".ACTC").children(".ACTRActionPanel")
 		var rHeight = $(this).css("height");

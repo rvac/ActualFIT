@@ -6,3 +6,12 @@
 #  setInterval(function() {
 #  $('.dynamic').load('/controller_name/action_name');}, 3000);
 #});
+@ChatPoller =
+  poll: ->
+    setTimeout @request, 3000
+  request: ->
+    $.get($("#Chat").data('url'))
+
+
+jQuery ->
+  ChatPoller.poll()

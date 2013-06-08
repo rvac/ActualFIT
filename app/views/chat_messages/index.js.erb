@@ -1,2 +1,3 @@
 $("#chat").html("<%= j render( :partial => 'chat_messages/chat', locals: {inspection: @inspection}) %>");
-alert('chat message created');
+ChatPoller.poll();
+alert('chat was polled');

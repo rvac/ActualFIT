@@ -3,10 +3,11 @@ ActualFIT::Application.routes.draw do
 
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
-  resources :chat_messages, only: [:create, :destroy]
   resources :artifacts
-  resources :inspections
   resources :remarks
+  resources :inspections do
+    resources :chat_messages, only: [:index, :create, :destroy]
+  end
   resources :campaigns
   root to: 'main_page#home'
   match '/new_inspection', to: 'inspections#new'

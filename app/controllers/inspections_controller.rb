@@ -1,14 +1,16 @@
 class InspectionsController < ApplicationController
 	before_filter :signed_in_user
   load_and_authorize_resource
+
+
 	def new
-		#@inspection = Inspection.new
+		@inspection = Inspection.new
     #authorize! :create, @inspection
 	end
 	
 	def show
 		@inspection = Inspection.find(params[:id])
-    #@current_inspection = @inspection
+    self.current_inspection= @inspection
 		@chat_messages = @inspection.chat_messages
 		@artifacts = @inspection.artifacts
     @remarks = @inspection.remarks
@@ -17,12 +19,9 @@ class InspectionsController < ApplicationController
 
 	def create
 
-		@inspection = Inspection.new(params[:inspection])
     @inspection.active!
-    #@current_inspection = @inspection
-		# @inspection.file = params[:inspection]
 		if @inspection.save
-			flash[:success] = "inspection created"
+			flash[:success] = "inspection #{@inspection.name} created"
 			redirect_to root_url
 		else
 			render 'new'

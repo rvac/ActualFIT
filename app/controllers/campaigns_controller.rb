@@ -1,6 +1,7 @@
 class CampaignsController < ApplicationController
   before_filter :signed_in_user
   load_and_authorize_resource
+
   def new
     @campaign = Campaign.new
     #may be add some filter that is only active teams/or not assigned to inspection or something like this
@@ -8,7 +9,7 @@ class CampaignsController < ApplicationController
   end
 
   def create
-    @campaign = Campaign.new(params[:campaign])
+    #@campaign = Campaign.new(params[:campaign])
     insp_names = params[:insp_names].split(',')
 
     if @campaign.save

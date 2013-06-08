@@ -15,8 +15,8 @@
 				</tr>
 			</thead>
 			<tbody>
-				<% if current_inspection.remarks.any?%>
-				<% current_inspection.remarks.each do |r| %>
+				<% if inspection.remarks.any?%>
+				<% inspection.remarks.each do |r| %>
 					<tr  class="ACTR">
 					  	<td>
 					  		<%= r.location %>
@@ -50,7 +50,6 @@
 
 
                     <%= f.text_field :remark_type, class: "span2", id: "appendedInputButton" %>
-                    <%= f.hidden_field :inspection_id, {value: current_inspection.id} %>
                     <%= f.submit "Submit", class: "btn" %>
                 <% end %>
         </div>

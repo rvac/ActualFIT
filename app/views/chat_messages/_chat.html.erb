@@ -6,32 +6,33 @@
 
 <div class="ChatInner">
 	<div class="row-fluid MessageWindow">
-		<div class="span12 well MessageWindowInner">
-			<% if current_inspection.chat_messages.any? %>
-				<% current_inspection.chat_messages.each do |msg| %>
-					<% imauthor =  User.find(msg.user_id) %>
+		<%= content_tag :div, class: "span12 well MessageWindowInner" do -%>
+            <% puts '--------zz------------' %>
+			<% if inspection.chat_messages.any? %>
+				<% inspection.chat_messages.each do |msg| %>
+					<% imAuthor =  User.find(msg.user_id) %>
 
 					<div class="row-fluid MessageContainer">
 
-						<% if current_user?(imauthor) %>
+						<% if current_user?(imAuthor) %>
 							<div class="row-fluid AuthorDigest UserDigest">
 								<span class="text-info IMTimestamp"><%= msg.created_at %> </span>
 								<strong class="IMAuthor">
-									<%= imauthor.name %>
+									<%= imAuthor.name %>
 								</strong>
 							</div>
 						<% else %>
 							<div class="row-fluid AuthorDigest">
 								<strong class="IMAuthor">
-									<%= imauthor.name %>
+									<%= imAuthor.name %>
 								</strong>
 								<span class="text-info IMTimestamp"><%= msg.created_at %> </span>
 							</div>
-						<% end %>
+						<% end -%>
 
 						<div class="row-fluid Message">
 
-							<% if current_user?(imauthor) %>
+							<% if current_user?(imAuthor) %>
 								<div class="pull-right well well-small MessageInner">
 									<p><%= msg.content %></p>
 								</div>
@@ -40,28 +41,29 @@
 									<p><%= msg.content %></p>
 								</div>
 							<% end %>
-							
+
 						</div>
 					</div>
 				<% end %>
 			<% end %>
-		</div>
+		<% end -%>
 	</div>
 
     <% if can? :create, ChatMessage %>
-	<div class="row-fluid SendMessage">
-		<div class="span12 SendMessageInner">
-			<%= form_for current_user.chat_messages.build, remote: true do |f| %>
-				<div class="row-fluid ChatTypeBoxRow">
-					<%= f.text_area :content, class: "ChatTypeBox pull-right", rows: 2, placeholder: "Type your answer" %>
-					<%= f.hidden_field :inspection_id, {value: current_inspection.id} %>
+      <div class="row-fluid SendMessage">
+        <div class="span12 SendMessageInner">
+          <%= form_for [inspection, inspection.chat_messages.build], remote: true do |f| %>
+              <div class="row-fluid ChatTypeBoxRow">
+                <%= f.text_area :content, class: "ChatTypeBox pull-right", rows: 2, placeholder: "Type your answer" %>
 
-				</div>
-				<div class="row-fluid">
-					<%= f.submit "Send", class: "btn btn-primary pull-right" %>
-				</div>
-			<% end %>	
-		</div>
-	</div>
+
+              </div>
+              <div class="row-fluid">
+                <%= f.submit "Send", class: "btn btn-primary pull-right" %>
+              </div>
+          <% end %>
+        </div>
+      </div>
     <% end %>
+
 </div>

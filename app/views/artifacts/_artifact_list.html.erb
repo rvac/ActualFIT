@@ -13,8 +13,8 @@
 <div class="row-fluid ArtifactsRowContainer">
 	<div class="span12 Artifacts">
 		<ul class="thumbnails">
-			<% if current_inspection.artifacts.any? %>
-			<% current_inspection.artifacts.each do |art|  %>
+			<% if inspection.artifacts.any? %>
+			<% inspection.artifacts.each do |art|  %>
 				<%= content_tag :li do -%>
 					<%= content_tag :div, class: "thumbnail" do -%>
 						<%= content_tag :div, class: "well well-small Artifact" do -%>

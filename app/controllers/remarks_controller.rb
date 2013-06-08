@@ -5,7 +5,8 @@ class RemarksController < ApplicationController
 	
 	def create
 		@remark = current_user.remarks.build(params[:remark])
-    @inspection = Inspection.find(@remark.inspection_id)
+    @inspection = current_inspection
+    @remark.inspection_id = @inspection.id
 		if @remark.save
 			# flash[:success] = "Yahoo, we did it"
 			# respond_with root_url
@@ -17,7 +18,7 @@ class RemarksController < ApplicationController
 
 	def destroy
 		@remark = Remark.find(params[:id])
-    @inspection = Inspection.find(@remark.inspection_id)
+    @inspection = current_inspection
 		if @remark.destroy
 			flash.now[:info] = "Remark deleted"
 		else

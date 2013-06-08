@@ -1,14 +1,17 @@
 <div id="openedInspection"class="row-fluid InspectionSelected">
 
 	<div id="artifacts" class="ArtifactsPanel span4 pull-left">
-		<%= render 'artifacts/artifact_list', current_inspection: @inspection %>
+		<%= render 'artifacts/artifact_list', inspection: @inspection %>
 	</div>
 
 	<div id="remarks" class="ArtifactComments span4 pull-left">
-		<%= render 'remarks/remarks_table', current_inspection: @inspection %>
+		<%= render 'remarks/remarks_table', inspection: @inspection %>
 	</div>
 
-	<div id="chat" class="ChatContainer span4 pull-right">
-		<%= render 'chat_messages/chat', current_inspection: @inspection %>
-	</div>
+
+    <%= content_tag :div, id: "Chat", class: "ChatContainer span4 pull-right", data: { url: inspection_chat_messages_url(@inspection) } do -%>
+        <%= render 'chat_messages/chat', inspection: @inspection %>
+    <% end -%>
+
+
 </div>
