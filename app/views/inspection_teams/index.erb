@@ -1,7 +1,0 @@
-<% if @teams.any? %>
-    <% @teams.each do |t| %>
-        <% if can? :read, t %>
-            <%= t.name %>
-        <% end %>
-    <% end %>
-<% end %>

@@ -8,9 +8,9 @@
 #});
 @ChatPoller =
   poll: ->
-    setTimeout @request, 3000
+    setTimeout @request, 5000
   request: ->
-    $.get($("#Chat").data('url'))
+    $.get($("#chat").data('url'))
 
 
 jQuery ->

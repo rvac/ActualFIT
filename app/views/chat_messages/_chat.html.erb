@@ -7,10 +7,12 @@
 <div class="ChatInner">
 	<div class="row-fluid MessageWindow">
 		<%= content_tag :div, class: "span12 well MessageWindowInner" do -%>
-            <% puts '--------zz------------' %>
+
 			<% if inspection.chat_messages.any? %>
 				<% inspection.chat_messages.each do |msg| %>
-					<% imAuthor =  User.find(msg.user_id) %>
+
+
+                    <% imAuthor =  User.find(msg.user_id) %>
 
 					<div class="row-fluid MessageContainer">
 

@@ -9,7 +9,7 @@
 	</div>
 
 
-    <%= content_tag :div, id: "Chat", class: "ChatContainer span4 pull-right", data: { url: inspection_chat_messages_url(@inspection) } do -%>
+    <%= content_tag :div, id: "chat", class: "ChatContainer span4 pull-right", data: { url: inspection_chat_messages_url(@inspection) } do -%>
         <%= render 'chat_messages/chat', inspection: @inspection %>
     <% end -%>
 
