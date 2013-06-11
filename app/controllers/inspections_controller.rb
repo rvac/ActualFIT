@@ -14,6 +14,7 @@ class InspectionsController < ApplicationController
 		@chat_messages = @inspection.chat_messages
 		@artifacts = @inspection.artifacts
     @remarks = @inspection.remarks
+    @user = current_user
 		store_location
 	end
 

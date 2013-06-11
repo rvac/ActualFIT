@@ -9,8 +9,42 @@
 	</div>
 
 
-    <%= content_tag :div, id: "chat", class: "ChatContainer span4 pull-right", data: { url: inspection_chat_messages_url(@inspection) } do -%>
-        <%= render 'chat_messages/chat', inspection: @inspection %>
+    <%= content_tag :div, id: "chat", class: "ChatContainer span4 pull-right"  do -%>
+      <div class="Dock">
+        <p>-></p>
+        <p>c h a t</p>
+      </div>
+
+      <div class="ChatInner">
+        <div class="row-fluid MessageWindow">
+          <%= content_tag :div, class: "span12 well MessageWindowInner" do -%>
+              <%= content_tag :div, id: 'MessageContainer', class: "row-fluid MessageContainer", data: { url: inspection_chat_messages_url(@inspection) } do -%>
+                  <%= render partial: 'chat_messages/chat_message', collection: @chat_messages, as: :chat_message, locals: {inspection: @inspection }  %>
+              <% end -%>
+          <% end -%>
+        </div>
+
+        <% if can? :create, ChatMessage %>
+            <div class="row-fluid SendMessage">
+              <div class="span12 SendMessageInner">
+                <%= form_for [@inspection, @inspection.chat_messages.build], remote: true do |f| %>
+                    <div class="row-fluid ChatTypeBoxRow">
+                      <%= f.text_area :content, class: "ChatTypeBox pull-right", rows: 2, placeholder: "Type your answer" %>
+
+
+                    </div>
+                    <div class="row-fluid">
+                      <%= f.submit "Send", class: "btn btn-primary pull-right" %>
+                    </div>
+                <% end %>
+              </div>
+            </div>
+        <% end %>
+
+      </div>
+
+
+
     <% end -%>
 
 

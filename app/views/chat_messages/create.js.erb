@@ -1,1 +1,1 @@
-$("#chat").html("<%= j render( :partial => 'chat_messages/chat', locals: {inspection: @inspection}) %>");
+$("#MessageContainer").html("<%= j render @inspection.chat_messages, inspection: @inspection %>");

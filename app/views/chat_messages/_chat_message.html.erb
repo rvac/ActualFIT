@@ -1,6 +1,32 @@
-<li>
-  <span class="content"><%= chat_message.content %></span>
-  <span class="timestamp">
-	written at <%= chat_message.created_at %>.
-  </span>
-</li>
+
+<% imAuthor =  User.find(chat_message.user_id) %>
+
+<% if current_user?(imAuthor) %>
+  <div class="row-fluid AuthorDigest UserDigest">
+    <span class="text-info IMTimestamp"><%= chat_message.created_at %> </span>
+    <strong class="IMAuthor">
+      <%= imAuthor.name %>
+    </strong>
+  </div>
+<% else %>
+  <div class="row-fluid AuthorDigest">
+    <strong class="IMAuthor">
+      <%= imAuthor.name %>
+    </strong>
+    <span class="text-info IMTimestamp"><%= chat_message.created_at %> </span>
+  </div>
+<% end %>
+
+<%= content_tag :div, class: "row-fluid Message", data: { id: chat_message.id } do -%>
+
+    <% if current_user?(imAuthor) %>
+        <div class="pull-right well well-small MessageInner">
+          <p><%= chat_message.content %></p>
+        </div>
+    <% else %>
+        <div class="pull-left well well-small MessageInner">
+          <p><%= chat_message.content %></p>
+        </div>
+    <% end %>
+
+<% end -%>
