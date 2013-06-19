@@ -1,11 +1,44 @@
 <div id="openedInspection"class="row-fluid InspectionSelected">
 
 	<div id="artifacts" class="ArtifactsPanel span4 pull-left">
-		<%= render 'artifacts/artifact_list', inspection: @inspection %>
-	</div>
+      <%= render 'artifacts/artifact_list', inspection: @inspection %>
+
+    </div>
 
 	<div id="remarks" class="ArtifactComments span4 pull-left">
-		<%= render 'remarks/remarks_table', inspection: @inspection %>
+      <div class="ArtifactCommentsInner">
+        <%= content_tag :div, class: "" do -%>
+          <table class="table table-striped table-hover">
+            <caption class="CommentsHeader">
+              <strong>Artifact Remark</strong>
+              <div class="CommentsClose"><strong>hide</strong></div>
+            </caption>
+            <thead>
+            <tr>
+              <th>Location</th>
+              <th>Remark</th>
+              <th>Type</th>
+              <th>Author</th>
+            </tr>
+            </thead>
+            <%= content_tag :tbody, class: "RemarksTable", id: "RemarksTable", data: { url: inspection_remarks_url(@inspection)} do -%>
+                <%= render partial: 'remarks/remark', collection: @inspection.remarks, as: :remark, locals: {inspection: @inspection }  %>
+            <% end -%>
+          </table>
+        <% end -%>
+        <% if can? :create, Remark %>
+            <div class="input-append row-fluid">
+              <%= form_for [@inspection, @inspection.remarks.build], remote: true do |f| %>
+                  <%= f.text_field :location, class: "span2", id: "appendedInputButton" %>
+                  <%= f.text_field :content, class: "span6", id: "appendedInputButton" %>
+
+
+                  <%= f.text_field :remark_type, class: "span2", id: "appendedInputButton" %>
+                  <%= f.submit "Submit", class: "btn" %>
+              <% end %>
+            </div>
+        <% end %>
+      </div>
 	</div>
 
 
@@ -19,7 +52,7 @@
         <div class="row-fluid MessageWindow">
           <%= content_tag :div, class: "span12 well MessageWindowInner" do -%>
               <%= content_tag :div, id: 'MessageContainer', class: "row-fluid MessageContainer", data: { url: inspection_chat_messages_url(@inspection) } do -%>
-                  <%= render partial: 'chat_messages/chat_message', collection: @chat_messages, as: :chat_message, locals: {inspection: @inspection }  %>
+                  <%= render partial: 'chat_messages/chat_message', collection: @inspection.chat_messages, as: :chat_message, locals: {inspection: @inspection }  %>
               <% end -%>
           <% end -%>
         </div>

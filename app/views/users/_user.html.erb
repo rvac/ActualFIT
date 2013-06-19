@@ -1,0 +1,15 @@
+<div class="row-fluid">
+  <h3><%= user.name %></h3>
+  <strong><%= user.email %></strong>
+  <% if user.roles.any? %>
+    <h3>Roles:</h3>
+    <% user.roles.each do |r| %>
+        <strong><%= r.name %></strong>
+        <% if !r.resource_type.nil? %>
+            <%= Inspection.find(r.resource_id).name %>
+        <% else %>
+            <span>Everywhere</span>
+        <% end %>
+    <% end %>
+  <% end %>
+</div>

@@ -7,14 +7,13 @@ class InspectionsController < ApplicationController
 		@inspection = Inspection.new
     #authorize! :create, @inspection
 	end
-	
+
+
+
 	def show
 		@inspection = Inspection.find(params[:id])
     self.current_inspection= @inspection
-		@chat_messages = @inspection.chat_messages
-		@artifacts = @inspection.artifacts
-    @remarks = @inspection.remarks
-    @user = current_user
+    r = @inspection.remarks
 		store_location
 	end
 

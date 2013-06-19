@@ -17,11 +17,11 @@ class User < ActiveRecord::Base
 
 	attr_accessible :email, :name, :password, :password_confirmation
 	has_secure_password
-	has_many :chat_messages
+	has_many :chat_messages, :dependent => :destroy
   has_many :participations, :dependent => :destroy
   has_many :inspections, :through => :participations
-	has_many :remarks
-  has_many :artifacts
+	has_many :remarks, :dependent => :destroy
+  has_many :artifacts, :dependent => :destroy
 
 	before_save { email.downcase! }
 	before_save :create_remember_token
@@ -35,7 +35,10 @@ class User < ActiveRecord::Base
 	validates :password, presence: true, length: { minimum: 6 }
 	validates :password_confirmation, presence: true
 
-
+  #def name
+  #  "#{} #{}"
+  #end
+  #
   private
 		def create_remember_token
 		  #create the token here

@@ -4,8 +4,8 @@ ActualFIT::Application.routes.draw do
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
   resources :artifacts
-  resources :remarks
   resources :inspections do
+    resources :remarks
     resources :chat_messages, only: [:index, :create, :destroy]
   end
   resources :campaigns

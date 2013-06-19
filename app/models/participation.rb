@@ -11,7 +11,7 @@
 #
 
 class Participation < ActiveRecord::Base
-  #attr_accessible :name, :user_id
+  attr_accessible :role, :inspection, :user
   belongs_to :inspection
   belongs_to :user
 

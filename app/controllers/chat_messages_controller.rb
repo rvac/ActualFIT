@@ -7,9 +7,9 @@ class ChatMessagesController < ApplicationController
   def index
     @inspection = self.current_inspection
     if params[:after].empty?
-        @chat_messages = @inspection.chat_messages
+        @chat_messages = current_inspection.chat_messages
     else
-        @chat_messages = @inspection.chat_messages.where("id > ?", params[:after].to_i) if params[:after].to_i > 0
+        @chat_messages = current_inspection.chat_messages.where("id > ?", params[:after].to_i) if params[:after].to_i > 0
         i = 0
     end
   end

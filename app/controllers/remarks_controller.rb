@@ -16,7 +16,16 @@ class RemarksController < ApplicationController
 		end
 	end
 
-	def destroy
+  def index
+    @inspection = self.current_inspection
+    if params[:after].empty?
+      @remarks= @inspection.remarks
+    else
+      @remarks= @inspection.remarks.where("id > ?", params[:after].to_i) if params[:after].to_i > 0
+    end
+  end
+
+  def destroy
 		@remark = Remark.find(params[:id])
     @inspection = current_inspection
 		if @remark.destroy

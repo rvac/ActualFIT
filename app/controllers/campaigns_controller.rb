@@ -10,18 +10,21 @@ class CampaignsController < ApplicationController
 
   def create
     #@campaign = Campaign.new(params[:campaign])
-    insp_names = params[:insp_names].split(',')
+    #insp_names = params[:insp_names].split(',')
 
     if @campaign.save
-      insp_names.each do |n|
-        i = @campaign.inspections.build(name: "#{@campaign.name} #{n}", comment: "Inspection for group #{n}", status: "active")
-        if i.save
-          # cool
-        else
-          #not-cool
-        end
-
-      end
+      #if params[:assignments]
+      # @campaign.import params[:assignments]
+      #end
+      #insp_names.each do |n|
+      #  i = @campaign.inspections.build(name: "#{@campaign.name} #{n}", comment: "Inspection for group #{n}", status: "active")
+      #  if i.save
+      #    # cool
+      #  else
+      #    #not-cool
+      #  end
+      #
+      #end
       redirect_to root_url
     else
       render 'new'

@@ -1,0 +1,22 @@
+
+<%= content_tag :tr, class: "ACTR", data: { id: remark.id } do -%>
+    <td>
+
+        <%=remark.location %>
+    </td>
+    <td>
+        <%= remark.content %>
+    </td>
+    <td>
+        <%= remark.remark_type %>
+    </td>
+    <td  class="ACTC">
+
+          <%  author =  User.find(remark.user_id) %>
+          <%= author.name %>
+          <% if can? :destroy, remark %>
+            <!-- remarksActionPanel remark -->
+          <% end %>
+
+    </td>
+<% end -%>

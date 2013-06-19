@@ -9,7 +9,7 @@
 						<li><%= link_to "Home", root_path %></li>
 						
 						<% if signed_in? %>
-							<li><%= link_to "Users", '#' %></li>
+							<li><%= link_to "Users", users_path %></li>
                             <li><%= link_to current_user.roles.first.name, '#' %></li>
 							<li class="dropdown">
 								<a href='#' class="dropdown-toggle" data-toggle="dropdown">
@@ -18,17 +18,41 @@
 								<ul class="dropdown-menu">
 									<li>
 										<%= link_to "Profile", current_user %>
-									</li>	
+									</li>
 									<li class="divider"></li>
 									<li>
 										<%= link_to "Sign out", signout_path, method: "delete" %>
-									</li>	
+									</li>
+								</ul>
+							</li>
+                          <li class="dropdown">
+								<a href='#' class="dropdown-toggle" data-toggle="dropdown">
+									Campaigns <b class="caret"></b>
+								</a>
+								<ul class="dropdown-menu">
+                                      <% campaigns = Campaign.all %>
+                                      <% if campaigns.any? %>
+                                          <% campaigns.each do |c| %>
+                                              <% if can? :read, c %>
+                                                  <li><%= link_to c.name, c %></li>
+                                              <% end %>
+                                          <% end %>
+                                      <% end %>
+
+                                      <% if can? :create, Campaign %>
+                                          <li class="divider"></li>
+                                          <li>
+                                            <%= link_to "Create a campaign", new_campaign_path %>
+                                          </li>
+                                          <li class="divider"></li>
+                                          <li><%= link_to "Campaigns list", campaigns_path %></li>
+                                      <% end %>
 								</ul>
 							</li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 									<span class="CurrentInspection">
-										current inspection</span>
+										Inspections</span>
 									<b class="caret"></b>
 								</a>
 								<ul class="dropdown-menu">
@@ -46,6 +70,7 @@
                                         <li>
                                             <%= link_to "Create an inspection", new_inspection_path %>
                                         </li>
+
                                     <% end %>
 								</ul>
 							<li>

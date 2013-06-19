@@ -7,7 +7,10 @@ gem 'bcrypt-ruby', '3.0.1'
 gem 'cancan', '1.6.9'
 gem 'rolify', '3.2.0'
 gem 'thin', '1.5.1'
+gem 'roo' #it should include spreadsheet gem?
+
 # Bundle edge Rails instead:
+
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 

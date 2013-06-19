@@ -1,3 +1,3 @@
 $("#MessageContainer").append("<%= j render partial: 'chat_messages/chat_message', collection: @chat_messages, as: :chat_message, locals: {inspection: @inspection }  %>");
-ChatPoller.poll();
+Poller.poll();
 
