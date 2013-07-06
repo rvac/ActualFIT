@@ -1,7 +1,7 @@
 <div class="row-fluid">
-     <% if (current_user.has_role? :admin) || (current_user.has_role? :supervisor) %>
-        <%= render partial: 'users/user', collection: @users, as: :user %>
-     <% else %>
-        You are just a user (( sorry
-     <% end %>
+  <div class="span12">
+  <ul class="UserList" style="list-style: none;" >
+    <%= render partial: 'users/user', collection: @users, as: :user, spacer_template: 'users/user_divider' %>
+  </ul>
+  </div>
 </div>

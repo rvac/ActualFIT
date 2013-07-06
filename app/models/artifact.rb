@@ -36,7 +36,9 @@ class Artifact < ActiveRecord::Base
     self.file = incoming_file.read
     incoming_file.rewind
   end
-
+  #def initialize(attributes = nil, options = {})
+  #  self.initialize(attributes, options)
+  #end
   private
   def sanitize_filename(filename)
     just_filename = File.basename(filename)

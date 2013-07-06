@@ -7,11 +7,40 @@
 				<nav>
 					<ul class="nav pull-right">
 						<li><%= link_to "Home", root_path %></li>
-						
+
 						<% if signed_in? %>
 							<li><%= link_to "Users", users_path %></li>
-                            <li><%= link_to current_user.roles.first.name, '#' %></li>
-							<li class="dropdown">
+
+                            <% if current_user.roles.any? %>
+                                <li><%= link_to current_user.roles.first.name, '#' %></li>
+                            <% end %>
+
+                            <% campaigns = Campaign.all %>
+                            <% if campaigns.any? || (can? :create, Campaign) %>
+                              <li class="dropdown">
+                                <a href='#' class="dropdown-toggle" data-toggle="dropdown">
+                                  Campaigns <b class="caret"></b>
+                                </a>
+
+                                <ul class="dropdown-menu">
+                                  <% campaigns.each do |c| %>
+                                      <% if can? :read, c %>
+                                          <li><%= link_to c.name, c %></li>
+                                      <% end %>
+                                  <% end %>
+
+                                  <% if can? :create, Campaign %>
+                                      <li class="divider"></li>
+                                      <li>
+                                      <%= link_to "Create a campaign", new_campaign_path %>
+                                      </li>
+                                      <li class="divider"></li>
+                                      <li><%= link_to "Campaigns list", campaigns_path %></li>
+                                  <% end %>
+                                </ul>
+                              </li>
+                            <% end %>
+                          <li class="dropdown">
 								<a href='#' class="dropdown-toggle" data-toggle="dropdown">
 									<%= current_user.name %> <b class="caret"></b>
 								</a>
@@ -25,55 +54,37 @@
 									</li>
 								</ul>
 							</li>
-                          <li class="dropdown">
-								<a href='#' class="dropdown-toggle" data-toggle="dropdown">
-									Campaigns <b class="caret"></b>
-								</a>
-								<ul class="dropdown-menu">
-                                      <% campaigns = Campaign.all %>
-                                      <% if campaigns.any? %>
-                                          <% campaigns.each do |c| %>
-                                              <% if can? :read, c %>
-                                                  <li><%= link_to c.name, c %></li>
-                                              <% end %>
-                                          <% end %>
-                                      <% end %>
 
-                                      <% if can? :create, Campaign %>
-                                          <li class="divider"></li>
-                                          <li>
-                                            <%= link_to "Create a campaign", new_campaign_path %>
-                                          </li>
-                                          <li class="divider"></li>
-                                          <li><%= link_to "Campaigns list", campaigns_path %></li>
-                                      <% end %>
-								</ul>
-							</li>
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+
+                            <% if (current_user.has_role? :admin, :any) || (current_user.has_role? :supervisor, :any )%>
+                                <%  inspections = Inspection.all %>
+                              <% else %>
+                                <% inspections = current_user.inspections %>
+                            <% end %>
+                            <% if inspections.any? || ( can? :create, Inspection)%>
+                              <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 									<span class="CurrentInspection">
 										Inspections</span>
-									<b class="caret"></b>
-								</a>
-								<ul class="dropdown-menu">
-                                    <% inspections = Inspection.all %>
-                                    <% if inspections.any? %>
-									<% inspections.each do |insp| %>
-										<% if can? :read, insp %>
-                                            <li><%= link_to insp.name, insp %></li>
+                                  <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <% inspections.each do |insp| %>
+                                            <% if can? :read, insp %>
+                                                <li><%= link_to insp.name, insp %></li>
+                                            <% end %>
                                         <% end %>
-									<% end %>
-									<% end %>
 
                                     <% if can? :create, Inspection %>
-                                        <li class="divider"></li>
-                                        <li>
-                                            <%= link_to "Create an inspection", new_inspection_path %>
-                                        </li>
+                                      <li class="divider"></li>
+                                      <li>
+                                      <%= link_to "Create an inspection", new_inspection_path %>
+                                      </li>
 
                                     <% end %>
-								</ul>
-							<li>
+                                </ul>
+                              <li>
+                            <% end %>
 
 						<% else %>
 							<li><%= link_to "Sign in", signin_path %></li>

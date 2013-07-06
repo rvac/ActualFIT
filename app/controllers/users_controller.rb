@@ -8,7 +8,14 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.all
+    if ((current_user.has_role? :supervisor) || ( current_user.has_role? :admin ))
+      @users = User.all
+    elsif !current_inspection.nil?
+      @users = current_inspection.users
+    else
+      @users = [] # think of something smart. What happen if there are several inspections or no inspections at all
+    end
+
   end
 	def show
 		@user = User.find(params[:id])

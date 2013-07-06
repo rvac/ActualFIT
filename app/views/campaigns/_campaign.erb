@@ -9,13 +9,29 @@
                 <%= content_tag :div, class: "well well-small Artifact" do -%>
                     <%= content_tag :div, class: "row-fluid ArtifactBody" do -%>
                         <%= content_tag(:strong, insp.name, class:"ArtifactName") %>
+                        <ul style="list-style: none">
+                          <li>
+                            <% insp.users.each do |u| %>
+                              <%= content_tag(:span, u.name) %>
+                              <ul>
+                                <%  u.roles.where(resource_id: insp.id, resource_type: insp.class.to_s).each do |r| %>
+                                    <li><%= content_tag(:span, r.name) %></li>
+                                <% end %>
+
+                              </ul>
+                            <% end %>
+                          </li>
+                        </ul>
                     <% end -%>
                 <% end -%>
             <% end -%>
         <% end -%>
         <% end -%>
     <% end %>
+
+
+
     </ul>
 <% else %>
-    <strong>The campaign has not inspections</strong><a href='#'>Create inspection</a>
+    <strong>The campaign does not have any inspection</strong><a href='#'>Create inspection</a>
 <% end %>

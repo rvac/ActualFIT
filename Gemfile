@@ -21,6 +21,13 @@ end
 
 group :test, :development do
 	gem 'rspec-rails', '2.13.0'
+  gem 'factory_girl_rails', '~> 4.2.1'
+end
+
+group :test do
+  gem 'faker', '~> 1.1.2'
+  gem 'capybara', '~> 2.0.2'
+  gem 'launchy', '~> 2.2.0'
 end 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -36,11 +43,6 @@ end
 
 gem 'jquery-rails', '2.2.1'
 
-group :test do
-	# gem 'webrat', '0.7.3'
-	gem 'capybara', '2.0.2'
-	gem 'factory_girl_rails', '4.2.1'
-end
 
 group :production do
 	gem 'pg', '0.14.1'

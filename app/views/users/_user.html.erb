@@ -1,15 +1,39 @@
-<div class="row-fluid">
-  <h3><%= user.name %></h3>
-  <strong><%= user.email %></strong>
-  <% if user.roles.any? %>
-    <h3>Roles:</h3>
-    <% user.roles.each do |r| %>
-        <strong><%= r.name %></strong>
-        <% if !r.resource_type.nil? %>
-            <%= Inspection.find(r.resource_id).name %>
-        <% else %>
-            <span>Everywhere</span>
-        <% end %>
-    <% end %>
-  <% end %>
-</div>
+<%= content_tag :li do -%>
+    <%= content_tag :div, class: "ArtifactResposible" do -%>
+        <%= content_tag :div, class: "row-fluid Responsible" do -%>
+            <%= content_tag :div, class: "span4" do -%>
+                <% image_tag 'profile-pics/av-8714.jpg', style: "padding: 5px;" %>
+            <% end -%>
+            <%= content_tag :div, class: "span8" do -%>
+                <%= content_tag :h4 do -%>
+                    <%= user.name %>
+                    <%= link_to user.email, user_path(user) %>
+                <% end -%>
+                    <% if user.roles.any? %>
+
+                            <%= content_tag :h5, 'Roles' %>
+                            <%= content_tag :ul, style: "list-style: none;" do -%>
+
+                                <% user.roles.each do |r| %>
+                                    <%= content_tag :li do -%>
+                                        <%= r.name %>
+                                        <% if ( !r.resource_type.nil? && !r.resource_id.nil? ) %>
+                                            <% object = r.resource_type.constantize.find(r.resource_id) %>
+                                            <%= "#{r.resource_type} #{object.name}" if !object.nil? %>
+                                        <% else %>
+                                            Everywhere
+                                        <% end %>
+                                    <% end -%>
+                                <% end %>
+                            <% end -%>
+
+                    <% else %>
+
+                            <%= content_tag :span, 'Unfortunately, user has no assigned roles', class: 'label label-warning' %>
+
+                    <% end %>
+
+            <% end -%>
+        <% end -%>
+    <% end -%>
+<% end -%>

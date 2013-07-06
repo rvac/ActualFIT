@@ -8,18 +8,24 @@ class InspectionsController < ApplicationController
     #authorize! :create, @inspection
 	end
 
+  def download_artifacts
+    @inspection = Inspection.find(params[:id])
+    @inspection.artifacts.each do |a|
+      send_data a.file, filename: a.filename,
+                type: a.content_type
+    end
 
+  end
 
 	def show
 		@inspection = Inspection.find(params[:id])
     self.current_inspection= @inspection
-    r = @inspection.remarks
 		store_location
 	end
 
 	def create
 
-    @inspection.active!
+
 		if @inspection.save
 			flash[:success] = "inspection #{@inspection.name} created"
 			redirect_to root_url

@@ -1,4 +1,5 @@
 $("#RemarksTable").html("<%= j render partial: 'remarks/remark', collection: @inspection.remarks, as: :remark, locals: {inspection: @inspection }  %>");
+$(".RemarkTypeBox").val('');
 $(".ACTR").hover(function(){
     var ap = $(this).children(".ACTC").children(".ACTRActionPanel");
     var rHeight = $(this).css("height");

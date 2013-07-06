@@ -29,7 +29,7 @@
                 <div class="row-fluid">
                   <%= c.name %>
                   <%= select_tag "inspectionID[#{c.id}]", options_from_collection_for_select(c.inspections,
-                                                                                             'id', 'name', c.inspections.first.id), style: "padding: 0px;" %>
+                                                                                             'id', 'name'), style: "padding: 0px;" %>
 
                   <%= select_tag "role[#{c.id}]", options_for_select(Role.possible_roles), style: "padding: 0px;" %>
                 </div>

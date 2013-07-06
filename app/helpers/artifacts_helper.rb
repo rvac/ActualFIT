@@ -23,6 +23,9 @@ module ArtifactsHelper
 	end
 
 	def artifact_icon(artifact)
+    if artifact.nil?
+      return ""
+    end
 		if artifact.filename[/\.((docx)|(doc))\z/i]
 			return image_tag('Free-file-icons-master/32px/doc.png', alt:"text-file", class: "ArtifactIcon")
 		end
