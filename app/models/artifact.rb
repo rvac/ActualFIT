@@ -11,34 +11,37 @@
 #  updated_at    :datetime         not null
 #  filename      :string(255)
 #  content_type  :string(255)
+#  user_id       :integer
 #
 
 class Artifact < ActiveRecord::Base
   resourcify
-  attr_accessible :comment, :inspection_id, :name
+  attr_accessible :comment, :name, :datafile
   belongs_to :inspection
-  has_many :remarks
-  
-  validates :inspection_id, presence: false
-  # validates :name, presence: true
+  belongs_to :user
+  has_many :remarks, :dependent => :destroy
+
+  validates :name, presence: true
   validates :file, presence: true
   validates :filename, presence: true
-  # validates :content_type, presence: true
+  validates :inspection_id, presence: true
+  validates :user_id, presence: true
+  validates :content_type, presence: true
 
+  before_validation { |artifact| if artifact.name.empty? then artifact.name = artifact.filename end }
 
-  # def uploaded_file=(incoming_file)
-  # 	self.filename = incoming_file.original_filename
-  # 	self.content_type = incoming_file.content_type
-  # 	self.file = incoming_file.read
-  # end
-
-  def filename=(new_filename)
-  	write_attribute :filename, sanitize_filename(new_filename)
+  def datafile=(incoming_file)
+    self.filename = sanitize_filename incoming_file.original_filename
+    self.content_type = incoming_file.content_type
+    self.file = incoming_file.read
+    incoming_file.rewind
   end
-
+  #def initialize(attributes = nil, options = {})
+  #  self.initialize(attributes, options)
+  #end
   private
-  	def sanitize_filename(filename)
-  		just_filename = File.basename(filename)
-  		just_filename.gsub(/[^\w\.\-]/, '_')
-  	end
+  def sanitize_filename(filename)
+    just_filename = File.basename(filename)
+    just_filename.gsub(/[^\w\.\-]/, '_')
+  end
 end

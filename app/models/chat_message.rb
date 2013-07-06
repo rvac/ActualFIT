@@ -12,7 +12,7 @@
 
 class ChatMessage < ActiveRecord::Base
   resourcify
-  attr_accessible :content, :user_id, :inspection_id
+  attr_accessible :content
   # add validation of the user id
   belongs_to :user
   belongs_to :inspection

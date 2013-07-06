@@ -2,13 +2,14 @@
 #
 # Table name: users
 #
-#  id              :integer          not null, primary key
-#  name            :string(255)
-#  email           :string(255)
-#  password_digest :string(255)
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  remember_token  :string(255)
+#  id                 :integer          not null, primary key
+#  name               :string(255)
+#  email              :string(255)
+#  password_digest    :string(255)
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  remember_token     :string(255)
+#  inspection_team_id :integer
 #
 
 class User < ActiveRecord::Base
@@ -16,10 +17,12 @@ class User < ActiveRecord::Base
 
 	attr_accessible :email, :name, :password, :password_confirmation
 	has_secure_password
-	has_many :chat_messages
-	has_many :inspection_teams
-	has_many :remarks
-	
+	has_many :chat_messages, :dependent => :destroy
+  has_many :participations, :dependent => :destroy
+  has_many :inspections, :through => :participations
+	has_many :remarks, :dependent => :destroy
+  has_many :artifacts, :dependent => :destroy
+
 	before_save { email.downcase! }
 	before_save :create_remember_token
 
@@ -32,7 +35,10 @@ class User < ActiveRecord::Base
 	validates :password, presence: true, length: { minimum: 6 }
 	validates :password_confirmation, presence: true
 
-
+  #def name
+  #  "#{} #{}"
+  #end
+  #
   private
 		def create_remember_token
 		  #create the token here

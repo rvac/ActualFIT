@@ -15,10 +15,16 @@
 				</tr>
 			</thead>
 			<tbody>
+<<<<<<< HEAD
 				<% if current_inspection.remarks.any?%>
 				<% current_inspection.remarks.each do |r| %>
 					<tr>
 
+=======
+				<% if inspection.remarks.any?%>
+				<% inspection.remarks.each do |r| %>
+					<tr  class="ACTR">
+>>>>>>> authorization-and-roles
 					  	<td>
 					  		<%= r.location %>
 					  	</td>
@@ -28,6 +34,7 @@
 					  	<td>
 					  		<%= r.remark_type %>
 					  	</td>
+<<<<<<< HEAD
 					  	<td>
                           <div class="ACTR">
                           <div class="ACTC">
@@ -36,6 +43,16 @@
 					  		<%= remarksActionPanel r %>
                           </div>
                           </div>
+=======
+					  	<td  class="ACTC">
+
+                              <%  author =  User.find(r.user_id) %>
+                              <%= author.name %>
+                              <% if can? :destroy, r %>
+                                <%= remarksActionPanel r %>
+                              <% end %>
+
+>>>>>>> authorization-and-roles
 					  	</td>
 
 					</tr>
@@ -44,15 +61,16 @@
 			</tbody>
 		</table>
 	</div>
-	<div class="input-append row-fluid">	
-			<%= form_for current_user.remarks.build, remote: true do |f| %>
-				<%= f.text_field :location, class: "span2", id: "appendedInputButton" %>
-				<%= f.text_field :content, class: "span6", id: "appendedInputButton" %>
-				
+    <% if can? :create, Remark %>
+        <div class="input-append row-fluid">
+                <%= form_for current_user.remarks.build, remote: true do |f| %>
+                    <%= f.text_field :location, class: "span2", id: "appendedInputButton" %>
+                    <%= f.text_field :content, class: "span6", id: "appendedInputButton" %>
 
-				<%= f.text_field :remark_type, class: "span2", id: "appendedInputButton" %>
-				<%= f.hidden_field :inspection_id, {value: current_inspection.id} %>
-				<%= f.submit "Submit", class: "btn" %>
-			<% end %>
-	</div>
+
+                    <%= f.text_field :remark_type, class: "span2", id: "appendedInputButton" %>
+                    <%= f.submit "Submit", class: "btn" %>
+                <% end %>
+        </div>
+    <% end %>
 </div>

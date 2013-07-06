@@ -3,10 +3,14 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.12'
 gem 'bootstrap-sass', '2.3'
 gem 'bcrypt-ruby', '3.0.1'
-gem 'strong_parameters' , '0.2.0'
+#gem 'strong_parameters' , '0.2.0'
 gem 'cancan', '1.6.9'
-gem 'rolify'
+gem 'rolify', '3.2.0'
+gem 'thin', '1.5.1'
+gem 'roo' #it should include spreadsheet gem?
+
 # Bundle edge Rails instead:
+
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 
@@ -17,6 +21,13 @@ end
 
 group :test, :development do
 	gem 'rspec-rails', '2.13.0'
+  gem 'factory_girl_rails', '~> 4.2.1'
+end
+
+group :test do
+  gem 'faker', '~> 1.1.2'
+  gem 'capybara', '~> 2.0.2'
+  gem 'launchy', '~> 2.2.0'
 end 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -32,11 +43,6 @@ end
 
 gem 'jquery-rails', '2.2.1'
 
-group :test do
-	# gem 'webrat', '0.7.3'
-	gem 'capybara', '2.0.2'
-	gem 'factory_girl_rails', '4.2.1'
-end
 
 group :production do
 	gem 'pg', '0.14.1'

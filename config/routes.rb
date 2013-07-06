@@ -3,19 +3,20 @@ ActualFIT::Application.routes.draw do
 
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
-  resources :chat_messages, only: [:create, :destroy]
-  resources :artifacts
-  resources :inspections
-  resources :inspection_teams
-  resources :remarks
-  
+  resources :inspections do
+    get 'download_artifacts', on: :member
+    resources :artifacts
+    resources :remarks
+    resources :chat_messages, only: [:index, :create]
+  end
+  resources :campaigns
   root to: 'main_page#home'
   match '/new_inspection', to: 'inspections#new'
-  
+  match '/new_campaign', to: 'campaigns#new'
   match '/signup', to: 'users#new'
   match '/signin', to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
-  match '/upload_file', to: 'artifacts#new'
+  #match '/upload_file', to: 'artifacts#new'
   # get "artifacts/artifacts"
 
   # get "chat/chat"

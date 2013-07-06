@@ -1,16 +1,16 @@
 # == Schema Information
 #
-# Table name: inspection_teams
+# Table name: campaigns
 #
 #  id         :integer          not null, primary key
 #  name       :string(255)
-#  user_id    :integer
+#  comment    :string(255)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 
 require 'spec_helper'
 
-describe InspectionTeam do
+describe Campaign do
   pending "add some examples to (or delete) #{__FILE__}"
 end

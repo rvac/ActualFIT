@@ -1,0 +1,40 @@
+
+
+        <%  if @user.inspections.any?    %>
+            <h3>Your teams and roles</h3>
+            <% @user.inspections.each do |i| %>
+                <div class="row-fluid">
+                  <%= i.name %>:  obtain role from participation, to make my life easier
+                </div>
+            <% end %>
+        <% end %>
+        <h3>Temporary solution, shows roles</h3>
+        <% if @user.roles.any? %>
+
+            <% @user.roles.each do |r| %>
+                <div class="row-fluid">
+                  <span><strong><%= r.name %></strong></span>
+                  <span><%= r.resource_type %></span>
+                  <span><%= r.resource_id %></span>
+                </div>
+
+            <% end %>
+        <% end %>
+
+        <h3>New teams and roles</h3>
+        <%  if @campaigns.any?    %>
+
+
+            <% @campaigns.each do |c| %>
+                <div class="row-fluid">
+                  <%= c.name %>
+                  <%= select_tag "inspectionID[#{c.id}]", options_from_collection_for_select(c.inspections,
+                                                                                             'id', 'name'), style: "padding: 0px;" %>
+
+                  <%= select_tag "role[#{c.id}]", options_for_select(Role.possible_roles), style: "padding: 0px;" %>
+                </div>
+
+
+            <% end %>
+        <% end %>
+

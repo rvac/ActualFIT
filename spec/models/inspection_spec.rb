@@ -8,6 +8,8 @@
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  inspection_team_id :integer
+#  campaign_id        :integer
+#  status             :string(255)
 #
 
 require 'spec_helper'

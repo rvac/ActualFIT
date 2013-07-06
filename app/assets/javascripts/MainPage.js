@@ -40,8 +40,16 @@ function fadeOutContent(content){
 	//insert check that the variable is div. Better if it is a proper div
 	content.fadeOut("slow");
 };
+//function refreshPartial() {
+//    $.ajax({url: "inspections/refresh_chat"});
+//};
 $(document).ready(function(){
-	
+
+        // will call refreshPartial every 3 seconds
+
+
+//    setInterval(refreshPartial, 3000);
+
 	var propsTimeout;
 	var ChatShown = true;
 	$("div.ArtifactBody").click(function(){

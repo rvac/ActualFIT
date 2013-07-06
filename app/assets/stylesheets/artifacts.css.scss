@@ -130,44 +130,7 @@
 	margin: 10px 0px 0px 0px;
 }
 
-.chevron-fletching{
-	position: absolute;
-	left:0px;
-	top: 0px;
-	width:0;
-	height: 0;
-	border-top: 15px solid green;
-	border-bottom: 15px solid green;
-	border-left: 15px solid transparent;
-	
-}
-.chevron-body{
-	position: absolute;
-	left:15px;
-	top: 0px;
-	width:80px;
-	height: 30px;
-	background-color: green;
 
-	text-align: center;
-	/*line-height: 30px;*/
-}
-.chevron-head{
-	position: absolute;
-	left:95px;
-	top: 0px;
-	width:0;
-	height: 0;
-	border-top: 15px solid transparent;
-	border-bottom: 15px solid transparent;
-	border-left: 15px solid green;
-	
-}
-.chevron{
-	position: relative;
-	color: white;
-	/*border:1px solid black;*/
-}
 
 .ArtifactComments{
 
@@ -197,11 +160,12 @@
 }
 /*ACTR stands for Artifact Comments Table's Row*/
 .ACTR{
-
+    height: 100%;
 }
 /*ACTR stands for Artifact Comments Table's Cell*/
 .ACTC{
 	position: relative;
+    //height: 100%;
 	
 }
 .ACTRActionPanel{
@@ -218,16 +182,14 @@
 
 }
 .ArtifactResposible{
-	position: absolute;
-	left:200px;
-	top: 0px;
-	width: 300px;
+
 	z-index: 1;
 	background-color: rgba(40,29,35,0.9);
 	color:white;
 	max-height: 430px;
+    max-width: 430px;
 	overflow-y:hidden;
-	border-radius: 0px 5px 5px 0px;
+	//border-radius: 0px 5px 5px 0px;
 }
 
 .ArtifactsPanel{
@@ -240,7 +202,7 @@
 /*	padding: 0px 0px 2px 2px;*/
 	/*border: 2px solid transparent;*/
 	/*max-height: */
-	border-radius: 2px 2px 2px 2px;
+
 }
 
 .Responsible:hover{
@@ -258,7 +220,7 @@
 	color:orange;
 }
 .InspectionSelected{
-	max-height: 500px;
+	min-height: 600px;
 
 }
 

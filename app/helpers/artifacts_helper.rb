@@ -2,18 +2,30 @@ module ArtifactsHelper
 	def artifactActionPanel(artifact)
 		
 		actionPanel_content = '<div class="ArtifactActionPanel">'
+
+    if can? :edit, artifact
 		actionPanel_content << link_to(image_tag('icon_32/pencil_32.png', alt:"edit"), 
-			edit_artifact_path(artifact), class: "ActionElement")										
+			edit_artifact_path(artifact), class: "ActionElement")
+    end
+
+    if can? :read, artifact
 		actionPanel_content << link_to(image_tag('icon_32/save_32.png', alt:"save on disk"), 
-			artifact, class: "ActionElement")										
+			artifact, class: "ActionElement")
+    end
+
+    if can? :destroy, artifact
 		actionPanel_content << link_to(image_tag('icon_32/delete_32.png', alt:"delete"), 
-			artifact, confirm: "Are you sure?", method: :delete, class: "ActionElement")	
+			artifact, confirm: "Are you sure?", method: :delete, class: "ActionElement")
+    end
 		actionPanel_content << '</div>'
 
 		actionPanel_content.html_safe
 	end
 
 	def artifact_icon(artifact)
+    if artifact.nil?
+      return ""
+    end
 		if artifact.filename[/\.((docx)|(doc))\z/i]
 			return image_tag('Free-file-icons-master/32px/doc.png', alt:"text-file", class: "ArtifactIcon")
 		end
