@@ -8,6 +8,17 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
+
+# == Schema Information
+#
+# Table name: campaigns
+#
+#  id         :integer          not null, primary key
+#  name       :string(255)
+#  comment    :string(255)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
 require 'fileutils'
 
 class Campaign < ActiveRecord::Base

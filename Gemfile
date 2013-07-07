@@ -28,6 +28,7 @@ group :test do
   gem 'faker', '~> 1.1.2'
   gem 'capybara', '~> 2.0.2'
   gem 'launchy', '~> 2.2.0'
+  gem 'guard-rspec'
 end 
 # Gems used only for assets and not required
 # in production environments by default.

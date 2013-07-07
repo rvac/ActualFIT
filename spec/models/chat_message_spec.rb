@@ -13,5 +13,22 @@
 require 'spec_helper'
 
 describe ChatMessage do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "is valid when" do
+    it "factory is valid" do
+      expect(build(:message)).to be_valid
+    end
+  end
+
+  describe "is invalid when" do
+    it "does not belong to a user" do
+      expect(build(:message, user_id: nil)).to_not be_valid
+    end
+    it "has no content" do
+      expect(build(:message, content: nil)).to_not be_valid
+    end
+    it "does not belong to an inspection" do
+      expect(build(:message, inspection_id: nil)).to_not be_valid
+    end
+
+  end
 end

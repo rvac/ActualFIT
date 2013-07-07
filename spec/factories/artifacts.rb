@@ -14,14 +14,14 @@
 #  user_id       :integer
 #
 
-require 'spec_helper'
+FactoryGirl.define do
+  factory :artifact do
 
-describe Artifact do
-  it "is valid with a name, file, user_id, inspection id, filename and content_type"
-  it "is invalid without a name"
-  it "is invalid without a file"
-  it "is invalid without a filename"
-  it "is invalid without a user_id"
-  it "is invalid without a inspection_id"
-  it "is invalid without a content_type"
+    association :user
+    association :inspection
+
+
+    sequence(:name) {|n| "artifact #{n}"}
+    sequence(:comment) {|n| "Comment for artifact #{n}"}
+  end
 end
