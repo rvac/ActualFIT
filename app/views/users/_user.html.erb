@@ -6,7 +6,11 @@
             <% end -%>
             <%= content_tag :div, class: "span8" do -%>
                 <%= content_tag :h4 do -%>
-                    <%= user.name %>
+                    <% if can? :edit, user %>
+                        <%= link_to user.name, edit_user_path(user) %>
+                    <% else %>
+                        <%= user.name %>
+                    <% end %>
                     <%= link_to user.email, user_path(user) %>
                 <% end -%>
                     <% if user.roles.any? %>

@@ -6,7 +6,10 @@
     alias_action :create, :read, :edit, :update, :destroy, to: :crud
     user ||= User.new   #for guest users
     can :read, :all
+    #can :crud, :all
 
+    #everyone who enrolled into inspection can dowload artifacts by batch
+    can :download_artifacts, Inspection, id: Inspection.with_role(:any, user).map(&:id)
     if user.has_role? :admin
       can :manage, :all
     end
@@ -30,6 +33,11 @@
     can :create, ChatMessage, inspection_id: Inspection.with_role(:inspector, user).map(&:id)
     can :create, ChatMessage, inspection_id: Inspection.with_role(:author, user).map(&:id)
     can :create, ChatMessage, inspection_id: Inspection.with_role(:moderator, user).map(&:id)
+
+
+    can :upload_remarks, Inspection, id: Inspection.with_role(:moderator, user).map(&:id)
+    can :upload_remarks, Inspection, id: Inspection.with_role(:inspector, user).map(&:id)
+
 
     #Managing deadlines
     can :crud, Deadline, inspection_id: Inspection.with_role(:moderator, user).map(&:id)

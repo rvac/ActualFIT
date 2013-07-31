@@ -22,6 +22,6 @@ FactoryGirl.define do
 
 
     sequence(:name) {|n| "artifact #{n}"}
-    sequence(:comment) {|n| "Comment for artifact #{n}"}
+    comment { Faker::Lorem.sentence(Random.rand(0..5)).chomp('.') }
   end
 end

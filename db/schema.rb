@@ -78,8 +78,8 @@ ActiveRecord::Schema.define(:version => 20130706211201) do
     t.integer  "user_id"
     t.integer  "inspection_id"
     t.string   "remark_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.integer  "artifact_id"
   end
 

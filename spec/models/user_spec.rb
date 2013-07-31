@@ -17,7 +17,21 @@ describe User do
   it "is valid with a name, email and password" do
     expect(create(:user)).to be_valid
   end
-
+  #it "creates valid admin" do
+  #  expect(create(:admin)).to be_valid
+  #end
+  #it "creates valid author" do
+  #  expect(create(:author)).to be_valid
+  #end
+  #it "creates valid supervisor" do
+  #  expect(create(:supervisor)).to be_valid
+  #end
+  #it "creates valid moderator" do
+  #  expect(create(:moderator)).to be_valid
+  #end
+  #it "creates valid inspector" do
+  #  expect(create(:inspector)).to be_valid
+  #end
   describe "is invalid when"  do
     let(:user) {build(:user)}
 

@@ -5,7 +5,10 @@ FactoryGirl.define do
 
     status "active"
     sequence(:name) {|n| "Inspection #{n}"}
-    sequence(:comment) {|n| "Comment for inspection #{n}"}
+    comment { Faker::Lorem.sentence(Random.rand(0..2)).chomp('.') }
 
+    factory :invalid_inspection do
+      name nil
+    end
   end
 end

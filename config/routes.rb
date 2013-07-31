@@ -5,6 +5,8 @@ ActualFIT::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :inspections do
     get 'download_artifacts', on: :member
+    get 'upload_remarks', on: :member
+    post 'upload_remarks', on: :member
     resources :artifacts
     resources :remarks
     resources :chat_messages, only: [:index, :create]

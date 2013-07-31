@@ -1,0 +1,45 @@
+<div class="row-fluid">
+    <div class="span6 offset3">
+      <%= content_tag :h2, @inspection.name %>
+      <% if @inspection.users.any? %>
+          <%= content_tag :h3, "Inspection participants" %>
+          <% @inspection.users.each do |u| %>
+          <%= content_tag(:span, u.name) %>
+
+          <ul>
+            <%  u.roles.where(resource_id: @inspection.id, resource_type: @inspection.class.to_s).each do |r| %>
+                <li><%= content_tag(:span, r.name) %></li>
+            <% end %>
+
+          </ul>
+        <% end %>
+    <% else %>
+      <strong>There is no users for the inspection right now, add some users</strong>
+      <% users = User.all %>
+      <% if users.any? %>
+
+          <% users.each do |u| %>
+              <%= content_tag(:span, u.name) %>
+
+              <ul>
+                <%  u.roles.where(resource_id: @inspection.id, resource_type: @inspection.class.to_s).each do |r| %>
+                    <li><%= content_tag(:span, r.name) %></li>
+                <% end %>
+                <stong>Add a role</stong>
+                <ul style="list-style-type: none" >
+                  <% [:inspector, :moderator, :author, :scribe].each do |r| %>
+                      <li>
+                        <%= link_to "make #{r.to_s}", '#', class: "AttachRoleToUserLink" if can? :update, u%>
+                      </li>
+                <% end %>
+                </ul>
+              </ul>
+          <% end %>
+      <% else %>
+        <strong>No users were found, even you do not exist. Something wierd has just happen. Security breach</strong>
+      <% end %>
+
+      <% end %>
+
+    </div>
+</div>

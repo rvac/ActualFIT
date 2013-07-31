@@ -1,0 +1,10 @@
+<div class="row-fluid">
+  <div class="span6 offset3">
+    <h1>Upload remarks for inspection here</h1>
+    <%= form_tag 'upload_remarks', multipart: true do %>
+        <label for="file">Remarks to upload</label>
+        <%= file_field_tag :remarks_file %>
+        <%= submit_tag %>
+    <% end %>
+  </div>
+</div>

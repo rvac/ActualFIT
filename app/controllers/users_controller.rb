@@ -7,15 +7,19 @@ class UsersController < ApplicationController
 		@user = User.new
   end
 
-  def index
-    if ((current_user.has_role? :supervisor) || ( current_user.has_role? :admin ))
-      @users = User.all
-    elsif !current_inspection.nil?
-      @users = current_inspection.users
-    else
-      @users = [] # think of something smart. What happen if there are several inspections or no inspections at all
-    end
+  def destroy
 
+  end
+  def index
+    if !current_user.nil?
+      if ((current_user.has_role? :supervisor) || ( current_user.has_role? :admin ))
+        @users = User.all
+      elsif !current_inspection.nil?
+        @users = current_inspection.users
+      else
+        @users = [] # think of something smart. What happen if there are several inspections or no inspections at all
+      end
+    end
   end
 	def show
 		@user = User.find(params[:id])
@@ -33,11 +37,10 @@ class UsersController < ApplicationController
 		if @user.save
 	    	sign_in @user
 			flash[:success] = "Welcome aboard!"
-			redirect_to root_url
-			# redirect_to current_user(@user)
+			#redirect_to root_url
+			redirect_to user_path(@user)
 
 		else
-
 			render 'new'
 		end
 	end
@@ -91,17 +94,7 @@ class UsersController < ApplicationController
 
 		def correct_user
 		@user = User.find(params[:id])
-		redirect_to (root_path) unless current_user?(@user)
+    redirect_to (root_path) unless (current_user?(@user) || current_user.has_role?(:admin) || current_user.has_role?(:supervisor))
 
-		end
-
-		def admin?
-			!/(admin)/.match(@user.role).nil?
-		end
-		def moderator?
-			!/(moderator)/.match(@user.role).nil?
-		end
-		def author?
-			!/(author)/.match(@user.role).nil?
 		end
 end

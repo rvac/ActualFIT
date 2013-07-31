@@ -17,6 +17,22 @@ class InspectionsController < ApplicationController
 
   end
 
+  def upload_remarks
+    if request.post?
+      @inspection = Inspection.find(params[:id])
+
+      if Remark.parse_excel( params[:remarks_file], @inspection )
+        flash.now[:success] = "Remarks were successfully uploaded"
+        redirect_back_or @inspection
+      else
+        flash.now[:error] = "Can not upload #{}"
+        render 'upload_remarks'
+      end
+    else
+      #handle get. I.e. do nothing for now
+    end
+  end
+
 	def show
 		@inspection = Inspection.find(params[:id])
     self.current_inspection= @inspection
@@ -46,4 +62,14 @@ class InspectionsController < ApplicationController
     #remove a roles connected to inspections when deleted
   end
 
+
+  def edit
+    @inspection = Inspection.find(params[:id])
+
+  end
+
+  def update
+    @inspection = Inspection.find(params[:id])
+    @inspection.update_attributes(params[:inspection])
+  end
 end
