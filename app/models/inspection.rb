@@ -23,14 +23,15 @@ class Inspection < ActiveRecord::Base
   #has_many :deadlines, :dependent => :destroy
   after_create :active!
   validates :name, presence: true
-  VALID_STATUS_REGEX = /\A(active)|(archived)\z/i
+  # status can be only lowecased
+  VALID_STATUS_REGEX = /\A(active)|(archived)|(preparation)|(inspection)|(rework)|(finished)|(closed)\z/
 
   validates :status, presence: true,
             format: {with: VALID_STATUS_REGEX}
 
 
   def active?
-    self.status == 'active'
+    !((self.status == 'archived') || (self.status == 'closed'))
   end
 
   def active!
@@ -38,7 +39,7 @@ class Inspection < ActiveRecord::Base
   end
   def archived?
     self.status == 'archived'
-    end
+  end
 
 
 end

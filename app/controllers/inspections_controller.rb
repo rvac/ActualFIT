@@ -75,7 +75,26 @@ class InspectionsController < ApplicationController
     @inspection = Inspection.find(params[:id])
 
   end
+  def change_status
+    @inspection = Inspection.find(params[:id])
+    if !current_user.nil?
+      #we don't think here about roles, they are controlled in abilities,
+      # moderator can not use this action when status in 'archived' or 'closed'
 
+      if current_user.has_role(:moderator, Inspection) && (params[:status] != 'archived') && (params[:status] != 'closed')
+        @inspectio.status = params[:status]
+      else
+        @ispection.status = params[:status]
+      end
+
+      if @inspection.save
+        flash.now[:success] = "Inspection status is now #{@inspection.status}"
+        #redirect_to root_url
+      else
+        flash[:error] = "Can not change inspection status, sorry!"
+      end
+    end
+  end
   def update
     @inspection = Inspection.find(params[:id])
     @inspection.update_attributes(params[:inspection])
