@@ -32,7 +32,7 @@ describe UsersController do
     end
     describe "DELETE #destoy" do
       it "requires login" do
-        #user = create(:user)
+        user = create(:user)
         delete :destroy, id: user.id
         expect(response).to redirect_to signin_url
       end
@@ -210,7 +210,7 @@ describe UsersController do
             end
             it "instance variable is the user itself" do
               put :update, id: @user.id, user: attributes_for(:user)
-              expect(session[:current_user]).to eq to @other_user
+              expect(session[:current_user]).to eq @other_user
               #should this be like this? may be it should, for security reasons
               expect(assigns(:user)).to eq @other_user
             end
@@ -219,17 +219,65 @@ describe UsersController do
       end
 
       describe "DELETE #destroy" do
-        context "modificator is" do
-          describe "admin" do
-            it "can destroy any ordinary user"
-            it "can not destroy a privileged user"
+        context "ordinary user tries to perform delete himself" do
+          it "does not remove the user" do
+            expect{
+              delete :destroy, id: @user.id
+            }.not_to change(User, :count)
           end
-          describe "supervisor" do
-            it "can destroy any ordinary user"
-            it "can destroy a privileged user"
+          it "redirects to the users profile" do
+            delete :destroy, id: @user.id
+            expect(response).to redirect_to user_path(@user)
           end
-          describe "ordinary user" do
-            it "can not destroy any user"
+          it "renders user#show after delete attempt" do
+            delete :destroy, id: @user.id
+            expect(response).to render_template :show
+          end
+        end
+        context "another user tries to edit a profile" do
+          context "the modificator is an admin or moderator" do
+            before :each do
+              @admin = create(:user)
+              @admin.add_role(:admin)
+              session[:current_user] = @admin
+              request.cookies[:remember_token] = @admin.remember_token
+            end
+            it "changes User count" do
+              expect{
+                delete :destroy, id: @user.id
+              }.to change(User, :count).by(-1)
+            end
+            it "redirects to a list of all users" do
+              delete :destroy, id: @user.id
+              expect(response).to redirect_to users_path
+            end
+            it "renders users#index after submission" do
+              delete :destroy, id: @user.id
+              expect(response).to render_template :index
+            end
+          end
+          context "the modificator is an ordinary user"  do
+            before :each do
+              @other_user = create(:user)
+              session[:current_user] = @other_user
+              request.cookies[:remember_token] = @other_user.remember_token
+            end
+
+            it "redirects to the modificators profile" do
+              delete :destroy, id: @user.id
+              expect(response).to redirect_to user_path(@other_user)
+            end
+            it "renders user#edit template" do
+              delete :destroy, id: @user.id
+              expect(response).to render_template :edit
+            end
+            it "does not change the user quantity" do
+              expect(session[:current_user]).to eq @other_user
+              #should this be like this? may be it should, for security reasons
+              expect{
+                delete :destroy, id: @user.id
+              }.not_to change(User, :count)
+            end
           end
         end
       end

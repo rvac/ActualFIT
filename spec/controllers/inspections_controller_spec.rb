@@ -62,7 +62,7 @@ describe InspectionsController do
       it "does not increase number of inspections by one" do
         expect{
           post :create, inspection: attributes_for(:inspection)
-        }.not_to change(Inspection, :count).by(1)
+        }.not_to change(Inspection, :count)
       end
     end
   end
@@ -90,7 +90,7 @@ describe InspectionsController do
     end
   context "regular user" do
       it "renders inspection#edit template" do
-        get :edit, id: @inspection
+        get :edit, id: @inspection.id
         expect(response).not_to be_success
       end
     end
@@ -144,7 +144,7 @@ describe InspectionsController do
       it 'does not delete the inspection' do
         expect{
           delete :destroy, id: @inspection.id
-        }.not_to change(Inspection, :count).by(-1)
+        }.not_to change(Inspection, :count)
       end
     end
   end
@@ -160,11 +160,11 @@ describe InspectionsController do
   end
   describe 'POST inspection#upload_remarks' do
      it "creates new remarks from file" do
-       post :upload_remarks
+       post :upload_remarks, id: @inspection.id
        expect(response).to be_success
      end
      it 'redirects to inspection#show' do
-       post :upload_remarks
+       post :upload_remarks, id: @inspection.id
        expect(response).to be_success
      end
   end

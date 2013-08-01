@@ -20,7 +20,7 @@ class Inspection < ActiveRecord::Base
   belongs_to :campaign
   has_many :participations, :dependent => :destroy
   has_many :users, :through => :participations
-  has_many :deadlines, :dependent => :destroy
+  #has_many :deadlines, :dependent => :destroy
   after_create :active!
   validates :name, presence: true
   VALID_STATUS_REGEX = /\A(active)|(archived)\z/i

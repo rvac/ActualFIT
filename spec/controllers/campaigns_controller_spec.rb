@@ -88,7 +88,7 @@ describe CampaignsController do
   describe 'DELETE destroy' do
     it 'deletes the campaign' do
       expect{
-        get :destroy, id: @campaign
+        delete :destroy, id: @campaign.id
       }.to change(Campaign, :count).by(-1)
     end
     it 'redirects to campaigns#index' do
