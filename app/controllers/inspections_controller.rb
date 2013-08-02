@@ -1,7 +1,7 @@
 class InspectionsController < ApplicationController
 	before_filter :signed_in_user
   load_and_authorize_resource
-
+  respond_to :html, :js
 
 	def new
 		@inspection = Inspection.new
@@ -82,17 +82,47 @@ class InspectionsController < ApplicationController
       # moderator can not use this action when status in 'archived' or 'closed'
 
       if current_user.has_role(:moderator, Inspection) && (params[:status] != 'archived') && (params[:status] != 'closed')
-        @inspectio.status = params[:status]
+        @inspection.status = params[:status]
       else
-        @ispection.status = params[:status]
+        @inspection.status = params[:status]
       end
 
       if @inspection.save
         flash.now[:success] = "Inspection status is now #{@inspection.status}"
-        #redirect_to root_url
+        respond_to do |format|
+          format.js  {}
+        end
+        #render :edit
       else
-        flash[:error] = "Can not change inspection status, sorry!"
+        flash.now[:error] = "Can not change inspection status, sorry!"
+        #render :edit
       end
+    end
+    end
+  def add_user
+    @inspection = Inspection.find(params[:id])
+    if !current_user.nil?
+      #we don't think here about roles, they are controlled in abilities,
+      # moderator can not use this action when status in 'archived' or 'closed'
+      user = User.find(params[:user_id])
+      if Role.possible_roles.include? params[:role]
+        user.grant params[:role], @inspection
+        Participation.create user: user, inspection: @inspection, role: params[:role]
+      end
+    end
+    end
+  def remove_user
+    @inspection = Inspection.find(params[:id])
+    if !current_user.nil?
+      #we don't think here about roles, they are controlled in abilities,
+      # moderator can not use this action when status in 'archived' or 'closed'
+      user = User.find(params[:user_id])
+      user.revoke params[:role], @inspection
+
+      #removing users bu any of these methods
+      Participation.find_by_user_id_and_inspection_id(user.id, @inspection.id).destroy
+
+      #@inspection.participations.select{|p| p.user_id == user.id}.each{|p| p.destroy}
     end
   end
   def update

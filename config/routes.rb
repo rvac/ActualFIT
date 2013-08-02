@@ -8,6 +8,8 @@ ActualFIT::Application.routes.draw do
     get 'upload_remarks', on: :member
     post 'upload_remarks', on: :member
     put 'change_status', on: :member
+    put 'add_user', on: :member
+    put 'remove_user', on: :member
     resources :artifacts
     resources :remarks
     resources :chat_messages, only: [:index, :create]

@@ -14,6 +14,9 @@
 
     if user.has_role? :supervisor
       can :crud, :all
+      can :add_user, Inspection
+      can :remove_user, Inspection
+      can :download_artifacts, Inspection
     end
 
     #everyone who enrolled into inspection can dowload artifacts by batch

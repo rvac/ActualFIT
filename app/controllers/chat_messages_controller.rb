@@ -16,14 +16,16 @@ class ChatMessagesController < ApplicationController
 
 	def create
     @inspection = current_inspection
-    @chat_message = @inspection.chat_messages.build(params[:chat_message])
-    @chat_message.user_id = current_user.id
-		if @chat_message.save
-			# flash[:success] = "Yahoo, we did it"
-			# respond_with root_url
-		else
-			flash.now[:error] = "Still troubling with chat message creation"
-		end
+    if !@inspection.nil?
+      @chat_message = @inspection.chat_messages.build(params[:chat_message])
+      @chat_message.user_id = current_user.id
+      if @chat_message.save
+        # flash[:success] = "Yahoo, we did it"
+        # respond_with root_url
+      else
+        flash.now[:error] = "Still troubling with chat message creation"
+      end
+    end
   end
 
 

@@ -3,7 +3,7 @@
 
 <% if current_user?(imAuthor) %>
   <div class="row-fluid AuthorDigest UserDigest">
-    <span class="text-info IMTimestamp"><%= chat_message.created_at %> </span>
+    <span class="text-info IMTimestamp"><%= chat_message.created_at.localtime %> </span>
     <strong class="IMAuthor">
       <%= imAuthor.name %>
     </strong>

@@ -1,6 +1,28 @@
 <div class="row-fluid">
     <div class="span6 offset3">
       <%= content_tag :h2, @inspection.name %>
+      <% if can? :change_status, @inspection %>
+          <% if ((current_user.has_role(:admin, @inspection)) || (current_user.has_role(:supervisor, @inspection)))%>
+            <% status_list = Inspection.admin_status_list %>
+          <% else %>
+            <% status_list = Inspection.status_list  %>
+          <% end %>
+          <div class="dropdown">
+            <!-- Link or button to toggle dropdown -->
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">
+              <%= content_tag :span, @inspection.status, id: "inspectionStatus" %>
+              <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+              <% status_list.each do |status| %>
+                <%= content_tag(:li, link_to(status, change_status_inspection_path(@inspection, status: status), confirm: "Change #{@inspection.name} status from #{@inspection.status} to #{status}?", method: :put, remote: true)) %>
+              <% end %>
+            </ul>
+          </div>
+      <% else %>
+          <%= @inspection.status %>
+      <% end %>
+
       <% if @inspection.users.any? %>
           <%= content_tag :h3, "Inspection participants" %>
           <% @inspection.users.each do |u| %>

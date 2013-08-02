@@ -40,6 +40,11 @@ class Inspection < ActiveRecord::Base
   def archived?
     self.status == 'archived'
   end
-
+  def self.status_list
+    return ['preparation','inspection','rework','finished']
+  end
+  def self.admin_status_list
+    return ['active','archived','preparation','inspection','rework','finished','closed']
+  end
 
 end
