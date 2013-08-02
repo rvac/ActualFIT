@@ -1,38 +1,13 @@
 
 <% if campaign.inspections.any? %>
-    <h1><%= campaign.name %></h1>
-    <ul class="thumbnails">
-    <% campaign.inspections.each do |insp|  %>
-        <% if can? :read, insp %>
-        <%= content_tag :li do -%>
-            <%= content_tag :div, class: "thumbnail" do -%>
-                <%= content_tag :div, class: "well well-small Artifact" do -%>
-                    <%= content_tag :div, class: "row-fluid ArtifactBody" do -%>
-                        <%= content_tag(:strong, insp.name, class:"ArtifactName") %>
-                        <%= link_to "Edit inspection", edit_inspection_path(insp) if can? :update, insp %>
-
-                        <ul style="list-style: none">
-                          <li>
-                            <% insp.users.each do |u| %>
-                              <%= content_tag(:span, u.name) %>
-
-                                <ul>
-                                <%  u.roles.where(resource_id: insp.id, resource_type: insp.class.to_s).each do |r| %>
-                                    <li><%= content_tag(:span, r.name) %></li>
-                                <% end %>
-
-                              </ul>
-                            <% end %>
-                          </li>
-                        </ul>
-                    <% end -%>
-                <% end -%>
-            <% end -%>
-        <% end -%>
-        <% end -%>
+    <% if can? :edit, campaign %>
+        <%= content_tag(:h1, link_to(campaign.name, edit_campaign_path(campaign))) %>
+    <% else %>
+        <%= content_tag :h1, campaign.name %>
     <% end %>
-
-
+    <ul class="thumbnails">
+      <% inspections_html = render partial: 'inspections/inspection', collection: campaign.inspections, as: :insp %>
+      <%= inspections_html || 'there is no inspections'%>
 
     </ul>
 <% else %>

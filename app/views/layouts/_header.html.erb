@@ -71,16 +71,14 @@
                                 <ul class="dropdown-menu">
                                     <% inspections.each do |insp| %>
                                             <% if can? :read, insp %>
-                                                <li><%= link_to insp.name, insp %></li>
+                                                <%= content_tag :li, link_to(insp.name, insp) %>
                                             <% end %>
                                         <% end %>
 
                                     <% if can? :create, Inspection %>
-                                      <li class="divider"></li>
-                                      <li>
-                                      <%= link_to "Create an inspection", new_inspection_path %>
-                                      </li>
-
+                                      <%= content_tag :li, '', class: "divider" %>
+                                      <%= content_tag :li, link_to("Create an inspection", new_inspection_path) %>
+                                      <%= content_tag :li, link_to("Inspections list", inspections_path) %>
                                     <% end %>
                                 </ul>
                               <li>

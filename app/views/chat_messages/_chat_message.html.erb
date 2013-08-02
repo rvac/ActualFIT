@@ -13,7 +13,7 @@
     <strong class="IMAuthor">
       <%= imAuthor.name %>
     </strong>
-    <span class="text-info IMTimestamp"><%= chat_message.created_at %> </span>
+    <span class="text-info IMTimestamp"><%= chat_message.created_at.localtime %> </span>
   </div>
 <% end %>
 

@@ -51,12 +51,12 @@ class InspectionsController < ApplicationController
   end
 
 
-  #def refresh_chat
-  #  @inspection = Inspection.find(params[:id])
+  def index
+    @inspections = Inspection.all
   #  respond_to do |format|
   #    format.js
   #  end
-  #end
+  end
 
   def destroy
     #remove a roles connected to inspections when deleted

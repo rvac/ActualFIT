@@ -8,6 +8,7 @@ class CampaignsController < ApplicationController
 
   end
 
+
   def create
     #@campaign = Campaign.new(params[:campaign])
     #insp_names = params[:insp_names].split(',')
@@ -61,6 +62,7 @@ class CampaignsController < ApplicationController
 
   def update
     @campaign = Campaign.find(params[:id])
+    @campaign.update_attributes(params[:campaign])
     if @campaign.save
       flash[:success] = "campaign #{@campaign.name} modified"
       redirect_to @campaign

@@ -1,0 +1,21 @@
+<div class="row-fluid ArtifactsRowContainer">
+  <div class="span12 Artifacts">
+
+    <div class="row-fluid">
+      <% if @inspections.any? %>
+          <h1>List of inspections</h1>
+          <ul class="thumbnails">
+            <% inspections_html = render partial: 'inspections/inspection', collection: @inspections, as: :insp %>
+            <%= inspections_html || 'there is no inspections'%>
+          </ul>
+      <% else %>
+          <strong>There is no inspections</strong><a href='#'>Create inspection</a>
+      <% end %>
+    </div>
+    <div class="row-fluid">
+      <h3>
+          <%= link_to 'Create new inspection', new_inspection_url %>
+      </h3>
+    </div>
+  </div>
+</div>

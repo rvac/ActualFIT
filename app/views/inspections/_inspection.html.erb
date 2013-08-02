@@ -1,0 +1,31 @@
+<% if can? :read, insp %>
+    <%= content_tag :li do -%>
+        <%= content_tag :div, class: "thumbnail" do -%>
+            <%= content_tag :div, class: "well well-small Artifact" do -%>
+                <%= content_tag :div, class: "row-fluid ArtifactBody" do -%>
+                    <% if can? :edit, insp %>
+                        <%= content_tag(:strong, link_to(insp.name, edit_inspection_path(insp)), class: "ArtifactName") %>
+                    <% else %>
+                        <%= content_tag :strong, insp.name, class: "ArtifactName" %>
+                    <% end %>
+                    <%= content_tag(:strong, "Status #{insp.status}") %>
+                    <ul style="list-style: none">
+                      <li>
+
+                        <% insp.users.each do |u| %>
+                            <%= content_tag(:span, u.name) %>
+
+                            <ul>
+                              <%  u.roles.where(resource_id: insp.id, resource_type: insp.class.to_s).each do |r| %>
+                                  <li><%= content_tag(:span, r.name) %></li>
+                              <% end %>
+
+                            </ul>
+                        <% end %>
+                      </li>
+                    </ul>
+                <% end -%>
+            <% end -%>
+        <% end -%>
+    <% end -%>
+<% end -%>

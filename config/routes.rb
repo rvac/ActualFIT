@@ -7,6 +7,7 @@ ActualFIT::Application.routes.draw do
     get 'download_artifacts', on: :member
     get 'upload_remarks', on: :member
     post 'upload_remarks', on: :member
+    put 'change_status', on: :member
     resources :artifacts
     resources :remarks
     resources :chat_messages, only: [:index, :create]
