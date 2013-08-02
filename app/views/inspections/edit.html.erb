@@ -1,4 +1,4 @@
-<div class="row-fluid">
+<div class="row-fluid" id="InspectionEdit">
     <div class="span6 offset3">
       <%= content_tag :h2, @inspection.name %>
       <% if can? :change_status, @inspection %>
@@ -25,43 +25,53 @@
 
       <% if @inspection.users.any? %>
           <%= content_tag :h3, "Inspection participants" %>
-          <% @inspection.users.each do |u| %>
-          <%= content_tag(:span, u.name) %>
+          <%= content_tag :div, id: "InspectionParticipantsList" do -%>
+              <% @inspection.users.each do |u| %>
+                  <%= content_tag :div, class: "InspectionParticipant", style: "border: solid 1px; border-color: #8F0000" do -%>
+                    <%= content_tag(:span, u.name) %>
+                    <%= content_tag :ul do -%>
+                      <%  u.roles.where(resource_id: @inspection.id, resource_type: @inspection.class.to_s).each do |r| %>
+                        <%= content_tag(:li, content_tag(:span, r.name)) %>
+                      <% end %>
 
-          <ul>
-            <%  u.roles.where(resource_id: @inspection.id, resource_type: @inspection.class.to_s).each do |r| %>
-                <li><%= content_tag(:span, r.name) %></li>
-            <% end %>
-
-          </ul>
-        <% end %>
-    <% else %>
-      <strong>There is no users for the inspection right now, add some users</strong>
-      <% users = User.all %>
-      <% if users.any? %>
-
-          <% users.each do |u| %>
-              <%= content_tag(:span, u.name) %>
-
-              <ul>
-                <%  u.roles.where(resource_id: @inspection.id, resource_type: @inspection.class.to_s).each do |r| %>
-                    <li><%= content_tag(:span, r.name) %></li>
-                <% end %>
-                <stong>Add a role</stong>
-                <ul style="list-style-type: none" >
-                  <% [:inspector, :moderator, :author, :scribe].each do |r| %>
-                      <li>
-                        <%= link_to "make #{r.to_s}", '#', class: "AttachRoleToUserLink" if can? :update, u%>
-                      </li>
-                <% end %>
-                </ul>
-              </ul>
-          <% end %>
+                      <%= link_to('delete from inspection', remove_user_inspection_path(@inspection, user_id: u.id), method: :put, confirm: "Remove #{u.name} from #{@inspection.name}", remote: true)%>
+                    <% end -%>
+                  <% end -%>
+              <% end %>
+          <% end -%>
       <% else %>
-        <strong>No users were found, even you do not exist. Something wierd has just happen. Security breach</strong>
+          <strong>There is no users</strong>
       <% end %>
 
-      <% end %>
+      <div class="AddUserToInspectionList" id="AddUserToInspectionList">
+        <strong>Add users</strong>
+        <div class="AddUserToInspectionListInner" id="AddUserToInspectionListInner">
+          <% users = User.all %>
+          <% if users.any? %>
+              <% users.each do |u| %>
+                  <%= content_tag :div,  data: { user_id: u.id }, id: "AddUserToInspection"  do -%>
+                      <%= content_tag(:span, u.name) %>
+                      <%= content_tag :div,  data: { user_id: u.id }, id: "AddUserToInspectionRoles"  do -%>
+                          <%= content_tag :strong, "Roles" %>
+                          <%= content_tag :ul do -%>
+                            <% u.roles.where(resource_id: @inspection.id, resource_type: @inspection.class.to_s).each do |r| %>
+                                <%= content_tag(:li, content_tag(:span, r.name)) %>
+                            <% end %>
+                          <% end -%>
 
+                          <%= content_tag :strong, "Add role" %>
+                          <%= content_tag :ul, style: "list-style-type: none" do -%>
+                            <% Role.possible_roles.each do |r| %>
+                                <%= content_tag(:li, link_to("make #{r}", add_user_inspection_path(@inspection, user_id: u.id, role: r), method: :put, confirm: "Add #{u.name} to #{@inspection.name} as #{r}", remote: true, class: "AttachRoleToUserLink")) %>
+                            <% end %>
+                          <% end -%>
+                      <% end -%>
+                  <% end -%>
+              <% end %>
+          <% else %>
+              <strong>No users were found, even you do not exist. Something wierd has just happen</strong>
+          <% end %>
+        </div>
+      </div>
     </div>
 </div>

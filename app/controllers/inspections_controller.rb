@@ -110,18 +110,27 @@ class InspectionsController < ApplicationController
         Participation.create user: user, inspection: @inspection, role: params[:role]
       end
     end
+    respond_to do |format|
+      format.js  {}
     end
+  end
   def remove_user
     @inspection = Inspection.find(params[:id])
     if !current_user.nil?
       #we don't think here about roles, they are controlled in abilities,
       # moderator can not use this action when status in 'archived' or 'closed'
       user = User.find(params[:user_id])
-      user.revoke params[:role], @inspection
+
+      #remove all roles from user that are relevant to that inspection
+      Role.possible_roles do |r|
+        user.revoke r, @inspection
+      end
 
       #removing users bu any of these methods
       Participation.find_by_user_id_and_inspection_id(user.id, @inspection.id).destroy
-
+      respond_to do |format|
+        format.js  {}
+      end
       #@inspection.participations.select{|p| p.user_id == user.id}.each{|p| p.destroy}
     end
   end
