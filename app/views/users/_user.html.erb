@@ -1,17 +1,17 @@
-<%= content_tag :li do -%>
+<%= content_tag :li, class: "UserPartial", user_id: user.id  do -%>
     <%= content_tag :div, class: "ArtifactResposible" do -%>
         <%= content_tag :div, class: "row-fluid Responsible" do -%>
             <%= content_tag :div, class: "span4" do -%>
-                <% image_tag 'profile-pics/av-8714.jpg', style: "padding: 5px;" %>
+                <%= image_tag 'profile-pics/av-8714.jpg', style: "padding: 5px;" %>
             <% end -%>
             <%= content_tag :div, class: "span8" do -%>
                 <%= content_tag :h4 do -%>
                     <% if can? :edit, user %>
-                        <%= link_to user.name, edit_user_path(user) %>
+                        <%= link_to user.name, user_path(user) %>
                     <% else %>
                         <%= user.name %>
                     <% end %>
-                    <%= link_to user.email, user_path(user) %>
+
                 <% end -%>
                     <% if user.roles.any? %>
 
@@ -24,18 +24,17 @@
                                         <% if ( !r.resource_type.nil? && !r.resource_id.nil? ) %>
                                             <% object = r.resource_type.constantize.find(r.resource_id) %>
                                             <%= "#{r.resource_type} #{object.name}" if !object.nil? %>
+                                            <%= link_to('revoke', revoke_role_user_path(user, role: r.name, resource_type: r.resource_type, resource_id: r.resource_id), method: :put, confirm: "Remove #{r.name} on #{r.resource_type} #{object.name} role from #{user.name}",remote: true) %>
                                         <% else %>
-                                            Everywhere
+                                            Global
+                                            <%= link_to('revoke', revoke_role_user_path(user, role: r.name), method: :put,confirm: "Remove global #{r.name} role from #{user.name}", remote: true) %>
                                         <% end %>
                                     <% end -%>
                                 <% end %>
                             <% end -%>
 
-                    <% else %>
-
-                            <%= content_tag :span, 'Unfortunately, user has no assigned roles', class: 'label label-warning' %>
-
                     <% end %>
+                    <strong>Add Role</strong>
 
             <% end -%>
         <% end -%>

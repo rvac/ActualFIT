@@ -1,3 +1,47 @@
 // Place all the styles related to the Inspections controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.InspectionParticipantsList{
+  background: #F8F1D2;
+  border-radius: 0px;
+  ul {
+    list-style: none;
+  }
+
+}
+.InspectionParticipant{
+  ul {
+    display: none;
+  }
+
+}
+.AddUserToInspectionList{
+
+}
+
+.AddUserToInspectionListInner{
+  display: none;
+
+}
+
+.AddUserToInspection{
+
+}
+
+.AddUserToInspectionRoles{
+}
+
+.InspectionEdit{
+
+}
+.AddRoleToggle, .AddRoleToggleOpened{
+  color: blueviolet;
+}
+
+.RolesToAssignList{
+  display: none;
+  ul {
+    style: "list-style-type: none";
+  }
+}

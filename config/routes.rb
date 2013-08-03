@@ -1,7 +1,10 @@
 ActualFIT::Application.routes.draw do
 
 
-  resources :users
+  resources :users  do
+    put 'grant_role', on: :member
+    put 'revoke_role', on: :member
+  end
   resources :sessions, only: [:new, :create, :destroy]
   resources :inspections do
     get 'download_artifacts', on: :member

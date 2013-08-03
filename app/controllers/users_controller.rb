@@ -62,11 +62,39 @@ class UsersController < ApplicationController
   # to use dynamic dropdown. If campaign is chosen - than by JS list of inspections is modified
   # after granting role - add user to inspection
   def revoke_role
-
+    @user = User.find(params[:id])
+    if !@user.nil?
+      role = params[:role]
+      if !params[:resource_id].nil? && !params[:resource_type].nil? && Role.possible_roles.include?(role)
+        object = params[:resource_type].constantize.find(params[:resource_id])
+        if !object.nil?
+          @user.revoke role, object
+        end
+      elsif Role.possible_roles.include?(role)
+        @user.revoke role
+      end
+      respond_to do |format|
+        format.js  {}
+      end
+    end
   end
   # function to delete permissions from user profile
   def grant_role
-
+    @user = User.find(params[:id])
+    if !@user.nil?
+      role = params[:role]
+      if !params[:object_id].nil? && !params[:object_type].nil? && Role.possible_roles.include?(role)
+        object = params[:object_type].constantize.find(params[:object_id])
+        if !object.nil?
+          @user.grant role, object
+        end
+      elsif Role.possible_roles.include?(role)
+        @user.grant role
+      end
+      respond_to do |format|
+        format.js  {}
+      end
+    end
   end
 	# Function to be modified. Taken from SAMPLEAPP
 	def update

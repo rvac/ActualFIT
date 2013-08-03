@@ -1,33 +1,34 @@
 <div class="row-fluid" id="InspectionEdit">
     <div class="span6 offset3">
-      <%= content_tag :h2, @inspection.name %>
-      <% if can? :change_status, @inspection %>
-          <% if ((current_user.has_role(:admin, @inspection)) || (current_user.has_role(:supervisor, @inspection)))%>
-            <% status_list = Inspection.admin_status_list %>
-          <% else %>
-            <% status_list = Inspection.status_list  %>
-          <% end %>
-          <div class="dropdown">
-            <!-- Link or button to toggle dropdown -->
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">
-              <%= content_tag :span, @inspection.status, id: "inspectionStatus" %>
-              <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-              <% status_list.each do |status| %>
-                <%= content_tag(:li, link_to(status, change_status_inspection_path(@inspection, status: status), confirm: "Change #{@inspection.name} status from #{@inspection.status} to #{status}?", method: :put, remote: true)) %>
+      <div class="row-fluid">
+          <%= content_tag :h2, @inspection.name %>
+          <% if can? :change_status, @inspection %>
+              <% if ((current_user.has_role(:admin, @inspection)) || (current_user.has_role(:supervisor, @inspection)))%>
+                <% status_list = Inspection.admin_status_list %>
+              <% else %>
+                <% status_list = Inspection.status_list  %>
               <% end %>
-            </ul>
-          </div>
-      <% else %>
-          <%= @inspection.status %>
-      <% end %>
-
+              <div class="dropdown">
+                <!-- Link or button to toggle dropdown -->
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">
+                  <%= content_tag :span, @inspection.status, id: "inspectionStatus" %>
+                  <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                  <% status_list.each do |status| %>
+                    <%= content_tag(:li, link_to(status, change_status_inspection_path(@inspection, status: status), confirm: "Change #{@inspection.name} status from #{@inspection.status} to #{status}?", method: :put, remote: true)) %>
+                  <% end %>
+                </ul>
+              </div>
+          <% else %>
+              <%= @inspection.status %>
+          <% end %>
+      </div>
       <% if @inspection.users.any? %>
           <%= content_tag :h3, "Inspection participants" %>
-          <%= content_tag :div, id: "InspectionParticipantsList" do -%>
+          <%= content_tag :div, class: "InspectionParticipantsList", id: "InspectionParticipantsList" do -%>
               <% @inspection.users.each do |u| %>
-                  <%= content_tag :div, class: "InspectionParticipant", style: "border: solid 1px; border-color: #8F0000" do -%>
+                  <%= content_tag :div, class: "InspectionParticipant row-fluid well-small",  data: { user_id: u.id } do -%>
                     <%= content_tag(:span, u.name) %>
                     <%= content_tag :ul do -%>
                       <%  u.roles.where(resource_id: @inspection.id, resource_type: @inspection.class.to_s).each do |r| %>
@@ -44,14 +45,14 @@
       <% end %>
 
       <div class="AddUserToInspectionList" id="AddUserToInspectionList">
-        <strong>Add users</strong>
+        <strong class="AddUserToInspectionListToggle">Add users</strong>
         <div class="AddUserToInspectionListInner" id="AddUserToInspectionListInner">
           <% users = User.all %>
           <% if users.any? %>
               <% users.each do |u| %>
-                  <%= content_tag :div,  data: { user_id: u.id }, id: "AddUserToInspection"  do -%>
+                  <%= content_tag :div,  data: { user_id: u.id }, class: "AddUserToInspection row-fluid", id: "AddUserToInspection"  do -%>
                       <%= content_tag(:span, u.name) %>
-                      <%= content_tag :div,  data: { user_id: u.id }, id: "AddUserToInspectionRoles"  do -%>
+                      <%= content_tag :div,  data: { user_id: u.id }, class: "AddUserToInspectionRoles", id: "AddUserToInspectionRoles"  do -%>
                           <%= content_tag :strong, "Roles" %>
                           <%= content_tag :ul do -%>
                             <% u.roles.where(resource_id: @inspection.id, resource_type: @inspection.class.to_s).each do |r| %>
@@ -59,12 +60,15 @@
                             <% end %>
                           <% end -%>
 
-                          <%= content_tag :strong, "Add role" %>
-                          <%= content_tag :ul, style: "list-style-type: none" do -%>
-                            <% Role.possible_roles.each do |r| %>
-                                <%= content_tag(:li, link_to("make #{r}", add_user_inspection_path(@inspection, user_id: u.id, role: r), method: :put, confirm: "Add #{u.name} to #{@inspection.name} as #{r}", remote: true, class: "AttachRoleToUserLink")) %>
-                            <% end %>
-                          <% end -%>
+                          <%= content_tag :strong, "Add Role",class: "AddRoleToggle" %>
+                          <div class="RolesToAssignList">
+                            <%= content_tag :ul do -%>
+                                <% Role.possible_roles.each do |r| %>
+                                    <%= content_tag(:li, link_to("make #{r}", add_user_inspection_path(@inspection, user_id: u.id, role: r), method: :put, confirm: "Add #{u.name} to #{@inspection.name} as #{r}", remote: true, class: "AttachRoleToUserLink")) %>
+                                <% end %>
+                            <% end -%>
+                          </div>
+
                       <% end -%>
                   <% end -%>
               <% end %>
