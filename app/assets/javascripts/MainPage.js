@@ -55,18 +55,8 @@ $(document).ready(function(){
 	$("div.ArtifactBody").click(function(){
 		fadeInContent($(".ArtifactComments"));
 	});
-// some shit just does not work
-    $(".AddRoleToggle").click(function(){
-        $(this).text("Hide");
-        $(this).toggleClass("AddRoleToggle AddRoleToggleOpened");
-        toggleContent($(this).next());
-    });
-    (".AddRoleToggleOpened").click(function(){
-        $(this).text("Add Role");
-        $(this).toggleClass("AddRoleToggle AddRoleToggleOpened");
-        toggleContent($(this).next());
-    });
-    $(".AddUserToInspectionListToggle").click(function(){
+
+    $(".AddUserToInspectionToggle").click(function(){
         toggleContent($(".AddUserToInspectionListInner"));
     });
 

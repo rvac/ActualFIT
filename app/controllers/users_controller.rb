@@ -40,14 +40,11 @@ class UsersController < ApplicationController
 	end
 	def create
 		@user = User.new(params[:user])
-
-    @user.add_role params[:role].to_sym if Role.possible_roles.include?(params[:role])
 		if @user.save
-	    	sign_in @user
+	    	sign_in @user if current_user.nil?
 			flash[:success] = "Welcome aboard!"
 			#redirect_to root_url
 			redirect_to user_path(@user)
-
 		else
 			render 'new'
 		end

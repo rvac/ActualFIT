@@ -13,6 +13,7 @@
                     <% end %>
                 <% end -%>
                 <%= render( :partial => 'users/user_roles', locals: {user: user}) %>
+                <%= render( :partial => 'users/user_grant_role', locals: {user: user}) %>
                 <%= render( :partial => 'users/user_inspections', locals: {user: user}) %>
             <% end -%>
         <% end -%>

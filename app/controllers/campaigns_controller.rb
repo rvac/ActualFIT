@@ -38,6 +38,7 @@ class CampaignsController < ApplicationController
     if !current_user.nil?
       if ((current_user.has_role? :supervisor) || ( current_user.has_role? :admin ))
         @campaign.destroy
+        redirect_back_or :index
       else
         flash.now[:success] = "Looks like you don't have right to do that"
       end
@@ -54,6 +55,7 @@ class CampaignsController < ApplicationController
 
   def index
     @campaigns = Campaign.all
+    store_location
   end
 
   def edit

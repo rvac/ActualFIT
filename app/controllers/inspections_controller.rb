@@ -66,8 +66,9 @@ class InspectionsController < ApplicationController
     if !current_user.nil?
       if ((current_user.has_role? :supervisor) || ( current_user.has_role? :admin ))
         @inspection.destroy
+        redirect_back_or :index
       else
-        flash.now[:success] = "Looks like you don't have right to do that"
+        flash.now[:error] = "Looks like you don't have right to do that"
       end
     end
   end
@@ -106,10 +107,10 @@ class InspectionsController < ApplicationController
     if !current_user.nil?
       #we don't think here about roles, they are controlled in abilities,
       # moderator can not use this action when status in 'archived' or 'closed'
-      user = User.find(params[:user_id])
+      @user = User.find(params[:user_id])
       if Role.possible_roles.include? params[:role]
-        user.grant params[:role], @inspection
-        Participation.create user: user, inspection: @inspection, role: params[:role]
+        @user.grant params[:role], @inspection
+        Participation.create user: @user, inspection: @inspection, role: params[:role]
       end
     end
     respond_to do |format|
@@ -121,15 +122,15 @@ class InspectionsController < ApplicationController
     if !current_user.nil?
       #we don't think here about roles, they are controlled in abilities,
       # moderator can not use this action when status in 'archived' or 'closed'
-      user = User.find(params[:user_id])
+      @user = User.find(params[:user_id])
 
       #remove all roles from user that are relevant to that inspection
       Role.possible_roles do |r|
-        user.revoke r, @inspection
+        @user.revoke r, @inspection
       end
 
       #removing users bu any of these methods
-      Participation.find_by_user_id_and_inspection_id(user.id, @inspection.id).destroy
+      Participation.find_by_user_id_and_inspection_id(@user.id, @inspection.id).destroy
       respond_to do |format|
         format.js  {}
       end

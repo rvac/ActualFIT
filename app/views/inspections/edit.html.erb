@@ -27,55 +27,29 @@
       <% if @inspection.users.any? %>
           <%= content_tag :h3, "Inspection participants" %>
           <%= content_tag :div, class: "InspectionParticipantsList", id: "InspectionParticipantsList" do -%>
-              <% @inspection.users.each do |u| %>
-                  <%= content_tag :div, class: "InspectionParticipant row-fluid well-small",  data: { user_id: u.id } do -%>
-                    <%= content_tag(:span, u.name) %>
-                    <%= content_tag :ul do -%>
-                      <%  u.roles.where(resource_id: @inspection.id, resource_type: @inspection.class.to_s).each do |r| %>
-                        <%= content_tag(:li, content_tag(:span, r.name)) %>
-                      <% end %>
-
-                      <%= link_to('delete from inspection', remove_user_inspection_path(@inspection, user_id: u.id), method: :put, confirm: "Remove #{u.name} from #{@inspection.name}", remote: true) if can? :remove_user, @inspection %>
-                    <% end -%>
-                  <% end -%>
-              <% end %>
+              <ul class="UserList" id="UserList" style="list-style: none;" >
+                <%= render partial: 'users/user', collection: @inspection.users, as: :user, spacer_template: 'users/user_divider' %>
+              </ul>
           <% end -%>
       <% else %>
           <strong>There is no users</strong>
       <% end %>
 
       <div class="AddUserToInspectionList" id="AddUserToInspectionList">
-        <strong class="AddUserToInspectionListToggle">Add users</strong>
+
+        <h3 class="AddUserToInspectionToggle">Add Users</h3>
         <div class="AddUserToInspectionListInner" id="AddUserToInspectionListInner">
-          <% users = User.all %>
-          <% if users.any? %>
-              <% users.each do |u| %>
-                  <%= content_tag :div,  data: { user_id: u.id }, class: "AddUserToInspection row-fluid", id: "AddUserToInspection"  do -%>
-                      <%= content_tag(:span, u.name) %>
-                      <%= content_tag :div,  data: { user_id: u.id }, class: "AddUserToInspectionRoles", id: "AddUserToInspectionRoles"  do -%>
-                          <%= content_tag :strong, "Roles" %>
-                          <%= content_tag :ul do -%>
-                            <% u.roles.where(resource_id: @inspection.id, resource_type: @inspection.class.to_s).each do |r| %>
-                                <%= content_tag(:li, content_tag(:span, r.name)) %>
-                            <% end %>
-                          <% end -%>
-
-                          <%= content_tag :strong, "Add Role",class: "AddRoleToggle" %>
-                          <div class="RolesToAssignList">
-                            <%= content_tag :ul do -%>
-                                <% Role.possible_roles.each do |r| %>
-                                    <%= content_tag(:li, link_to("make #{r}", add_user_inspection_path(@inspection, user_id: u.id, role: r), method: :put, confirm: "Add #{u.name} to #{@inspection.name} as #{r}", remote: true, class: "AttachRoleToUserLink")) %>
-                                <% end %>
-                            <% end -%>
-                          </div>
-
-                      <% end -%>
-                  <% end -%>
-              <% end %>
+          <% inspection_users = @inspection.users.map(&:id) %>
+          <% users = User.all.reject{|u| inspection_users.include?(u.id)} %>
+          <% if !users.nil? && users.any? %>
+              <ul class="UserList" id="UserList" style="list-style: none;" >
+                <%= render partial: 'users/user', collection: users, as: :user, spacer_template: 'users/user_divider' %>
+              </ul>
           <% else %>
               <strong>No users were found, even you do not exist. Something wierd has just happen</strong>
           <% end %>
         </div>
       </div>
+      <%= content_tag(:h3, link_to('Delete Inspection', inspection_path(@inspection), method: :delete, confirm: "Do you want to delete #{@inspection.name}?"))  if can? :destroy, @inspection%>
     </div>
 </div>

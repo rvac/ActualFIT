@@ -11,5 +11,11 @@
 
     </ul>
 <% else %>
-    <strong>The campaign does not have any inspection</strong><a href='#'>Create inspection</a>
+    <% if can? :edit, campaign %>
+        <%= content_tag(:h1, link_to(campaign.name, edit_campaign_path(campaign))) %>
+    <% else %>
+        <%= content_tag :h1, campaign.name %>
+    <% end %>
+    <h3>The campaign does not have any inspection</h3>
+    <%= content_tag(:h3, link_to('Create Inspection', new_inspection_path)) %>
 <% end %>

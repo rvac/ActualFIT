@@ -1,2 +1,15 @@
-<h1>Campaigns#edit</h1>
-<p>Find me in app/views/campaigns/edit.html.erb</p>
+<div class="row-fluid">
+  <%= form_for @campaign do |c| %>
+
+      <div class="span6 offset3">
+        <%= c.label :name %>
+        <%= c.text_field :name %>
+
+        <%= c.label :comment %>
+        <%= c.text_field :comment %>
+
+        <%= c.submit 'Save changes', class: "btn btn-primary btn-large" %>
+        <%= content_tag(:h3, link_to('Delete Campaign', campaign_path(@campaign), method: :delete, confirm: "Do you want to delete #{@campaign.name}?"))  if can? :destroy, @campaign%>
+      </div>
+<% end %>
+ </div>
