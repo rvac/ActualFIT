@@ -1,19 +1,14 @@
 <div class="row-fluid">
   <%= form_for @user do |user| %>
       <%= render 'shared/error_messages' %>
-      <div class="span5 offset 1 pull-left">
+      <div class="span6 offset3">
         <h3>User attributes update</h3>
         <%= render partial: '/users/edit_attributes', locals: {f: user} %>
         <% attribute_button = user.submit "Save attributes", class: "btn btn-primary btn-large" %>
         <%= content_tag(:div, attribute_button, style: "margin-bottom: 10px;") %>
       </div>
 
-      <div class="span5 pull-left">
-        <%= render partial: '/users/edit_roles', locals: {f: user} %>
-        <% roles_button = submit_tag "Save roles", name: "edit_roles", class: "btn btn-primary btn-large" %>
-        <%= content_tag(:div, roles_button, style: "margin-bottom: 10px;") %>
 
-      </div>
 <% end %>
 
 

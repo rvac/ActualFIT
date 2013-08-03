@@ -21,7 +21,7 @@ class Inspection < ActiveRecord::Base
   has_many :participations, :dependent => :destroy
   has_many :users, :through => :participations
   #has_many :deadlines, :dependent => :destroy
-  after_create :active!
+  before_create :active!
   validates :name, presence: true
   # status can be only lowecased
   VALID_STATUS_REGEX = /\A(active)|(archived)|(preparation)|(inspection)|(rework)|(finished)|(closed)\z/

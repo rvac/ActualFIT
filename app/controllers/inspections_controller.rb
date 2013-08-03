@@ -41,11 +41,13 @@ class InspectionsController < ApplicationController
 
 	def create
 
-
+    @inspection.active!
 		if @inspection.save
 			flash[:success] = "inspection #{@inspection.name} created"
-			redirect_to root_url
-		else
+			redirect_back_or root_url
+    else
+      errors = @inspection.errors.full_messages
+      flash[:error] = errors.join(" ")
 			render 'new'
 		end
   end

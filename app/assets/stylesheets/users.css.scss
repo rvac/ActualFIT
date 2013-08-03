@@ -1,3 +1,20 @@
 // Place all the styles related to the users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.UserList{
+  .InspectionSelect{
+   width: auto;
+   max-width: 15em;
+  }
+  .RoleSelect{
+   width: auto;
+  }
+  .UserEntry{
+    z-index: 1;
+    background-color: rgba(40,29,35,0.9);
+    color:white;
+    max-width: 40em;
+    overflow-y:hidden;
+  }
+}

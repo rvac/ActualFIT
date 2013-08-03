@@ -1,32 +1,31 @@
 
 <div class="row-fluid">
     <h1>
-		Hello, <%= @user.name %>
+		<% if current_user?(@user) %>
+          Hello, <%= @user.name %>
+        <% elsif can? :edit, @user %>
+          <%= link_to "#{@user.name}", edit_user_path(@user) %> profile
+        <% else %>
+          <%= @user.name %>  profile
+        <% end %>
 	</h1>
 
     <div class="span6 pull-left" style="overflow-y: auto;">
-        <h3>Your chat messages (<%= @user.chat_messages.count %>)</h3>
-        <% if @user.chat_messages.any? %>
-            you wrote some messages
-        <% end %>
-    </div>
-
-    <div class="span6 pull-left">
-       <% if @user.roles.any? %>
-
-           <!-- Think of an idea how to check the roles in a smart way, may be by loking at join table? -->
-            <% @user.roles.each do |r| %>
-                <div class="row-fluid">
-                     <span><strong><%= r.name %></strong></span>
-                     <span><%= r.resource_type %></span>
-                     <span><%= r.resource_id %></span>
-                </div>
-
+        <% if current_user?(@user) %>
+            <h3>Your chat messages (<%= @user.chat_messages.count %>)</h3>
+            <% if @user.chat_messages.any? %>
+                you wrote some messages
             <% end %>
         <% end %>
     </div>
 
+    <div class="span6 pull-left">
+      <%= render( :partial => 'users/user_roles', locals: {user: @user}) %>
+    </div>
+
 </div>
 <div class="row-fluid">
-<h3>Click <%= link_to "here", edit_user_path(@user) %>  to edit your profile</h3>
+  <% if current_user?(@user) %>
+      <h3>Click <%= link_to "here", edit_user_path(@user) %>  to edit your profile</h3>
+  <% end %>
 </div>

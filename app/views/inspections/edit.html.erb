@@ -3,7 +3,7 @@
       <div class="row-fluid">
           <%= content_tag :h2, @inspection.name %>
           <% if can? :change_status, @inspection %>
-              <% if ((current_user.has_role(:admin, @inspection)) || (current_user.has_role(:supervisor, @inspection)))%>
+              <% if ((current_user.has_role?(:admin, @inspection)) || (current_user.has_role?(:supervisor, @inspection)))%>
                 <% status_list = Inspection.admin_status_list %>
               <% else %>
                 <% status_list = Inspection.status_list  %>
@@ -11,7 +11,7 @@
               <div class="dropdown">
                 <!-- Link or button to toggle dropdown -->
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">
-                  <%= content_tag :span, @inspection.status, id: "inspectionStatus" %>
+                  <%= content_tag :span, @inspection.status, id: "InspectionStatus" %>
                   <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
@@ -35,7 +35,7 @@
                         <%= content_tag(:li, content_tag(:span, r.name)) %>
                       <% end %>
 
-                      <%= link_to('delete from inspection', remove_user_inspection_path(@inspection, user_id: u.id), method: :put, confirm: "Remove #{u.name} from #{@inspection.name}", remote: true)%>
+                      <%= link_to('delete from inspection', remove_user_inspection_path(@inspection, user_id: u.id), method: :put, confirm: "Remove #{u.name} from #{@inspection.name}", remote: true) if can? :remove_user, @inspection %>
                     <% end -%>
                   <% end -%>
               <% end %>

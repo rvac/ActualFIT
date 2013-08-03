@@ -1,0 +1,41 @@
+<% if user.roles.any? %>
+    <%= content_tag :h5, 'Roles' %>
+    <%= content_tag :ul, style: "list-style: none;" do -%>
+
+        <% user.roles.each do |r| %>
+            <%= content_tag :li do -%>
+                <%= r.name %>
+                <% if ( !r.resource_type.nil? && !r.resource_id.nil? ) %>
+                    <% object = r.resource_type.constantize.find(r.resource_id) %>
+                    <%= "#{r.resource_type} #{object.name}" if !object.nil? %>
+                    <%= link_to('revoke', revoke_role_user_path(user, role: r.name, resource_type: r.resource_type, resource_id: r.resource_id), method: :put, confirm: "Remove #{r.name} on #{r.resource_type} #{object.name} role from #{user.name}",remote: true) if can? :revoke_role, user %>
+                <% else %>
+                    everywhere
+                    <%= link_to('revoke', revoke_role_user_path(user, role: r.name), method: :put,confirm: "Remove global #{r.name} role from #{user.name}", remote: true) if can? :revoke_role, user%>
+                <% end %>
+            <% end -%>
+        <% end %>
+    <% end -%>
+<% end %>
+<% if can? :grant_role, user %>
+    <h5>Add Role</h5>
+    <% campaigns = Campaign.all %>
+    <% indep_insp = Inspection.where(campaign_id: nil) %>
+
+    <%= form_tag(grant_role_user_path(user), method: :put, remote: true, class: "form-inline") do %>
+        <select class="RoleSelect" id="RoleSelect" name="role">
+          <%= options_for_select(Role.possible_roles, Role.possible_roles.first) %>
+        </select>
+        <select id="InspectionSelect" class="InspectionSelect" name="resource_id">
+            <option value="">Global</option>
+            <%= option_groups_from_collection_for_select(campaigns, :inspections, :name, :id, :name)  %>
+              <% if !indep_insp.nil? %>
+                  <optgroup label="Independent Inspections">
+                    <%= options_from_collection_for_select(indep_insp, :id, :name) %>
+                  </optgroup>
+              <% end %>
+        </select>
+        <%= submit_tag 'grant', class: "btn btn" %>
+    <% end %>
+
+<% end %>

@@ -26,6 +26,7 @@ class UsersController < ApplicationController
       else
         @users = [] # think of something smart. What happen if there are several inspections or no inspections at all
       end
+      store_location
     end
   end
 	def show
@@ -83,10 +84,15 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     if !@user.nil?
       role = params[:role]
-      if !params[:object_id].nil? && !params[:object_type].nil? && Role.possible_roles.include?(role)
-        object = params[:object_type].constantize.find(params[:object_id])
+
+      params[:resource_id] = nil if params[:resource_id] == ""
+      if !params[:resource_id].nil?  && Role.possible_roles.include?(role)
+        object = Inspection.find(params[:resource_id])
         if !object.nil?
           @user.grant role, object
+          #the following is not optimal for universal role granting. But we don't care. The way of doing stuff is optional
+          Participation.create user: @user, inspection: object, role: role if !(@user.inspections.map(&:id).include?(object.id))
+          #object.users << @user if !(@user.inspections.map(&id).include?(object.id))
         end
       elsif Role.possible_roles.include?(role)
         @user.grant role
@@ -101,36 +107,17 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @campaigns = Campaign.all
 
-    if params[:edit_roles]
-      @campaigns.each do |c|
-        c.inspections.each do |i|
-          #trying to revoke all possible roles from user for all inspections
-          Role.possible_roles.each do |r|
-            @user.revoke r, i
-            puts "role revoked"
-          end
 
-
-          # giving rights according to the result
-          # later check if it is possible to send via form some shit, like admin
-          if i.id == params[:inspectionID][c.id.to_s].to_i
-            if Role.possible_roles.include? params[:role][c.id.to_s]
-              @user.grant params[:role][c.id.to_s].to_sym, i
-            end
-          end
-        end
-      end
-      redirect_to @user
+    if @user.update_attributes(params[:user])
+      #handle a successful update
+      flash[:success] = "Profile updated"
+       sign_in @user if current_user?(@user)
+       #redirect_to @user
+       redirect_back_or @user
     else
-      if @user.update_attributes(params[:user])
-        #handle a successful update
-        flash[:success] = "Profile updated"
-         sign_in @user
-         redirect_to @user
-      else
-         render 'edit'
-      end
+       render 'edit'
     end
+
 
     #redirect_to @user
 	end
