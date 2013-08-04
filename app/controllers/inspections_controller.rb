@@ -42,9 +42,14 @@ class InspectionsController < ApplicationController
 	def create
 
     @inspection.active!
-		if @inspection.save
+    if params[:campaign_id] == ""
+      params[:campaign_id] = nil
+    elsif Campaign.find(params[:campaign_id])
+      @inspection.campaign_id = params[:campaign_id]
+    end
+      if @inspection.save
 			flash[:success] = "inspection #{@inspection.name} created"
-			redirect_back_or root_url
+			redirect_to @inspection
     else
       errors = @inspection.errors.full_messages
       flash[:error] = errors.join(" ")

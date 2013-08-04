@@ -8,8 +8,11 @@
   <%= render 'layouts/shim' %>
 </head>
 <body>
-
-	<%= render 'layouts/header' %>
+    <% if !current_user.nil? && ((current_user.has_role? :admin) || (current_user.has_role? :supervisor))%>
+        <%= render 'layouts/admin_header' %>
+    <% else %>
+        <%= render 'layouts/header' %>
+    <% end %>
 	<div class="container-fluid">
 		<% flash.each do |key, value| %>
 			<%= content_tag(:div, value, class: "alert alert-#{key}") %>

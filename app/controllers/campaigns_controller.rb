@@ -26,7 +26,7 @@ class CampaignsController < ApplicationController
       #  end
       #
       #end
-      redirect_to root_url
+      redirect_to @campaign
     else
       render 'new'
     end
