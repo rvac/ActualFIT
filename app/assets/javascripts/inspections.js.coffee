@@ -14,5 +14,6 @@
     $.get($("#RemarksTable").data('url'), after: $('.ACTR').last().data('id'));
 
 
+
 jQuery ->
   Poller.poll();

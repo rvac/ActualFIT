@@ -8,8 +8,11 @@
                 <%= content_tag :h4 do -%>
                     <% if can? :edit, user %>
                         <%= link_to user.name, user_path(user) %>
+
+                        <%= link_to('Delete User', user_path(user), style: "padding-left: 1em;", class: "pull-right", method: :delete, confirm: "Do you want to permanently delete #{user.name}?") if can? :delete, user%>
+                        <%= link_to 'Edit', edit_user_path(user), class: "pull-right" %>
                     <% else %>
-                        <%= user.name %>
+                        <%= link_to user.name, user_path(user) %>
                     <% end %>
                 <% end -%>
                 <%= content_tag :div, class: "UserRoles", user_id: user.id  do -%>

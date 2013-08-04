@@ -5,17 +5,17 @@ module ArtifactsHelper
 
     if can? :edit, artifact
 		actionPanel_content << link_to(image_tag('icon_32/pencil_32.png', alt:"edit"), 
-			edit_artifact_path(artifact), class: "ActionElement")
+			edit_inspection_artifact_path(artifact.inspection_id,artifact.id), class: "ActionElement")
     end
 
     if can? :read, artifact
 		actionPanel_content << link_to(image_tag('icon_32/save_32.png', alt:"save on disk"), 
-			artifact, class: "ActionElement")
+			inspection_artifact_path(artifact.inspection_id,artifact.id), class: "ActionElement")
     end
 
     if can? :destroy, artifact
-		actionPanel_content << link_to(image_tag('icon_32/delete_32.png', alt:"delete"), 
-			artifact, confirm: "Are you sure?", method: :delete, class: "ActionElement")
+		actionPanel_content << link_to(image_tag('icon_32/delete_32.png', alt:"delete"),
+      inspection_artifact_path(artifact.inspection_id,artifact.id), confirm: "Don you want to delete #{artifact.name}?", method: :delete, class: "ActionElement")
     end
 		actionPanel_content << '</div>'
 

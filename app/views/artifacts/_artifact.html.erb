@@ -2,9 +2,10 @@
     <%= content_tag :div, class: "thumbnail" do -%>
         <%= content_tag :div, class: "well well-small Artifact" do -%>
             <%= content_tag :div, class: "row-fluid ArtifactBody" do -%>
-               <%= content_tag(:strong, "#{art.name}", class:"ArtifactName") %>
+                <%= artifact_icon(art) %>
+                <%= content_tag(:strong, "#{art.name}", class:"ArtifactName") %>
             <% end -%>
-
+               <%= artifactActionPanel(art) %>
         <% end -%>
     <% end -%>
 <% end -%>

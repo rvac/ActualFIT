@@ -26,8 +26,7 @@ class ArtifactsController < ApplicationController
 
   def show
     @artifact = Artifact.find(params[:id])
-    send_data @artifact.file, filename: @artifact.filename,
-    type: @artifact.content_type
+    send_data @artifact.file, filename: @artifact.filename, type: @artifact.content_type
   end
 
   def index
@@ -59,7 +58,7 @@ class ArtifactsController < ApplicationController
   def destroy
       @artifact = Artifact.find(params[:id])
       if @artifact.destroy
-        flash[:notice] = "Artifact was deleted"
+        flash[:success] = "Artifact was deleted"
       else
         flash[:alert] = "Artifact can not be deleted"
       end

@@ -53,9 +53,9 @@ RemarkTypeBox{
 }
 .ACTRActionPanel{
   position: absolute;
-  right:-8px;
-  top: -8px;
-  z-index: 1;
+  right: 0px;
+  top: 0px;
+  z-index: 2;
   display:none;
   background-color: rgba(40,29,35,0.5);
   //height:100%;

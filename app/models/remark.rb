@@ -21,7 +21,7 @@ class Remark < ActiveRecord::Base
   belongs_to :inspection
   belongs_to :artifact
 
-  VALID_LOCATION_REGEX = /\A((line)|(diagram)|(picture)|(figure)|(inspection))\s\d*\z/i
+  VALID_LOCATION_REGEX = /\A((line)|(diagram)|(picture)|(figure)|(inspection))\s?\d*\z/i
 
   validates :inspection_id, presence: true
   # validates :remark_type, presence: true
