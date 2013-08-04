@@ -27,6 +27,7 @@ class Campaign < ActiveRecord::Base
   has_many :inspections, :dependent => :destroy
 
   validate :name, presence: true
+
   after_create 'FileUtils.rm @new_file_link, force: true if @new_file_link'
 
   def assignments=(file)
@@ -51,7 +52,7 @@ class Campaign < ActiveRecord::Base
         end
 
         #inspection creation
-        inspection = self.inspections.find_by_name(row["Group"]) || self.inspections.create(name: row["Group"], status: "active")
+        inspection = self.inspections.find_by_name(row["Group"]) || self.inspections.build(name: row["Group"], status: "active")
         #
         #user.inspections << inspection
         #inspection.users << user
@@ -93,6 +94,10 @@ class Campaign < ActiveRecord::Base
 
     def s_user_find_or_create(s_number)
       user = User.find_by_email("#{s_number}@student.dtu.dk") || User.new
+
+    end
+
+    def assign_roles
 
     end
 
