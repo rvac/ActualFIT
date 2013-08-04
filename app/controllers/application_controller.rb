@@ -1,6 +1,10 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   include SessionsHelper
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:error] = exception.message
+    redirect_back_or main_app.root_url
+  end
 
   def handle_unverified_request
   	sign_out
