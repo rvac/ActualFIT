@@ -37,6 +37,7 @@ class ArtifactsController < ApplicationController
 
   def edit
     @artifact = Artifact.find(params[:id])
+    @inspection = Inspection.find(@artifact.inspection_id)
   end
 
   def update

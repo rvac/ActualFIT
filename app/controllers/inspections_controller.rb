@@ -40,7 +40,7 @@ class InspectionsController < ApplicationController
 	end
 
 	def create
-
+    #@inspection = Inspection.build(params[:inspection])
     @inspection.active!
     if params[:campaign_id] == ""
       params[:campaign_id] = nil
@@ -89,7 +89,7 @@ class InspectionsController < ApplicationController
       #we don't think here about roles, they are controlled in abilities,
       # moderator can not use this action when status in 'archived' or 'closed'
 
-      if current_user.has_role(:moderator, Inspection) && (params[:status] != 'archived') && (params[:status] != 'closed')
+      if current_user.has_role?(:moderator, Inspection) && (params[:status] != 'archived') && (params[:status] != 'closed')
         @inspection.status = params[:status]
       else
         @inspection.status = params[:status]

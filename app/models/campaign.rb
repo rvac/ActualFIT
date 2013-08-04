@@ -51,7 +51,7 @@ class Campaign < ActiveRecord::Base
         end
 
         #inspection creation
-        inspection = self.inspections.find_by_name(row["Group"]) || self.inspections.build(name: row["Group"], status: "active")
+        inspection = self.inspections.find_by_name(row["Group"]) || self.inspections.create(name: row["Group"], status: "active")
         #
         #user.inspections << inspection
         #inspection.users << user
