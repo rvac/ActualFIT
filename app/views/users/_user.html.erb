@@ -12,9 +12,15 @@
                         <%= user.name %>
                     <% end %>
                 <% end -%>
-                <%= render( :partial => 'users/user_roles', locals: {user: user}) %>
-                <%= render( :partial => 'users/user_grant_role', locals: {user: user}) %>
-                <%= render( :partial => 'users/user_inspections', locals: {user: user}) %>
+                <%= content_tag :div, class: "UserRoles", user_id: user.id  do -%>
+                    <%= render( :partial => 'users/user_roles', locals: {user: user}) %>
+                <% end -%>
+                <%= content_tag :div, class: "GrantUserRoles", user_id: user.id  do -%>
+                    <%= render( :partial => 'users/user_grant_role', locals: {user: user}) %>
+                <% end -%>
+                <%= content_tag :div, class: "UserInspections", user_id: user.id  do -%>
+                    <%= render( :partial => 'users/user_inspections', locals: {user: user}) %>
+                <% end -%>
             <% end -%>
         <% end -%>
     <% end -%>

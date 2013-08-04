@@ -74,56 +74,8 @@ $(document).ready(function(){
 		slideUpProps($(this));
 	});
 
-	$(".ChatInner").hover(function(){
-		fadeInContent($(".Dock"));
-	},function(){
-		 if(ChatShown){
-			propsTimeout = window.setTimeout(fadeOutContent,2000,$(".Dock"));
-		 }
-	});
-
-	$(".Dock").hover(function(){
-		if(ChatShown){
-			window.clearTimeout(propsTimeout);
-		}
-	},function(){
-		if(ChatShown){
-			fadeOutContent($(".Dock"));	
-		}
-	});
 
 
-
-	$(".Dock").click(function(){
-		if(ChatShown){
-			// $(".ChatContainer").css("min-width: 20px;");
-			ChatShown = false;
-			$(".ArtifactComments").css("padding-right","30px");
-			$(".Dock").css("left","auto");
-			$(".Dock").css('right','0px');	
-			fadeOutContent($(".ChatInner"));
-			propsTimeout = window.setTimeout(toggleChat,500);
-			
-	
-			
-			
-			
-		}
-		else{
-			// $(".ChatContainer").css("min-width: 20px;");
-			toggleChat();
-			fadeInContent($(".ChatInner"));
-			$(".Dock").css("right","auto");
-		 	$(".Dock").css('left','-25px');
-			ChatShown = true;
-			
-		}
-		
-	});
-
-	// $(".ActionElement").click(function(){
-	// 	alert("action taken");
-	// });
 
 	$(".ACTR").hover(function(){
 		var ap = $(this).children(".ACTC").children(".ACTRActionPanel")
@@ -147,10 +99,5 @@ $(document).ready(function(){
 	$(".CommentsClose").click(function(){
 		fadeOutContent($(".ArtifactComments"));
 	});
-	$(".Responsible, .Responsible-Selected").click(function(){
-		$(this).toggleClass("Responsible Responsible-Selected");
-	});
-
-
 });
 

@@ -6,7 +6,7 @@
 	 
 }
 .ArtifactPreview, .CommentTable{
-	min-height: 450px;
+	//min-height: 450px;
 }
 /*body{
 	margin-top:4em;
@@ -27,7 +27,7 @@
 }
 .Artifacts {
 	/*For mozilla does not work without this statement((*/
-	max-height: 450px;
+	//max-height: 450px;
 	
 }
 .Artifacts .thumbnail{
@@ -36,7 +36,7 @@
 }
 .ArtifactsPanel{
 	/*padding: 10px;*/
-	/*min-width: 220px;*/
+	min-width: 15em;
 	/*width: 31%;*/
 	/*max-width: 31%;*/
 /*	overflow-x: none;
@@ -131,56 +131,6 @@
 }
 
 
-
-.ArtifactComments{
-
-	/*max-width: 500px;*/
-}
-
-.CommentsHeader{
-	position:relative;
-
-}
-.CommentsClose{
-	display: none;
-	background-color: rgba(40,29,35,0.5);
-	border:1px solid transparent;
-	border-radius: 2px 2px 2px 2px;
-	position: absolute;
-	color:white;
-	right:0px;
-	top: 0px;
-	width: 3em;
-	height: 1em;
-	line-height: 1em;
-}
-.CommentsClose:hover{
-	background-color: rgba(0,0,0,0.5);
-	color:orange;
-}
-/*ACTR stands for Artifact Comments Table's Row*/
-.ACTR{
-    height: 100%;
-}
-/*ACTR stands for Artifact Comments Table's Cell*/
-.ACTC{
-	position: relative;
-    //height: 100%;
-	
-}
-.ACTRActionPanel{
-	position: absolute;
-	right:-8px;
-	top: -8px;
-	z-index: 1;
-	display:none;
-	background-color: rgba(40,29,35,0.5);
-	//height:100%;
-	width: 40px;
-	text-align: center;
-	border-radius:0px 2px 2px 0px;
-
-}
 .ArtifactResposible{
 
 	z-index: 1;

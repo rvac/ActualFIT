@@ -60,7 +60,9 @@ class Remark < ActiveRecord::Base
       end
     end
   end
-
+  def self.possible_remark_type
+    return ['minor', 'medium', 'major']
+  end
   private
     def self.open_spreadsheet(file)
       #make something smart afterwards

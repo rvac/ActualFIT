@@ -28,6 +28,7 @@ class CampaignsController < ApplicationController
       #end
       redirect_to @campaign
     else
+      flash.now[:error] =
       render 'new'
     end
   end
@@ -38,7 +39,7 @@ class CampaignsController < ApplicationController
     if !current_user.nil?
       if ((current_user.has_role? :supervisor) || ( current_user.has_role? :admin ))
         @campaign.destroy
-        redirect_back_or :index
+        redirect_back_or action: :index
       else
         flash.now[:success] = "Looks like you don't have right to do that"
       end

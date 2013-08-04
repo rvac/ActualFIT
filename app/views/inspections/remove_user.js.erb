@@ -1,2 +1,1 @@
-$('.UserPartial[user_id=<%= @user.id %>]').remove();
-alert();
+$('.UserInspections[user_id=<%= @user.id %>]').html("<%= j render( :partial => 'users/user_inspections', locals: {user: @user}) %>");

@@ -12,8 +12,10 @@ class UsersController < ApplicationController
      if !current_user.nil?
        if ((current_user.has_role? :supervisor) || ( current_user.has_role? :admin ))
          @user.destroy
+         flash[:success] = "User was deleted"
+         redirect_to action: :index
        else
-          flash.now[:success] = "Looks like you don't have right to do that"
+         flash.now[:error] = "Looks like you don't have right to do that"
        end
      end
   end
@@ -44,7 +46,7 @@ class UsersController < ApplicationController
 	    	sign_in @user if current_user.nil?
 			flash[:success] = "Welcome aboard!"
 			#redirect_to root_url
-			redirect_to user_path(@user)
+			redirect_to @user
 		else
 			render 'new'
 		end

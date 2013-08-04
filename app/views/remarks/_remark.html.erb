@@ -5,6 +5,9 @@
         <%=remark.location %>
     </td>
     <td>
+        <%= Artifact.find(remark.artifact_id).name if !remark.artifact_id.nil?%>
+    </td>
+    <td>
         <%= remark.content %>
     </td>
     <td>

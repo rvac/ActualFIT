@@ -11,12 +11,17 @@ class RemarksController < ApplicationController
     #@remark = current_user.remarks.build(params[:remark])
 
     #we don't know the id, so we
+    if params[:artifact_id] == ""
+      params[:artifact_id] = nil
+    elsif Artifact.find(params[:artifact_id])
+      @remark.artifact_id = params[:artifact_id]
+    end
     @remark.user_id = current_user.id
 		if @remark.save
 			#flash.now[:success] = "Yahoo, we did it"
 			# respond_with root_url
 		else
-			#flash.now[:error] = "Still troubling with remark creation"
+			flash.now[:error] = @remark.errors.full_messages.join(" ");
 			# redirect_to root_url
 		end
 	end
