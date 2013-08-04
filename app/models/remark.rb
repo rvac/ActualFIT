@@ -42,8 +42,8 @@ class Remark < ActiveRecord::Base
         #user creation
         if !row["s-number"].nil?
           user = self.s_user_find row["s-number"]
-        else
-          #try something else. Write factory for user
+        elsif !row["email"].nil?
+          user = User.find_by_email(row["email"]) || User.new#try something else. Write factory for user
         end
 
         if !user.new_record?

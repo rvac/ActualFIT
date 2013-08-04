@@ -1,7 +1,7 @@
 <div class="row-fluid" id="InspectionEdit">
     <div class="span6 offset3">
       <div class="row-fluid">
-          <%= content_tag :h2, link_to(@inspection.name, @inspection) %>
+          <%= content_tag :h2, link_to(@inspection.fullname, @inspection) %>
           <% if can? :change_status, @inspection %>
               <% if ((current_user.has_role?(:admin, @inspection)) || (current_user.has_role?(:supervisor, @inspection)))%>
                 <% status_list = Inspection.admin_status_list %>

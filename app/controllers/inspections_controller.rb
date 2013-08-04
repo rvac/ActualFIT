@@ -42,7 +42,7 @@ class InspectionsController < ApplicationController
 	def create
     #@inspection = Inspection.build(params[:inspection])
     @inspection.active!
-    if params[:campaign_id] == ""
+    if params[:campaign_id] == "" || params[:campaign_id].nil?
       params[:campaign_id] = nil
     elsif Campaign.find(params[:campaign_id])
       @inspection.campaign_id = params[:campaign_id]
@@ -71,7 +71,7 @@ class InspectionsController < ApplicationController
     if !current_user.nil?
       if ((current_user.has_role? :supervisor) || ( current_user.has_role? :admin ))
         @inspection.destroy
-        redirect_back_or :index
+        redirect_back_or action: :index
       else
         flash.now[:error] = "Looks like you don't have right to do that"
       end

@@ -45,7 +45,9 @@
                                 <ul class="dropdown-menu">
                                     <% inspections.each do |insp| %>
                                             <% if can? :read, insp %>
-                                                <%= content_tag :li, link_to(insp.name, insp) %>
+
+                                            <%= content_tag :li, link_to(insp.fullname, insp) %>
+
                                             <% end %>
                                         <% end %>
 
@@ -60,7 +62,7 @@
                             <% end %>
 
 						<% else %>
-							<li><%= link_to "Sign in", signin_path %></li>
+							<li><%= link_to "Log in", signin_path %></li>
 						<% end %>
 					</ul>
 				</nav>

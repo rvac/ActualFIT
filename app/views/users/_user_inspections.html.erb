@@ -4,7 +4,7 @@
         <% user.inspections.each do |insp| %>
             <%= content_tag :li do -%>
                 <%= insp.name %>
-                <%= link_to('delete from inspection', remove_user_inspection_path(insp, user_id: user.id), method: :put, confirm: "Remove #{user.name} from #{insp.name}", remote: true) if can? :remove_user, insp %>
+                <%= link_to('delete from inspection', remove_user_inspection_path(insp, user_id: user.id), method: :put, confirm: "Remove #{user.name} from #{insp.fullname}", remote: true) if can? :remove_user, insp %>
             <% end -%>
         <% end %>
     <% end -%>

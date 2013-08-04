@@ -47,7 +47,8 @@
     #Inspection.with_role(:inspector).select {|i| !(['closed', 'archived'].include?(i.status))}.map(&:id).uniq
 
     #AUTHOR ABILITIES
-    can :create, Artifact, inspection_id: Inspection.with_role(:author, user).select {|i| !(['finished', 'closed', 'archived'].include?(i.status))}.map(&:id).uniq
+    #can :create, Artifact, inspection_id: Inspection.with_role(:author, user).select {|i| !(['finished', 'closed', 'archived'].include?(i.status))}.map(&:id).uniq
+    can :create, Artifact, inspection_id: Inspection.with_role(:author, user).select {|i| (['preparation','rework'].include?(i.status))}.map(&:id).uniq
     can :crud, Artifact, user_id: user.id, inspection_id: Inspection.with_role(:author, user).select {|i| !(['finished', 'closed', 'archived'].include?(i.status))}.map(&:id).uniq
     can :create, ChatMessage, inspection_id: Inspection.with_role(:author, user).select {|i| !(['finished', 'closed', 'archived'].include?(i.status))}.map(&:id).uniq
     can :download_artifacts, Inspection, id: Inspection.with_role(:author, user).select {|i| !(['finished', 'closed', 'archived'].include?(i.status))}.map(&:id).uniq

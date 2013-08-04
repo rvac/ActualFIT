@@ -3,9 +3,9 @@
         <div class="row-fluid"  style="text-align: center;">
           <h3 style="margin: 0px;">
             <% if can? :edit, @inspection %>
-                <%= link_to "Inspection #{@inspection.name }", edit_inspection_path(@inspection) %>
+                <%= link_to "Inspection #{@inspection.fullname }", edit_inspection_path(@inspection) %>
             <% else %>
-                <%= "Inspection #{@inspection.name }" %>
+                <%= "Inspection #{@inspection.fullname }" %>
             <% end %>
 
           </h3>

@@ -41,11 +41,20 @@ class Inspection < ActiveRecord::Base
   def archived?
     self.status == 'archived'
   end
+  def fullname
+    campaign = Campaign.find(self.campaign_id) if !self.campaign_id.nil?
+    if !campaign.nil?
+      "#{campaign.name} #{self.name}"
+    else
+      self.name
+    end
+  end
   def self.status_list
     return ['preparation','inspection','rework','finished']
   end
   def self.admin_status_list
     return ['active','archived','preparation','inspection','rework','finished','closed']
   end
+
 
 end
