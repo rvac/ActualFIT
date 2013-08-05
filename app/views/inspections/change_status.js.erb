@@ -1,2 +1,3 @@
+$("#InspectionStatusBarContainer").html("<%= j render partial: 'inspections/status', locals: {status: @inspection.status }  %>");
 $('#InspectionStatus').html("<%= j @inspection.status %>");
 $('.dropdown.open .dropdown-toggle').dropdown('toggle');

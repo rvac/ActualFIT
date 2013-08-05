@@ -28,7 +28,7 @@ class CampaignsController < ApplicationController
       #end
       redirect_to @campaign
     else
-      flash.now[:error] =
+      flash[:error] = @campaign.errors.full_messages.join(' ')
       render 'new'
     end
   end

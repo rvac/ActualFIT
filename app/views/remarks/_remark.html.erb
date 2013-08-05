@@ -16,8 +16,11 @@
     <td  class="ACTC">
           <%  author =  User.find(remark.user_id) if !remark.user_id.nil? %>
           <%= author.name %>
+
+    </td>
+    <td>
           <% if can? :destroy, remark %>
-             <%=  remarksActionPanel(remark) %>
+              <%=  remarksActionPanel(remark) %>
           <% end %>
     </td>
 <% end -%>

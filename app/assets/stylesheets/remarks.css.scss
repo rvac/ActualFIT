@@ -47,20 +47,20 @@ RemarkTypeBox{
 }
 /*ACTR stands for Artifact Comments Table's Cell*/
 .ACTC{
-  position: relative;
+  //position: relative;
   //height: 100%;
 
 }
 .ACTRActionPanel{
-  position: absolute;
-  right: 0px;
-  top: 0px;
-  z-index: 2;
-  display:none;
-  background-color: rgba(40,29,35,0.5);
+  //position: absolute;
+  //right: 0px;
+  //top: 0px;
+  //z-index: 2;
+  //display:none;
+  //background-color: rgba(40,29,35,0.5);
+
   //height:100%;
   width: 40px;
   text-align: center;
-  border-radius:0px 2px 2px 0px;
-
-}
+  //border-radius:0px 2px 2px 0px;
+  }

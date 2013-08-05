@@ -1,4 +1,4 @@
-# == Schema Information
+r# == Schema Information
 #
 # Table name: deadlines
 #

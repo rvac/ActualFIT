@@ -52,8 +52,8 @@ class Campaign < ActiveRecord::Base
         end
 
         #inspection creation
-        inspection = self.inspections.find_by_name(row["Group"]) || self.inspections.build(name: row["Group"], status: "active")
-        #
+        inspection = self.inspections.find_by_name(row["Group"]) || self.inspections.build(name: row["Group"])
+        inspection.active!
         #user.inspections << inspection
         #inspection.users << user
         #create participation
@@ -61,18 +61,18 @@ class Campaign < ActiveRecord::Base
         case row["Role"]
           when "I" then
             Participation.create user: user, inspection: inspection, role: "inspector"
-            #puts "#{user.name} #{inspection.id} inspector"
-            #puts inspection
+            puts "#{user.name} #{inspection.id} inspector"
+            puts inspection
             user.grant :inspector, inspection  #apply regexp later here
           when "M" then
             Participation.create user: user, inspection: inspection, role: "moderator"
-            #puts "#{user.name} #{inspection.id} moderator"
-            #puts inspection
+            puts "#{user.name} #{inspection.id} moderator"
+            puts inspection
             user.grant :moderator, inspection  #apply regexp later here
           when "A" then
             Participation.create user: user, inspection: inspection, role: "author"
-            #puts "#{user.name} #{inspection.id} author"
-            #puts inspection
+            puts "#{user.name} #{inspection.id} author"
+            puts inspection
             user.grant :author, inspection  #apply regexp later here
           else  puts "oops expect some kind of warning here"
         end

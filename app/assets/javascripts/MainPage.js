@@ -60,34 +60,6 @@ $(document).ready(function(){
         toggleContent($(".AddUserToInspectionListInner"));
     });
 
-	$("div.IIHeader, div.IIHeaderContentExpanded").click(function(){
-		var container = $(this).parent();
-		toggleContentVisibility(container);
-		$(this).toggleClass("IIHeader IIHeaderContentExpanded");
-	});
-
-	$(".Artifact, .InspectionItem").hover(function(){
-		propsTimeout = window.setTimeout(slideDownProps,1000,$(this));
-		// slideDownProps($(this));
-	},function(){
-		window.clearTimeout(propsTimeout);
-		slideUpProps($(this));
-	});
-
-
-
-
-	$(".ACTR").hover(function(){
-		var ap = $(this).children(".ACTC").children(".ACTRActionPanel")
-		var rHeight = $(this).css("height");
-		ap.css("line-height", rHeight);
-		propsTimeout = window.setTimeout(fadeInContent,1000,ap);
-		// slideDownProps($(this));
-	},function(){
-		window.clearTimeout(propsTimeout);
-		var ap = $(this).children(".ACTC").children(".ACTRActionPanel")
-		fadeOutContent(ap);
-	});
 
 	$(".CommentsHeader").hover(function(){
 		propsTimeout = window.setTimeout(fadeInContent,1000,$(".CommentsClose"));

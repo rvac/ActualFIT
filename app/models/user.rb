@@ -14,7 +14,7 @@
 class User < ActiveRecord::Base
   rolify
 
-	attr_accessible :email, :name, :password, :password_confirmation
+	attr_accessible :email, :name, :password, :password_confirmation , :skype, :phone, :address, :additional_info
 	has_secure_password
 	has_many :chat_messages, :dependent => :destroy
   has_many :participations, :dependent => :destroy

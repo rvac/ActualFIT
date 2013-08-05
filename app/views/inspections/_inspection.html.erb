@@ -1,30 +1,15 @@
 <% if can? :read, insp %>
     <%= content_tag :li do -%>
         <%= content_tag :div, class: "thumbnail" do -%>
-            <%= content_tag :div, class: "well well-small Artifact" do -%>
-                <%= content_tag :div, class: "row-fluid ArtifactBody" do -%>
+            <div class="row-fluid">
+              <%= content_tag :h5 do -%>
+                  <%= link_to("visit #{insp.name} inspection", inspection_path(insp)) %>
+                  <%= link_to('edit inspection', edit_inspection_path(insp)) %>
+              <% end -%>
+            </div>
 
-                    <%= content_tag(:strong, link_to(insp.name, inspection_path(insp)), class: "ArtifactName") %>
-                    <%= content_tag(:strong, link_to('edit', edit_inspection_path(insp)), class: "ArtifactName") if can? :edit, insp%>
+             <%= render partial: 'inspections/status', locals: {status: insp.status} %>
 
-                    <%= content_tag(:strong, "Status #{insp.status}") %>
-                    <ul style="list-style: none">
-                      <li>
-
-                        <% insp.users.each do |u| %>
-                            <%= content_tag(:span, u.name) %>
-
-                            <ul>
-                              <%  u.roles.where(resource_id: insp.id, resource_type: insp.class.to_s).each do |r| %>
-                                  <li><%= content_tag(:span, r.name) %></li>
-                              <% end %>
-
-                            </ul>
-                        <% end %>
-                      </li>
-                    </ul>
-                <% end -%>
-            <% end -%>
         <% end -%>
     <% end -%>
 <% end -%>

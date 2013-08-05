@@ -13,14 +13,14 @@
 
 class Inspection < ActiveRecord::Base
   resourcify
-  attr_accessible :comment, :name , :status
+  attr_accessible :comment, :name
   has_many :artifacts, :dependent => :destroy
   has_many :chat_messages, :dependent => :destroy
   has_many :remarks, :dependent => :destroy
   belongs_to :campaign
   has_many :participations, :dependent => :destroy
   has_many :users, :through => :participations
-  #has_many :deadlines, :dependent => :destroy
+  has_many :deadlines, :dependent => :destroy
   before_create :active!
   after_create "puts 'inspection created'"
   validates :name, presence: true
@@ -53,7 +53,8 @@ class Inspection < ActiveRecord::Base
     return ['preparation','inspection','rework','finished']
   end
   def self.admin_status_list
-    return ['active','archived','preparation','inspection','rework','finished','closed']
+    self.status_list
+    #return ['active','archived','preparation','inspection','rework','finished','closed']
   end
 
 

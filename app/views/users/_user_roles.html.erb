@@ -7,7 +7,12 @@
                 <%= r.name %>
                 <% if ( !r.resource_type.nil? && !r.resource_id.nil? ) %>
                     <% object = r.resource_type.constantize.find(r.resource_id) %>
-                    <%= "#{r.resource_type} #{object.name}" if !object.nil? %>
+                    <% #there is a quick fix on fullname adds problems to potential flexibility %>
+                    <% if r.resource_type = "Inspection" %>
+                        <%= "#{r.resource_type} #{object.fullname}" if !object.nil? %>
+                    <% else %>
+                        <%= "#{r.resource_type} #{object.name}" if !object.nil? %>
+                    <% end %>
                     <%= link_to('revoke', revoke_role_user_path(user, role: r.name, resource_type: r.resource_type, resource_id: r.resource_id), method: :put, confirm: "Remove #{r.name} on #{r.resource_type} #{object.name} role from #{user.name}",remote: true) if can? :revoke_role, user %>
                 <% else %>
                     everywhere

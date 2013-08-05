@@ -4,8 +4,8 @@ module ArtifactsHelper
 		actionPanel_content = '<div class="ArtifactActionPanel">'
 
     if can? :edit, artifact
-		actionPanel_content << link_to(image_tag('icon_32/pencil_32.png', alt:"edit"), 
-			edit_inspection_artifact_path(artifact.inspection_id,artifact.id), class: "ActionElement")
+		actionPanel_content << link_to(image_tag('icon_32/pencil_32.png', alt:"edit"),
+			edit_inspection_artifact_path(artifact.inspection_id,artifact.id), class: "pull-left ActionElement")
     end
 
     if can? :read, artifact
@@ -15,7 +15,7 @@ module ArtifactsHelper
 
     if can? :destroy, artifact
 		actionPanel_content << link_to(image_tag('icon_32/delete_32.png', alt:"delete"),
-      inspection_artifact_path(artifact.inspection_id,artifact.id), confirm: "Don you want to delete #{artifact.name}?", method: :delete, class: "ActionElement")
+      inspection_artifact_path(artifact.inspection_id,artifact.id), confirm: "Don you want to delete #{artifact.name}?", method: :delete, class: "pull-right ActionElement")
     end
 		actionPanel_content << '</div>'
 

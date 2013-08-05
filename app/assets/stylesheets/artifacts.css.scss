@@ -19,7 +19,7 @@
 .Artifact{
 	border: 1px solid #a4b1c9;
 	/*margin: 0px 0px 10px 0px;*/
-	width: 11em;
+	width: 12em;
 	padding: 5px;
 	/*height: 4em;*/
 	position: relative;
@@ -59,16 +59,10 @@
 	}
 }
 .ArtifactActionPanel{
-	display:none;
-	background-color: rgba(40,29,35,0.5);
 	width:100%;
 	text-align: center;
-	border-radius:2px 2px 0px 0px;
+
 	height:34px;
-	position: absolute;
-	left: 0px;
-	top: 0px;
-	z-index: 1;
 
 }
 /*.Artifact-onhover>ul{
@@ -85,36 +79,17 @@
 	word-wrap: break-word;
 	word-break: break-all;
 }
-.Artifact-Header [class *="ActionElement"]:first-child{
-	/*the same margin as for thumbnail*/
-	margin-left: 20px;
-}
-.Artifact-Header{
-	.ActionElement{
-		img {
-			border:1px solid rgba(40,29,35,0);
-			border-radius: 2px 2px 2px 2px;
-		}
-		&:hover{
-			img{
-			background-color: rgba(200,200,200,0.5);
-			border-radius: 2px 2px 2px 2px;
-			}
-		}
-	}
-}
+
 .ArtifactActionPanel, .ACTRActionPanel{
 	.ActionElement {
-		img {
-			border:1px solid rgba(40,29,35,0);
-			border-radius: 2px 2px 2px 2px;
-		}
-		&:hover{
-			img {
-			background-color: rgba(92,81,79,0.5);
-			border-radius: 2px 2px 2px 2px;
-			}
-		}
+      img {
+        opacity: 0.5;
+      }
+      &:hover{
+        img{
+          opacity: 1;
+        }
+      }
 	}
 }
 .ImportantInformation{

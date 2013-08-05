@@ -44,3 +44,74 @@
     style: "list-style-type: none";
   }
 }
+
+.chevron-fletching{
+  position: absolute;
+  left:0px;
+  top: 0px;
+  width:0;
+  height: 0;
+  border-top: 15px solid dimgray;
+  border-bottom: 15px solid dimgray;
+  border-left: 15px solid transparent;
+
+}
+.chevron-body{
+  position: absolute;
+  left:15px;
+  top: 0px;
+  width:80px;
+  height: 30px;
+  background-color: dimgray;
+
+  text-align: center;
+  line-height: 30px;
+}
+.chevron-head{
+  position: absolute;
+  left:95px;
+  top: 0px;
+  width:0;
+  height: 0;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  border-left: 15px solid dimgray;
+
+}
+
+
+.InspectionStatusBarContainer{
+  height: 30px;
+  .InspectionStatusBar{
+    width: 400px;
+    margin: 0px auto 0px auto;
+    .chevron{
+      position: relative;
+      color: white;
+      .currentStatusChevronFletching{
+        border-top: 15px solid green;
+        border-bottom: 15px solid green;
+      }
+      .currentStatusChevronHead{
+        border-left: 15px solid green;
+      }
+      .currentStatusChevronBody{
+        background-color: green;
+      }
+    }
+    .statusPreparation{
+      left: 0px;
+    }
+    .statusInspection{
+      left: 100px;
+    }
+    .statusRework{
+      left: 200px;
+    }
+    .statusFinished{
+      left: 300px;
+    }
+  }
+  text-align: center;
+}
+
