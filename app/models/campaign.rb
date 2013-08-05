@@ -60,17 +60,20 @@ class Campaign < ActiveRecord::Base
         #give permissions
         case row["Role"]
           when "I" then
-            user.grant :inspector, inspection  #apply regexp later here
             Participation.create user: user, inspection: inspection, role: "inspector"
-            puts "#{user.name} #{inspection.id} inspector"
+            #puts "#{user.name} #{inspection.id} inspector"
+            #puts inspection
+            user.grant :inspector, inspection  #apply regexp later here
           when "M" then
-            user.grant :moderator, inspection  #apply regexp later here
             Participation.create user: user, inspection: inspection, role: "moderator"
-            puts "#{user.name} #{inspection.id} moderator"
+            #puts "#{user.name} #{inspection.id} moderator"
+            #puts inspection
+            user.grant :moderator, inspection  #apply regexp later here
           when "A" then
-            user.grant :author, inspection  #apply regexp later here
             Participation.create user: user, inspection: inspection, role: "author"
-            puts "#{user.name} #{inspection.id} author"
+            #puts "#{user.name} #{inspection.id} author"
+            #puts inspection
+            user.grant :author, inspection  #apply regexp later here
           else  puts "oops expect some kind of warning here"
         end
 
