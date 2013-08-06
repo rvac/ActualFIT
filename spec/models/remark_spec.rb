@@ -3,7 +3,6 @@
 # Table name: remarks
 #
 #  id            :integer          not null, primary key
-#  location      :string(255)
 #  content       :string(255)
 #  user_id       :integer
 #  inspection_id :integer

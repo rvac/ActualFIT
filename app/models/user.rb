@@ -9,6 +9,10 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  remember_token  :string(255)
+#  skype           :string(255)
+#  phone           :string(255)
+#  address         :string(255)
+#  additional_info :string(255)
 #
 
 class User < ActiveRecord::Base

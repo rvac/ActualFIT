@@ -7,18 +7,9 @@
 #  comment    :string(255)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  status     :string(255)
 #
 
-# == Schema Information
-#
-# Table name: campaigns
-#
-#  id         :integer          not null, primary key
-#  name       :string(255)
-#  comment    :string(255)
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#
 require 'fileutils'
 
 class Campaign < ActiveRecord::Base
@@ -27,7 +18,11 @@ class Campaign < ActiveRecord::Base
   has_many :inspections, :dependent => :destroy
 
   validate :name, presence: true
+  VALID_STATUS_REGEX = /\A(open)|(closed)\z/
 
+  validates :status, presence: true,
+            format: {with: VALID_STATUS_REGEX}
+  before_validation { |c| c.status = 'open' }
   after_create 'FileUtils.rm @new_file_link, force: true if @new_file_link'
 
   def assignments=(file)

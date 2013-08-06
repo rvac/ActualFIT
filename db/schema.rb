@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130805192455) do
+ActiveRecord::Schema.define(:version => 20130806005158) do
 
   create_table "artifacts", :force => true do |t|
     t.string   "name"
@@ -50,8 +50,9 @@ ActiveRecord::Schema.define(:version => 20130805192455) do
     t.string   "comment"
     t.datetime "startDate"
     t.datetime "endDate"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "inspection_id"
   end
 
   create_table "inspections", :force => true do |t|
@@ -65,6 +66,19 @@ ActiveRecord::Schema.define(:version => 20130805192455) do
 
   add_index "inspections", ["name"], :name => "index_inspections_on_name"
 
+  create_table "locations", :force => true do |t|
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.integer  "remark_id"
+    t.string   "description"
+    t.string   "element_type"
+    t.string   "element_number"
+    t.string   "element_name"
+    t.string   "diagram"
+    t.string   "path"
+    t.integer  "line_number"
+  end
+
   create_table "participations", :force => true do |t|
     t.integer  "user_id"
     t.datetime "created_at",    :null => false
@@ -74,7 +88,6 @@ ActiveRecord::Schema.define(:version => 20130805192455) do
   end
 
   create_table "remarks", :force => true do |t|
-    t.string   "location"
     t.string   "content"
     t.integer  "user_id"
     t.integer  "inspection_id"

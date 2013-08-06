@@ -3,7 +3,6 @@
 # Table name: remarks
 #
 #  id            :integer          not null, primary key
-#  location      :string(255)
 #  content       :string(255)
 #  user_id       :integer
 #  inspection_id :integer
@@ -20,6 +19,7 @@ class Remark < ActiveRecord::Base
   belongs_to :user
   belongs_to :inspection
   belongs_to :artifact
+  has_one :location
 
   VALID_LOCATION_REGEX = /\A((line)|(diagram)|(picture)|(figure)|(inspection))\s?\d*\z/i
 

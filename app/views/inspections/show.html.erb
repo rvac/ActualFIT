@@ -1,6 +1,7 @@
 <div id="openedInspection"class="row-fluid InspectionSelected">
     <div class="span12">
         <%= render partial: 'inspections/status', locals: {status: @inspection.status} %>
+        <%= render partial: 'inspections/deadline', locals: {inspection: @inspection} %>
         <div class="row-fluid"  style="text-align: center;">
 
           <h3 style="margin: 0px;">
