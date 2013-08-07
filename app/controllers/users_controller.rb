@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-	before_filter   :signed_in_user, only: [:edit, :update]
-	before_filter   :correct_user, only: [:edit, :update]
+	before_filter   :signed_in_user, except: [:new, :create]
+	before_filter   :correct_user, except: [:new, :create]
   #load_and_authorize_resource
 
 	def new
@@ -24,7 +24,9 @@ class UsersController < ApplicationController
       if ((current_user.has_role? :supervisor) || ( current_user.has_role? :admin ))
         @users = User.all
       elsif !current_inspection.nil?
-        @users = current_inspection.users
+        #@users = current_inspection.users
+        @users = current_inspection.users.uniq
+
       else
         @users = [] # think of something smart. What happen if there are several inspections or no inspections at all
       end
@@ -33,11 +35,9 @@ class UsersController < ApplicationController
   end
 	def show
 		@user = User.find(params[:id])
-		@chat_messages = @user.chat_messages
-    #@userTeams = []
-    #if !@user.inspection_team_id.nil?
-    #  @userTeams = [Participation.find(@user.inspection_team_id)]
-    #end
+		if @user.attributes.values.compact.count <= 8
+      flash.now[:notice] = "Please add some information to your profile"
+    end
 
 	end
 	def create
@@ -46,7 +46,7 @@ class UsersController < ApplicationController
 	    	sign_in @user if current_user.nil?
 			flash[:success] = "Welcome aboard!"
 			#redirect_to root_url
-      flash[:notice] = "Please add some information about you"
+      flash[:notice] = "Please add some information to your profile"
 			redirect_to edit_user_path(@user)
 		else
 			render 'new'
@@ -105,24 +105,27 @@ class UsersController < ApplicationController
 	# Function to be modified. Taken from SAMPLEAPP
 	def update
     @user = User.find(params[:id])
-    @campaigns = Campaign.all
-
 
     if @user.update_attributes(params[:user])
       #handle a successful update
       flash[:success] = "Profile updated"
-       sign_in @user if current_user?(@user)
-       #redirect_to @user
-       redirect_back_or @user
+      sign_in @user if current_user?(@user)
+      #redirect_to @user
+      redirect_back_or @user
     else
        render 'edit'
     end
-
-
     #redirect_to @user
 	end
   def get_profile_picture
-
+    @user = User.find(params[:id])
+    if !@user.profile_picture.nil? && !@user.content_type.nil?
+      send_data @user.profile_picture, type: @user.content_type, :disposition => 'inline'
+    else
+      #data = File.open("#{Rails.root}/app/assets/images/profile-pics/av-8714.jpg", "rb") {|io| io.read}
+      #File.read("#{Rails.root}/app/assets/images/profile-pics/", :mode => "rb"), :filename => 'av-8714.jpg'
+      #send_file data, type: 'image/jpeg', :disposition => 'inline'
+    end
   end
 	private
 

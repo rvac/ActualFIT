@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130807095216) do
+ActiveRecord::Schema.define(:version => 20130807205348) do
 
   create_table "artifacts", :force => true do |t|
     t.string   "name"
@@ -112,13 +112,15 @@ ActiveRecord::Schema.define(:version => 20130807095216) do
     t.string   "name"
     t.string   "email"
     t.string   "password_digest"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
     t.string   "remember_token"
     t.string   "skype"
     t.string   "phone"
     t.string   "address"
     t.string   "additional_info"
+    t.binary   "profile_picture", :limit => 256000
+    t.string   "content_type"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

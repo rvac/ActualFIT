@@ -2,6 +2,7 @@ ActualFIT::Application.routes.draw do
 
 
   resources :users  do
+    get 'get_profile_picture', on: :member
     put 'grant_role', on: :member
     put 'revoke_role', on: :member
   end

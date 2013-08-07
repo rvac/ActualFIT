@@ -13,12 +13,14 @@
 #  phone           :string(255)
 #  address         :string(255)
 #  additional_info :string(255)
+#  profile_picture :binary(256000)
+#  content_type    :string(255)
 #
 
 class User < ActiveRecord::Base
   rolify
 
-	attr_accessible :email, :name, :password, :password_confirmation , :skype, :phone, :address, :additional_info
+	attr_accessible :email, :name, :password, :password_confirmation , :skype, :phone, :address, :additional_info, :datafile
 	has_secure_password
 	has_many :chat_messages, :dependent => :destroy
   has_many :participations, :dependent => :destroy
@@ -38,11 +40,24 @@ class User < ActiveRecord::Base
 	validates :password, presence: true, length: { minimum: 6 }
 	validates :password_confirmation, presence: true
 
-  #def name
-  #  "#{} #{}"
+  def datafile=(incoming_file)
+    if ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png', 'image/jpg'].include?(incoming_file.content_type)
+      self.content_type = incoming_file.content_type
+      self.profile_picture = incoming_file.read
+      incoming_file.rewind
+    else
+      errors.add(:profile_picture, 'should be a png, jpg or gif image')
+    end
+  end
+  #def initialize(attributes = nil, options = {})
+  #  self.initialize(attributes, options)
   #end
-  #
   private
+    def sanitize_filename(filename)
+      just_filename = File.basename(filename)
+      just_filename.gsub(/[^\w\.\-]/, '_')
+    end
+
 		def create_remember_token
 		  #create the token here
 		  self.remember_token = SecureRandom.urlsafe_base64

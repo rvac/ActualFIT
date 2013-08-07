@@ -13,6 +13,8 @@
 #  phone           :string(255)
 #  address         :string(255)
 #  additional_info :string(255)
+#  profile_picture :binary(256000)
+#  content_type    :string(255)
 #
 
 require 'spec_helper'
