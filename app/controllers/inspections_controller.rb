@@ -123,7 +123,7 @@ class InspectionsController < ApplicationController
 
       if current_user.has_role?(:moderator, Inspection) && (params[:status] != 'archived') && (params[:status] != 'closed')
         #there should be a checkup on validity of inspection )
-        if @inspection.update_deadline(params[:status], params[:endDate])
+        if @inspection.update_deadline(params[:status], Date.strptime(params[:endDate], '%Y-%m-%d'))
           respond_to do |format|
             format.js  {}
           end
@@ -131,12 +131,13 @@ class InspectionsController < ApplicationController
           flash.now[:error] = "Deadline for the inspection is not valid"
         end
       else
-        if @inspection.update_deadline(params[:status], params[:endDate])
+        if @inspection.update_deadline(params[:status], Date.strptime(params[:endDate], '%Y-%m-%d'))
+          @inspection.reload
           respond_to do |format|
             format.js  {}
           end
         else
-          flash.now[:error] = "Deadline for the inspection is not valid"
+          flash[:error] = "Deadline for the inspection is not valid"
         end
       end
     end

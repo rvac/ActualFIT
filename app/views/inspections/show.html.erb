@@ -1,39 +1,17 @@
 <div id="openedInspection"class="row-fluid InspectionSelected">
     <div class="span12">
-        <%= render partial: 'inspections/status_bar', locals: {inspection: @inspection} %>
-        <%= render partial: 'inspections/deadline_bar', locals: {inspection: @inspection} %>
         <div class="row-fluid"  style="text-align: center;">
-
           <h3 style="margin: 0px;">
             <% if can? :edit, @inspection %>
                 <%= link_to "Inspection #{@inspection.fullname }", edit_inspection_path(@inspection) %>
             <% else %>
                 <%= "Inspection #{@inspection.fullname }" %>
             <% end %>
-                      </h3>
-          <% if can? :change_status, @inspection %>
-              <% if ((current_user.has_role?(:admin, @inspection)) || (current_user.has_role?(:supervisor, @inspection)))%>
-                  <% status_list = Inspection.admin_status_list %>
-              <% else %>
-                  <% status_list = Inspection.status_list  %>
-              <% end %>
-              <div class="dropdown">
-                <!-- Link or button to toggle dropdown -->
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">
-                  <%= content_tag :span, @inspection.status, id: "InspectionStatus" %>
-                  <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                  <% status_list.each do |status| %>
-                      <%= content_tag(:li, link_to(status, change_status_inspection_path(@inspection, status: status), confirm: "Change #{@inspection.name} status from #{@inspection.status} to #{status}?", method: :put, remote: true)) %>
-                  <% end %>
-                </ul>
-              </div>
-          <% else %>
-              <%= @inspection.status %>
-          <% end %>
+          </h3>
         </div>
-        <div class="row-fluid">
+      <%= render partial: 'inspections/status_bar', locals: {inspection: @inspection} %>
+      <%= render partial: 'inspections/deadline_bar', locals: {inspection: @inspection} %>
+      <div class="row-fluid">
             <%= render partial: 'artifacts/artifacts_list', locals: {inspection: @inspection} %>
             <%= render partial: 'remarks/remarks_table', locals: {inspection: @inspection} %>
             <%= render partial: 'chat_messages/chat', locals: {inspection: @inspection} %>

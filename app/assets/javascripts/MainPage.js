@@ -57,6 +57,8 @@ $(document).ready(function(){
                 _d = e.date.getDate(),
                 d = (_d > 9 ? _d : '0'+_d);
             $(this).text(y + '-' + m + '-' + d);
+            $(this).next("#endDate").val(y + '-' + m + '-' + d);
+            $(this).next("#endDate").next("#submitDeadline").show();
         });
 	var propsTimeout;
 	var ChatShown = true;

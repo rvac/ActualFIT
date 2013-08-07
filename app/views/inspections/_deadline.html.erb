@@ -3,13 +3,29 @@
     <%= content_tag :div, class: "chevron status#{status.titleize}", id: "status#{status.titleize}" do -%>
         <% if status == inspection.status %>
             <div class="chevron-fletching currentStatusChevronFletching"></div>
-            <%= link_to deadlines[status], '#', class: "chevron-body currentStatusChevronBody", id: "dp#{status}", data: { date: deadlines[status], date_format: "yyyy-mm-dd", date_autoclose: "true" } %>
-            <% content_tag(:div, deadlines[status], class: "chevron-body currentStatusChevronBody") %>
+            <% if can? :change_deadline, inspection %>
+                <%= form_tag(change_deadline_inspection_path(inspection), :method => :put, remote: true) do %>
+                    <%= hidden_field_tag :status, status %>
+                    <%= link_to deadlines[status], '#', class: "chevron-body currentStatusChevronBody", id: "dp#{status}", data: { date: deadlines[status], date_format: "yyyy-mm-dd", date_autoclose: "true" } %>
+                    <%= hidden_field_tag :endDate, deadlines[status], id: "endDate" %>
+                    <%= image_submit_tag("icon_32/save_32.png", class: "submitDeadline", id: "submitDeadline") %>
+                <% end %>
+            <% else %>
+                <%= content_tag(:div, deadlines[status], class: "chevron-body currentStatusChevronBody") %>
+            <% end %>
             <div class="chevron-head currentStatusChevronHead"></div>
         <% else %>
             <div class="chevron-fletching"></div>
-            <%= link_to deadlines[status], '#', class: "chevron-body", id: "dp#{status}", data: { date: deadlines[status], date_format: "yyyy-mm-dd", date_autoclose: "true" } %>
-            <% content_tag(:div, deadlines[status], class: "chevron-body") %>
+            <% if can? :change_deadline, inspection %>
+                <%= form_tag(change_deadline_inspection_path(inspection), :method => :put, remote: true) do %>
+                    <%= hidden_field_tag :status, status %>
+                    <%= link_to deadlines[status], '#', class: "chevron-body", id: "dp#{status}", data: { date: deadlines[status], date_format: "yyyy-mm-dd", date_autoclose: "true" } %>
+                    <%= hidden_field_tag :endDate, deadlines[status], id: "endDate" %>
+                    <%= image_submit_tag("icon_32/save_32.png", class: "submitDeadline", id: "submitDeadline") %>
+                <% end %>
+            <% else %>
+                <%= content_tag(:div, deadlines[status], class: "chevron-body") %>
+            <% end %>
             <div class="chevron-head"></div>
         <% end %>
     <% end %>

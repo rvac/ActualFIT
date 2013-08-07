@@ -70,9 +70,6 @@
 
   text-align: center;
   line-height: 30px;
-  a{
-    color: white;
-  }
 }
 .chevron-head{
   position: absolute;
@@ -104,6 +101,23 @@
       }
       .currentStatusChevronBody{
         background-color: green;
+
+      }
+      form{
+        position: absolute;
+        left: 0px;
+        color: transparent;
+        .submitDeadline{
+          display: none;
+          position: absolute;
+          padding: 0px;
+          margin: 0px;
+          top: 30px;
+          left: 40px;
+          background-color: transparent;
+          z-index: 2;
+          border: 0px;
+        }
       }
     }
     .statusPreparation{

@@ -9,7 +9,7 @@ module ArtifactsHelper
     end
 
     if can? :read, artifact
-		actionPanel_content << link_to(image_tag('icon_32/save_32.png', alt:"save on disk"), 
+		actionPanel_content << link_to(image_tag('icon_32/down_32.png', alt:"save on disk"),
 			inspection_artifact_path(artifact.inspection_id,artifact.id), class: "ActionElement")
     end
 
