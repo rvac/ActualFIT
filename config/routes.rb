@@ -9,10 +9,13 @@ ActualFIT::Application.routes.draw do
   resources :inspections do
     get 'download_artifacts', on: :member
     get 'upload_remarks', on: :member
+    get 'download_remarks', on: :member
+    get 'download_remarks_template', on: :member
     post 'upload_remarks', on: :member
     put 'change_status', on: :member
     put 'add_user', on: :member
     put 'remove_user', on: :member
+    put 'change_deadline', on: :member
     resources :artifacts
     resources :remarks
     resources :chat_messages, only: [:index, :create]

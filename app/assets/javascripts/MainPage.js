@@ -49,7 +49,15 @@ $(document).ready(function(){
 
 
 //    setInterval(refreshPartial, 3000);
-
+    $('#dprework, #dppreparation, #dpfinished, #dpinspection').datepicker()
+        .on('changeDate', function(e){
+            var y = e.date.getFullYear(),
+                _m = e.date.getMonth() + 1,
+                m = (_m > 9 ? _m : '0'+_m),
+                _d = e.date.getDate(),
+                d = (_d > 9 ? _d : '0'+_d);
+            $(this).text(y + '-' + m + '-' + d);
+        });
 	var propsTimeout;
 	var ChatShown = true;
 	$("div.ArtifactBody").click(function(){

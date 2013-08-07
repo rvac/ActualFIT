@@ -18,3 +18,13 @@
     overflow-y:hidden;
   }
 }
+.UserProfileAttibutes{
+  min-width: 25em;
+}
+
+.UserPartialCompact{
+  max-height: 300px;
+  overflow: auto;
+  max-width: 18em;
+  min-width: 10em;
+}

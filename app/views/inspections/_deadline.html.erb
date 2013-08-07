@@ -1,58 +1,16 @@
-<% deadlines = inspection.deadlines_to_hash %>
-<div class="row-fluid InspectionStatusBarContainer" id="InspectionDeadlineBarContainer">
-  <div class="InspectionStatusBar">
-    <div class="">
-      <div class="chevron" id="statusPreparation">
 
-        <% if inspection.status == "preparation" %>
+  <div class="">
+    <%= content_tag :div, class: "chevron status#{status.titleize}", id: "status#{status.titleize}" do -%>
+        <% if status == inspection.status %>
             <div class="chevron-fletching currentStatusChevronFletching"></div>
-            <div class="chevron-body currentStatusChevronBody"><%= deadlines["preparation"] %></div>
+            <%= link_to deadlines[status], '#', class: "chevron-body currentStatusChevronBody", id: "dp#{status}", data: { date: deadlines[status], date_format: "yyyy-mm-dd", date_autoclose: "true" } %>
+            <% content_tag(:div, deadlines[status], class: "chevron-body currentStatusChevronBody") %>
             <div class="chevron-head currentStatusChevronHead"></div>
         <% else %>
             <div class="chevron-fletching"></div>
-            <div class="chevron-body"><%= deadlines["preparation"] %></div>
+            <%= link_to deadlines[status], '#', class: "chevron-body", id: "dp#{status}", data: { date: deadlines[status], date_format: "yyyy-mm-dd", date_autoclose: "true" } %>
+            <% content_tag(:div, deadlines[status], class: "chevron-body") %>
             <div class="chevron-head"></div>
         <% end %>
-      </div>
-    </div>
-    <div class="">
-      <div class="chevron statusInspection">
-        <% if inspection.status == "inspection" %>
-            <div class="chevron-fletching currentStatusChevronFletching"></div>
-            <div class="chevron-body currentStatusChevronBody"><%= deadlines["inspection"] %></div>
-            <div class="chevron-head currentStatusChevronHead"></div>
-        <% else %>
-            <div class="chevron-fletching"></div>
-            <div class="chevron-body"><%= deadlines["inspection"] %></div>
-            <div class="chevron-head"></div>
-        <% end %>
-      </div>
-    </div>
-    <div class="">
-      <div class="chevron statusRework">
-        <% if inspection.status == "rework" %>
-            <div class="chevron-fletching currentStatusChevronFletching"></div>
-            <div class="chevron-body currentStatusChevronBody"><%= deadlines["rework"] %></div>
-            <div class="chevron-head currentStatusChevronHead"></div>
-        <% else %>
-            <div class="chevron-fletching"></div>
-            <div class="chevron-body"><%= deadlines["rework"] %></div>
-            <div class="chevron-head"></div>
-        <% end %>
-      </div>
-    </div>
-    <div class="">
-      <div class="chevron statusFinished">
-        <% if inspection.status == "finished" %>
-            <div class="chevron-fletching currentStatusChevronFletching"></div>
-            <div class="chevron-body currentStatusChevronBody"><%= deadlines["finished"] %></div>
-            <div class="chevron-head currentStatusChevronHead"></div>
-        <% else %>
-            <div class="chevron-fletching"></div>
-            <div class="chevron-body"><%= deadlines["finished"] %></div>
-            <div class="chevron-head"></div>
-        <% end %>
-      </div>
-    </div>
+    <% end %>
   </div>
-</div>

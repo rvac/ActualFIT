@@ -8,7 +8,11 @@
         <%= c.label :comment %>
         <%= c.text_field :comment %>
 
+        <%= c.label :assignments %>
+        <%= c.file_field :assignments %>
+
         <%= c.submit 'Save changes', class: "btn btn-primary btn-large" %>
+
         <%= content_tag(:h3, link_to('Create Inspection', new_inspection_path)) %>
         <%= content_tag(:h3, link_to('Delete Campaign', campaign_path(@campaign), method: :delete, confirm: "Do you want to delete #{@campaign.name}?"))  if can? :destroy, @campaign%>
       </div>

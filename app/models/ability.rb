@@ -58,6 +58,7 @@
     can :create, ChatMessage, inspection_id: Inspection.with_role(:moderator, user).select {|i| !(['finished', 'closed', 'archived'].include?(i.status))}.map(&:id).uniq
     can :crud, Remark, inspection_id: Inspection.with_role(:moderator, user).select {|i| !(['finished', 'closed', 'archived'].include?(i.status))}.map(&:id).uniq
     can :change_status, Inspection, id: Inspection.with_role(:moderator, user).select {|i| i.active? }.map(&:id).uniq
+    can :change_deadline, Inspection, id: Inspection.with_role(:moderator, user).select {|i| i.active? }.map(&:id).uniq
     can :upload_remarks, Inspection, id: Inspection.with_role(:moderator, user).select {|i| !(['finished', 'closed', 'archived'].include?(i.status))}.map(&:id).uniq
     can :download_artifacts, Inspection, id: Inspection.with_role(:moderator, user).select {|i| !(['finished', 'closed', 'archived'].include?(i.status))}.map(&:id).uniq
     #Managing deadlines

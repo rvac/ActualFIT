@@ -1,3 +1,4 @@
-$("#InspectionStatusBarContainer").html("<%= j render partial: 'inspections/status', locals: {status: @inspection.status }  %>");
+$(".InspectionStatusBar[inspection_id=<%= @inspection.id %>]").html("<%= j render partial: 'inspections/status_bar', locals: {inspection: @inspection}  %>");
+$(".InspectionDeadlineBar[inspection_id=<%= @inspection.id %>]").html("<%= j render partial: 'inspections/deadline_bar', locals: {inspection: @inspection }  %>");
 $('#InspectionStatus').html("<%= j @inspection.status %>");
 $('.dropdown.open .dropdown-toggle').dropdown('toggle');

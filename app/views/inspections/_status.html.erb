@@ -1,56 +1,13 @@
-<div class="row-fluid InspectionStatusBarContainer" id="InspectionStatusBarContainer">
-  <div class="InspectionStatusBar">
-    <div class="">
-      <div class="chevron" id="statusPreparation">
-        <% if status == "preparation" %>
-            <div class="chevron-fletching currentStatusChevronFletching"></div>
-            <div class="chevron-body currentStatusChevronBody">preparation</div>
-            <div class="chevron-head currentStatusChevronHead"></div>
-        <% else %>
-            <div class="chevron-fletching"></div>
-            <div class="chevron-body">preparation</div>
-            <div class="chevron-head"></div>
-        <% end %>
-      </div>
-    </div>
-    <div class="">
-      <div class="chevron statusInspection">
-        <% if status == "inspection" %>
-            <div class="chevron-fletching currentStatusChevronFletching"></div>
-            <div class="chevron-body currentStatusChevronBody">inspection</div>
-            <div class="chevron-head currentStatusChevronHead"></div>
-        <% else %>
-            <div class="chevron-fletching"></div>
-            <div class="chevron-body">inspection</div>
-            <div class="chevron-head"></div>
-        <% end %>
-      </div>
-    </div>
-    <div class="">
-      <div class="chevron statusRework">
-        <% if status == "rework" %>
-            <div class="chevron-fletching currentStatusChevronFletching"></div>
-            <div class="chevron-body currentStatusChevronBody">rework</div>
-            <div class="chevron-head currentStatusChevronHead"></div>
-        <% else %>
-            <div class="chevron-fletching"></div>
-            <div class="chevron-body">rework</div>
-            <div class="chevron-head"></div>
-        <% end %>
-      </div>
-    </div>
-    <div class="">
-      <div class="chevron statusFinished">
-        <% if status == "finished" %>
-            <div class="chevron-fletching currentStatusChevronFletching"></div>
-            <div class="chevron-body currentStatusChevronBody">finished</div>
-            <div class="chevron-head currentStatusChevronHead"></div>
-        <% else %>
-            <div class="chevron-fletching"></div>
-            <div class="chevron-body">finished</div>
-            <div class="chevron-head"></div>
-        <% end %>
-      </div>
-    </div>
-  </div>
+<div class="">
+  <%= content_tag :div, class: "chevron status#{status.titleize}", id: "status#{status.titleize}" do -%>
+    <% if status == inspection.status %>
+        <div class="chevron-fletching currentStatusChevronFletching"></div>
+        <%= content_tag(:div, link_to(status, change_status_inspection_path(inspection, status: status), confirm: "Change #{inspection.name} status from #{inspection.status} to #{status}?", method: :put, remote: true), class: "chevron-body currentStatusChevronBody") %>
+        <div class="chevron-head currentStatusChevronHead"></div>
+    <% else %>
+        <div class="chevron-fletching"></div>
+        <%= content_tag(:div, link_to(status, change_status_inspection_path(inspection, status: status), confirm: "Change #{inspection.name} status from #{inspection.status} to #{status}?", method: :put, remote: true), class: "chevron-body") %>
+        <div class="chevron-head"></div>
+    <% end %>
+  <% end %>
 </div>

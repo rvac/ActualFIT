@@ -84,28 +84,3 @@
 	overflow-x: none;
 	overflow-y: auto;
 }
-.Dock{
-	background-color: rgba(0,0,0,0.5);
-	color:white;
-	width:20px;
-	height: 100%;
-	position: absolute;
-
-	top:0px;
-	left:-25px;
-	-moz-border-radius:5px 0px 0px 5px;
-	-webkit-border-radius:5px 0px 0px 5px;
-	border-radius:5px 0px 0px 5px;
-	display:none;
-}
-.Dock > p:last-child{
-	position: relative;
-	top:25%;
-	/*padding-top: 40%;*/
-	width: 1em;
-	text-align: center;
-
-}
-.Dock:hover{
-	color:orange;
-}

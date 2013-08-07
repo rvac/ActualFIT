@@ -1,0 +1,29 @@
+<%= content_tag :li, class: "UserPartialCompact", user_id: user.id  do -%>
+    <%= content_tag :div, class: "thumbnail" do -%>
+        <%= content_tag :div, class: "row-fluid Responsible" do -%>
+            <%= content_tag :div, class: "" do -%>
+                <%= image_tag 'profile-pics/av-8714.jpg', width: "100px", height: "100px" %>
+            <% end -%>
+            <%= content_tag :div, class: "" do -%>
+                <%= content_tag :h4 do -%>
+                    <% if can? :edit, user %>
+                        <%= link_to user.name, user_path(user) %>
+                        <%= link_to('Delete User', user_path(user), style: "padding-left: 1em;", class: "pull-right", method: :delete, confirm: "Do you want to permanently delete #{user.name}?") if can? :delete, user%>
+                        <%= link_to 'Edit', edit_user_path(user), class: "pull-right" %>
+                    <% else %>
+                        <%= link_to user.name, user_path(user) %>
+                    <% end %>
+                <% end -%>
+                <%= content_tag :div, class: "UserRoles", user_id: user.id  do -%>
+                    <%= render( :partial => 'users/user_roles', locals: {user: user}) %>
+                <% end -%>
+                <%= content_tag :div, class: "GrantUserRoles", user_id: user.id  do -%>
+                    <%= render( :partial => 'users/user_grant_role', locals: {user: user}) %>
+                <% end -%>
+                <%= content_tag :div, class: "UserInspections", user_id: user.id  do -%>
+                    <%= render( :partial => 'users/user_inspections', locals: {user: user}) %>
+                <% end -%>
+            <% end -%>
+        <% end -%>
+    <% end -%>
+<% end -%>

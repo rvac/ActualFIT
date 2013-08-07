@@ -46,7 +46,8 @@ class UsersController < ApplicationController
 	    	sign_in @user if current_user.nil?
 			flash[:success] = "Welcome aboard!"
 			#redirect_to root_url
-			redirect_to @user
+      flash[:notice] = "Please add some information about you"
+			redirect_to edit_user_path(@user)
 		else
 			render 'new'
 		end
@@ -120,7 +121,9 @@ class UsersController < ApplicationController
 
     #redirect_to @user
 	end
+  def get_profile_picture
 
+  end
 	private
 
 		def correct_user

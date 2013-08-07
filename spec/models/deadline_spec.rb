@@ -5,8 +5,8 @@
 #  id            :integer          not null, primary key
 #  name          :string(255)
 #  comment       :string(255)
-#  startDate     :datetime
-#  endDate       :datetime
+#  startDate     :date
+#  endDate       :date
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  inspection_id :integer

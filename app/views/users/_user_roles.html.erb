@@ -1,7 +1,6 @@
 <% if user.roles.any? %>
     <%= content_tag :h5, 'Roles' %>
     <%= content_tag :ul, style: "list-style: none;" do -%>
-
         <% user.roles.each do |r| %>
             <%= content_tag :li do -%>
                 <%= r.name %>
@@ -15,7 +14,6 @@
                     <% end %>
                     <%= link_to('revoke', revoke_role_user_path(user, role: r.name, resource_type: r.resource_type, resource_id: r.resource_id), method: :put, confirm: "Remove #{r.name} on #{r.resource_type} #{object.name} role from #{user.name}",remote: true) if can? :revoke_role, user %>
                 <% else %>
-                    everywhere
                     <%= link_to('revoke', revoke_role_user_path(user, role: r.name), method: :put,confirm: "Remove global #{r.name} role from #{user.name}", remote: true) if can? :revoke_role, user%>
                 <% end %>
             <% end -%>

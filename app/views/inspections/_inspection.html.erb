@@ -1,14 +1,15 @@
 <% if can? :read, insp %>
     <%= content_tag :li do -%>
         <%= content_tag :div, class: "thumbnail" do -%>
-            <div class="row-fluid">
+            <div class="row-fluid InspectionEdit">
               <%= content_tag :h5 do -%>
                   <%= link_to("visit #{insp.name} inspection", inspection_path(insp)) %>
                   <%= link_to('edit inspection', edit_inspection_path(insp)) %>
               <% end -%>
             </div>
 
-             <%= render partial: 'inspections/status', locals: {status: insp.status} %>
+            <%= render partial: 'inspections/status_bar', locals: {inspection: insp} %>
+            <%= render partial: 'inspections/deadline_bar', locals: {inspection: insp} %>
 
         <% end -%>
     <% end -%>

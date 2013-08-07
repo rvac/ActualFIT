@@ -1,0 +1,96 @@
+<%= content_tag :div, id: "artifacts", class: "ArtifactsPanel span3 pull-left"  do -%>
+    <div class="row-fluid Artifact-HeaderRow">
+      <div class="span12 Artifacts">
+        <ul class="thumbnails">
+          <% if can? :create, Artifact, inspection_id: inspection.id %>
+              <li>
+                <div class="thumbnail">
+                  <%= content_tag :div, class: "well well-small Artifact" do -%>
+                      <%= content_tag :div, class: "row-fluid ArtifactBody" do -%>
+                          <%= image_tag('icon_32/plus_32.png', alt:"add artifact") %>
+                          <%= link_to(content_tag(:strong, "add artifact", class:"ArtifactName"), new_inspection_artifact_path(inspection.id), class: "ActionElement") %>
+                      <% end -%>
+                  <% end -%>
+                </div>
+              </li>
+          <% end %>
+          <% if can? :upload_remarks, inspection %>
+              <li>
+                <div class="thumbnail">
+                  <%= content_tag :div, class: "well well-small Artifact" do -%>
+                      <%= content_tag :div, class: "row-fluid ArtifactBody" do -%>
+                          <%= image_tag('icon_32/up_32.png', alt:"upload remark") %>
+                          <%= link_to(content_tag(:strong, "upload remarks", class:"ArtifactName"),upload_remarks_inspection_path(inspection.id), class: "ActionElement") %>
+                      <% end -%>
+                  <% end -%>
+                </div>
+              </li>
+          <% end %>
+          <% if can? :download_artifacts, inspection %>
+              <li class="thumbnail">
+                <%= content_tag :div, class: "well well-small Artifact" do -%>
+                    <%= content_tag :div, class: "row-fluid ArtifactBody" do -%>
+                        <%= image_tag('icon_32/save_32.png', alt:"download artifacts") %>
+                        <%= link_to(content_tag(:strong, "download artifacts", class:"ArtifactName"), download_artifacts_inspection_path(inspection.id), class: "ActionElement") %>
+                    <% end -%>
+                <% end -%>
+
+              </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <div class="row-fluid ArtifactsRowContainer">
+      <div class="span12 Artifacts">
+        <%= content_tag :ul, class: "thumbnails", id: "ArtifactsList", data: { url: inspection_artifacts_url(inspection)} do -%>
+            <% artifacts_html = render partial: 'artifacts/artifact', collection: inspection.artifacts, as: :art, locals: {inspection: inspection} %>
+            <%= artifacts_html || ''%>
+        <% end -%>
+      </div>
+    </div>
+<% end -%>
+
+
+<!-- <div class="ArtifactResposible">
+<div class="row-fluid Responsible">
+   <div class="span4">
+   	<img src="profile-pics/av-8714.jpg">
+   </div>
+   <div class="span8">
+   	<h4>Alex the Inspector</h4>
+      <p>Artifact 1, Artifact 3</p>
+ 	</div>   
+</div>
+<div class="row-fluid Responsible-Selected">
+   <div class="span4">
+   	<img src="profile-pics/av-8714.jpg">
+   </div>
+   <div class="span8">
+   	<h4>Alex the Inspector</h4>
+      <p>Artifact 1, Artifact 3</p>
+ 	</div>   
+</div>
+<div class="row-fluid Responsible">
+   <div class="span4">
+   	<img src="profile-pics/av-8714.jpg">
+   </div>
+   <div class="span8">
+   	<h4>Alex the Inspector</h4>
+      <p>Artifact 1, Artifact 3</p>
+ 	</div>   
+</div>  
+<div class="row-fluid Responsible">
+   <div class="span4">
+   	<img src="profile-pics/av-8714.jpg">
+   </div>
+   <div class="span8">
+   	<h4>Alex the Inspector</h4>
+      <p>Artifact 1, Artifact 3</p>
+ 	</div>   
+</div>
+<div class="row-fluid ResponsibleConfirmation">
+	<span class="span6"> Cancel </span>
+	<span class="span6"> Confirm </span>
+</div>
+</div> -->
+

@@ -5,8 +5,8 @@
 #  id            :integer          not null, primary key
 #  name          :string(255)
 #  comment       :string(255)
-#  startDate     :datetime
-#  endDate       :datetime
+#  startDate     :date
+#  endDate       :date
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  inspection_id :integer
@@ -27,7 +27,7 @@ class Deadline < ActiveRecord::Base
   def possible_deadline?
     if !(self.startDate.nil? || self.endDate.nil?)
       if self.endDate < self.startDate
-        errors.add(:endDate, 'Start date must precede end date')
+        errors.add(:base, 'The start date must precede the end date')
       end
     end
   end

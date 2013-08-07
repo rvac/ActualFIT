@@ -16,7 +16,13 @@ class InspectionsController < ApplicationController
     end
 
   end
+  def download_remarks
+    @inspection = Inspection.find(params[:id])
+    remarks = @inspection.remarks
+  end
+  def download_remarks_template
 
+  end
   def upload_remarks
     if request.post?
       @inspection = Inspection.find(params[:id])
@@ -36,7 +42,8 @@ class InspectionsController < ApplicationController
 	def show
 		@inspection = Inspection.find(params[:id])
     self.current_inspection= @inspection
-		store_location
+    flash.now[:notice] = "Ask author to add some artifacts" if @inspection.artifacts.empty?
+    store_location
 	end
 
 	def create
@@ -106,7 +113,34 @@ class InspectionsController < ApplicationController
         #render :edit
       end
     end
+  end
+
+  def change_deadline
+    @inspection = Inspection.find(params[:id])
+    if !current_user.nil?
+      #we don't think here about roles, they are controlled in abilities,
+      # moderator can not use this action when status in 'archived' or 'closed'
+
+      if current_user.has_role?(:moderator, Inspection) && (params[:status] != 'archived') && (params[:status] != 'closed')
+        #there should be a checkup on validity of inspection )
+        if @inspection.update_deadline(params[:status], params[:endDate])
+          respond_to do |format|
+            format.js  {}
+          end
+        else
+          flash.now[:error] = "Deadline for the inspection is not valid"
+        end
+      else
+        if @inspection.update_deadline(params[:status], params[:endDate])
+          respond_to do |format|
+            format.js  {}
+          end
+        else
+          flash.now[:error] = "Deadline for the inspection is not valid"
+        end
+      end
     end
+  end
   def add_user
     @inspection = Inspection.find(params[:id])
     if !current_user.nil?

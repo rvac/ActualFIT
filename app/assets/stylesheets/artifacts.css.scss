@@ -5,9 +5,9 @@
 .ArtifactInspection{
 	 
 }
-.ArtifactPreview, .CommentTable{
-	//min-height: 450px;
-}
+.ArtifactPreview{
+   //min-height: 450px;
+ }
 /*body{
 	margin-top:4em;
 }
@@ -80,7 +80,7 @@
 	word-break: break-all;
 }
 
-.ArtifactActionPanel, .ACTRActionPanel{
+.ArtifactActionPanel{
 	.ActionElement {
       img {
         opacity: 0.5;
@@ -92,10 +92,6 @@
       }
 	}
 }
-.ImportantInformation{
-	border: 1px solid #cccccc;
-}
-
 
 .Footer{
 	background-color: #8F0000;

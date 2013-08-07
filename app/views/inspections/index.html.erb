@@ -6,7 +6,7 @@
           <h1>List of inspections</h1>
           <ul class="thumbnails">
             <% inspections_html = render partial: 'inspections/inspection', collection: @inspections, as: :insp %>
-            <%= inspections_html || 'there is no inspections'%>
+            <%= inspections_html || 'there are no inspections'%>
           </ul>
       <% else %>
           <strong>There is no inspections</strong><a href='#'>Create inspection</a>

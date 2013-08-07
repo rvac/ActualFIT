@@ -32,7 +32,11 @@
 }
 
 .InspectionEdit{
+   text-align: center;
+   a{
+     color: black;
 
+   }
 }
 .AddRoleToggle, .AddRoleToggleOpened{
   color: blueviolet;
@@ -66,6 +70,9 @@
 
   text-align: center;
   line-height: 30px;
+  a{
+    color: white;
+  }
 }
 .chevron-head{
   position: absolute;
@@ -80,9 +87,9 @@
 }
 
 
-.InspectionStatusBarContainer{
+.InspectionStatusBarContainer, .InspectionDeadlineBarContainer{
   height: 30px;
-  .InspectionStatusBar{
+  .InspectionStatusBar, .InspectionDeadlineBar{
     width: 400px;
     margin: 0px auto 0px auto;
     .chevron{

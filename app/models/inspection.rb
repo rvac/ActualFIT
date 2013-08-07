@@ -57,17 +57,32 @@ class Inspection < ActiveRecord::Base
   end
   def valid_deadlines?
     if ((self.class.status_list | self.deadlines.map(&:name)) - (self.class.status_list & self.deadlines.map(&:name))).empty?
-      !self.deadlines.each_cons(2).map {|a, b| a.endDate <= b.startDate }.include?(false)
+      #!self.deadlines.each_cons(2).map {|a, b| a.endDate <= b.startDate }.include?(false)
+      !self.deadlines.each_cons(2).map {|a, b| a.endDate <= b.endDate }.include?(false)
     else
       false
     end
-
   end
-
+  def valid_deadlines?(name, endDate)
+        #!self.deadlines.each_cons(2).map {|a, b| a.endDate <= b.startDate }.include?(false)
+      false if !self.class.status_list.include?(name) || !endDate.class.to_s == "Date"
+      deadlines = self.deadlines_to_hash
+      deadlines[name] = endDate
+      !deadlines.values.each_cons(2).map {|a, b| a <= b }.include?(false)
+  end
+  def update_deadline(name, endDate)
+      if self.valid_deadlines?(name, endDate) && self.class.status_list.include?(name)
+        self.deadlines.find_by_name(name).update_attributes(endDate: endDate)
+        true
+      else
+        false
+      end
+  end
   def default_deadline!
     self.deadlines.delete_all
     self.class.status_list.each_with_index do |status, index|
-      self.deadlines.create(name: status, endDate: (3*(index+1)).days.from_now, startDate: (3*(index)).days.from_now)
+      #self.deadlines.create(name: status, endDate: (3*(index+1)).days.from_now, startDate: (3*(index)).days.from_now)
+      self.deadlines.create(name: status, endDate: (3*(index+1)).days.from_now.to_date, startDate: Date.today)
     end
   end
   def self.status_list

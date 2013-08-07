@@ -1,7 +1,7 @@
 <div class="row-fluid">
-  <div class="span6 offset3">
-  <ul class="UserList" id="UserList" style="list-style: none;" >
-    <%= render partial: 'users/user', collection: @users, as: :user, spacer_template: 'users/user_divider' %>
+  <div class="span12">
+  <ul class="thumbnails" id="UserList"  >
+    <%= render partial: 'users/user_compact', collection: @users, as: :user %>
   </ul>
   </div>
 </div>
