@@ -55,54 +55,81 @@
   top: 0px;
   width:0;
   height: 0;
-  border-top: 15px solid dimgray;
-  border-bottom: 15px solid dimgray;
-  border-left: 15px solid transparent;
+  border-top: 1em solid dimgray;
+  border-bottom: 1em solid dimgray;
+  border-left: 1em solid transparent;
 
 }
 .chevron-body{
   position: absolute;
-  left:15px;
+  left:1em;
   top: 0px;
-  width:80px;
-  height: 30px;
+  width:5.5em;
+  height: 2em;
   background-color: dimgray;
 
   text-align: center;
-  line-height: 30px;
+  line-height: 2em;
+  a{
+    color: white;
+  }
 }
 .chevron-head{
   position: absolute;
-  left:95px;
+  left:6.5em;
   top: 0px;
   width:0;
   height: 0;
-  border-top: 15px solid transparent;
-  border-bottom: 15px solid transparent;
-  border-left: 15px solid dimgray;
+  border-top: 1em solid transparent;
+  border-bottom: 1em solid transparent;
+  border-left: 1em solid dimgray;
 
 }
 
 
 .InspectionStatusBarContainer, .InspectionDeadlineBarContainer{
-  height: 30px;
+  height: 2em;
   .InspectionStatusBar, .InspectionDeadlineBar{
-    width: 400px;
+    width: 49em;
     margin: 0px auto 0px auto;
     .chevron{
       position: relative;
       color: white;
-      .currentStatusChevronFletching{
-        border-top: 15px solid green;
-        border-bottom: 15px solid green;
+      .activeStatusChevronFletching {
+        border-top: 1em solid green;
+        border-bottom: 1em solid green;
       }
-      .currentStatusChevronHead{
-        border-left: 15px solid green;
+      .activeStatusChevronHead{
+        border-left: 1em solid green;
       }
-      .currentStatusChevronBody{
+      .activeStatusChevronBody{
         background-color: green;
 
       }
+      .futureStatusChevronFletching{
+        border-top: 1em solid lightgray;
+        border-bottom: 1em solid lightgray;
+      }
+      .futureStatusChevronHead{
+        border-left: 1em solid lightgray;
+      }
+      .futureStatusChevronBody{
+        background-color: lightgray;
+        color: black;
+
+      }
+      .errorStatusChevronFletching{
+        border-top: 1em solid #ee0f16;
+        border-bottom: 1em solid #ee0f16;
+      }
+      .errorStatusChevronHead{
+        border-left: 1em solid #ee0f16;
+      }
+      .errorStatusChevronBody{
+        background-color: #ee0f16;
+
+      }
+
       form{
         position: absolute;
         left: 0px;
@@ -112,25 +139,37 @@
           position: absolute;
           padding: 0px;
           margin: 0px;
-          top: 30px;
+          top: 2em;
           left: 40px;
           background-color: transparent;
           z-index: 2;
           border: 0px;
         }
+        a{
+          color: white;
+        }
       }
     }
-    .statusPreparation{
+    .statusSetup{
       left: 0px;
     }
+    .statusUpload{
+      left: 7em;
+    }
+    .statusPrepare{
+      left: 14em;
+    }
+    .statusSummary{
+      left: 21em;
+    }
     .statusInspection{
-      left: 100px;
+      left: 28em;
     }
     .statusRework{
-      left: 200px;
+      left: 35em;
     }
     .statusFinished{
-      left: 300px;
+      left: 42em;
     }
   }
   text-align: center;

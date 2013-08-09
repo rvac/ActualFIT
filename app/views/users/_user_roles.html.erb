@@ -1,6 +1,6 @@
 <% if user.roles.any? %>
-    <%= content_tag :h5, 'Roles' %>
-    <%= content_tag :ul, style: "list-style: none;" do -%>
+    <strong>Roles</strong>
+    <%= content_tag :ul do -%>
         <% user.roles.each do |r| %>
             <%= content_tag :li do -%>
                 <%= r.name %>
@@ -8,7 +8,7 @@
                     <% object = r.resource_type.constantize.find(r.resource_id) %>
                     <% #there is a quick fix on fullname adds problems to potential flexibility %>
                     <% if r.resource_type = "Inspection" %>
-                        <%= "#{r.resource_type} #{object.fullname}" if !object.nil? %>
+                        <%= "at #{object.fullname}" if !object.nil? %>
                     <% else %>
                         <%= "#{r.resource_type} #{object.name}" if !object.nil? %>
                     <% end %>

@@ -19,4 +19,5 @@ class Role < ActiveRecord::Base
   def self.possible_roles
     possible_roles = ["author", "inspector", "moderator", "scribe", "admin", "supervisor"]
   end
+
 end

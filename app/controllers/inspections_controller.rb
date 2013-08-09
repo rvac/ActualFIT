@@ -41,6 +41,8 @@ class InspectionsController < ApplicationController
 
 	def show
 		@inspection = Inspection.find(params[:id])
+    #@remarks = @inspection.remarks.page(params[:page]).per(5)
+
     self.current_inspection= @inspection
     flash.now[:notice] = "Ask author to add some artifacts" if @inspection.artifacts.empty?
     store_location
@@ -67,6 +69,8 @@ class InspectionsController < ApplicationController
 
   def index
     @inspections = Inspection.all
+
+
   #  respond_to do |format|
   #    format.js
   #  end
@@ -95,14 +99,15 @@ class InspectionsController < ApplicationController
     if !current_user.nil?
       #we don't think here about roles, they are controlled in abilities,
       # moderator can not use this action when status in 'archived' or 'closed'
-
-      if current_user.has_role?(:moderator, Inspection) && (params[:status] != 'archived') && (params[:status] != 'closed')
+      old_status = @inspection.status
+      if current_user.has_role?(:moderator, Inspection) && (params[:status] != 'archived')
         @inspection.status = params[:status]
       else
         @inspection.status = params[:status]
       end
 
       if @inspection.save
+        @inspection.close_deadline(old_status)
         flash.now[:success] = "Inspection status is now #{@inspection.status}"
         respond_to do |format|
           format.js  {}
@@ -123,7 +128,7 @@ class InspectionsController < ApplicationController
 
       if current_user.has_role?(:moderator, Inspection) && (params[:status] != 'archived') && (params[:status] != 'closed')
         #there should be a checkup on validity of inspection )
-        if @inspection.update_deadline(params[:status], Date.strptime(params[:endDate], '%Y-%m-%d'))
+        if @inspection.update_deadline(params[:status], Date.strptime(params[:dueDate], '%Y-%m-%d'))
           respond_to do |format|
             format.js  {}
           end
@@ -131,7 +136,7 @@ class InspectionsController < ApplicationController
           flash.now[:error] = "Deadline for the inspection is not valid"
         end
       else
-        if @inspection.update_deadline(params[:status], Date.strptime(params[:endDate], '%Y-%m-%d'))
+        if @inspection.update_deadline(params[:status], Date.strptime(params[:dueDate], '%Y-%m-%d'))
           @inspection.reload
           respond_to do |format|
             format.js  {}

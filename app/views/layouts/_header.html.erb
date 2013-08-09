@@ -11,28 +11,6 @@
 						<% if signed_in? %>
 							<li><%= link_to "Users", users_path %></li>
 
-                            <% if current_user.roles.any? %>
-                                <li><%= link_to current_user.roles.first.name, current_user %></li>
-                            <% end %>
-
-
-                            <li class="dropdown">
-                                <a href='#' class="dropdown-toggle" data-toggle="dropdown">
-                                    <%= current_user.name %> <b class="caret"></b>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <%= link_to "Profile", current_user %>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li>
-                                        <%= link_to "Log Out", signout_path, method: "delete" %>
-                                    </li>
-                                </ul>
-                            </li>
-
-
-
                             <% inspections = current_user.inspections %>
 
                             <% if inspections.any? || ( can? :create, Inspection)%>
@@ -60,6 +38,20 @@
                                 </ul>
                               <li>
                             <% end %>
+                            <li class="dropdown">
+                                <a href='#' class="dropdown-toggle" data-toggle="dropdown">
+                                  <%= current_user.name %> <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                  <li>
+                                    <%= link_to "Profile", current_user %>
+                                  </li>
+                                  <li class="divider"></li>
+                                  <li>
+                                    <%= link_to "Log Out", signout_path, method: "delete" %>
+                                  </li>
+                                </ul>
+                            </li>
                             <li><%= link_to Date.today,"#" %></li>
 						<% else %>
 							<li><%= link_to "Log in", signin_path %></li>

@@ -22,7 +22,7 @@ class Inspection < ActiveRecord::Base
   has_many :users, :through => :participations
   has_many :deadlines, :dependent => :destroy
 
-  VALID_STATUS_REGEX = /\A(active)|(archived)|(preparation)|(inspection)|(rework)|(finished)|(closed)\z/
+  VALID_STATUS_REGEX = /\A(setup)|(upload)|(prepare)|(summary)|(inspection)|(rework)|(finished)|(archived)\z/
 
   before_validation { |i| i.active! if i.status.nil? }
   #after_create "puts 'inspection created'"
@@ -31,14 +31,14 @@ class Inspection < ActiveRecord::Base
   validates :status, presence: true,
             format: {with: VALID_STATUS_REGEX}
 
-  after_create { |i| i.default_deadline! if !i.valid_deadlines?  }
+  after_create { |i| i.default_deadline! if !i.deadlines_valid?  }
 
   def active?
-    !((self.status == 'archived') || (self.status == 'closed'))
+    !((self.status == 'archived'))
   end
 
   def active!
-    self.status = 'active'
+    self.status = 'setup'
   end
   def archived?
     self.status == 'archived'
@@ -52,48 +52,95 @@ class Inspection < ActiveRecord::Base
     end
   end
 
-  def deadlines_to_hash
-    Hash[self.deadlines.map{|d| [d.name, d.endDate]}]
+  def dueDates_to_hash
+    Hash[self.deadlines.map{|d| [d.name, d.dueDate]}]
+    end
+  def closeDates_to_hash
+    Hash[self.deadlines.map{|d| [d.name, d.closeDate]}]
   end
-  def valid_deadlines?
+  def deadlines_valid?
     if ((self.class.status_list | self.deadlines.map(&:name)) - (self.class.status_list & self.deadlines.map(&:name))).empty?
-      #!self.deadlines.each_cons(2).map {|a, b| a.endDate <= b.startDate }.include?(false)
-      !self.deadlines.each_cons(2).map {|a, b| a.endDate <= b.endDate }.include?(false)
+      #!self.deadlines.each_cons(2).map {|a, b| a.dueDate <= b.startDate }.include?(false)
+      !self.deadlines.each_cons(2).map {|a, b| a.dueDate <= b.dueDate }.include?(false)
     else
       false
     end
   end
-  def valid_deadlines?(name, endDate)
-        #!self.deadlines.each_cons(2).map {|a, b| a.endDate <= b.startDate }.include?(false)
+  def deadline_valid?(name, endDate)
+        #!self.deadlines.each_cons(2).map {|a, b| a.dueDate <= b.startDate }.include?(false)
       false if !self.class.status_list.include?(name) || !endDate.class.to_s == "Date"
-      deadlines = self.deadlines_to_hash
+      deadlines = self.dueDates_to_hash
       deadlines[name] = endDate
       !deadlines.values.each_cons(2).map {|a, b| a <= b }.include?(false)
   end
   def update_deadline(name, endDate)
-      if self.valid_deadlines?(name, endDate) && self.class.status_list.include?(name)
-        self.deadlines.find_by_name(name).update_attributes(endDate: endDate)
+      if self.deadline_valid?(name, endDate) && self.class.status_list.include?(name)
+        self.deadlines.find_by_name(name).update_attributes(dueDate: endDate)
         true
       else
         false
       end
   end
+  def close_deadline(old_status)
+      #for range between old and new status change closeDate of a corresponding deadline
+  end
   def default_deadline!
     self.deadlines.delete_all
     self.class.status_list.each_with_index do |status, index|
-      #self.deadlines.create(name: status, endDate: (3*(index+1)).days.from_now, startDate: (3*(index)).days.from_now)
-      self.deadlines.create(name: status, endDate: (3*(index+1)).days.from_now.to_date, startDate: Date.today)
+      self.deadlines.create(name: status, dueDate: (2*(index+1)).days.from_now.to_date)
     end
   end
+
+  def status_of_status(status)
+    puts self.class.status_list.index(status)
+    puts '<'
+    puts self.class.status_list.index(self.status)
+    if self.class.status_list.index(status) < self.class.status_list.index(self.status)
+      "done"
+    elsif status == self.status
+      "active"
+    else
+      "future"
+    end
+  end
+  def team_complete?
+    (self.class.minimal_team - self.roles.map(&:name)).empty?
+  end
+
+  def team_valid?(new_role = nil)
+    if !new_role.nil? && new_role.class == String
+       case new_role
+         when 'author', 'moderator'
+           if  self.roles.map(&:name).count(new_role) == 1
+              return false
+           else
+              return true
+           end
+         else
+           return true
+       end
+    else
+       team = self.roles.map(&:name)
+       return false if team.count("author") != 1
+       return false if team.count("moderator") != 1
+       return false if team.count("inspector") < 1
+       true
+    end
+  end
+
+
+
   def self.status_list
-    ['preparation','inspection','rework','finished']
+    ['setup', 'upload', 'prepare', 'summary', 'inspection', 'rework', 'finished']
   end
   def self.admin_status_list
     self.status_list
     #return ['active','archived','preparation','inspection','rework','finished','closed']
   end
 
-
+  def self.minimal_team
+    ["author", "moderator", "inspector"]
+  end
 
 
 end

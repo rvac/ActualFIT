@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-	before_filter   :signed_in_user, except: [:new, :create]
-	before_filter   :correct_user, except: [:new, :create]
+	before_filter   :signed_in_user, only: [:new, :create]
+  #fix this stuff!!   if not work
+	before_filter   :correct_user, only: [:edit, :update]
   #load_and_authorize_resource
 
 	def new
@@ -35,8 +36,8 @@ class UsersController < ApplicationController
   end
 	def show
 		@user = User.find(params[:id])
-		if @user.attributes.values.compact.count <= 8
-      flash.now[:notice] = "Please add some information to your profile"
+		if @user.attributes.values.compact.count <= 10
+      flash.now[:notice] = "Please add some information to your profile"  if current_user?(@user)
     end
 
 	end
@@ -131,7 +132,7 @@ class UsersController < ApplicationController
 
 		def correct_user
 		@user = User.find(params[:id])
-    redirect_to (root_path) unless (current_user?(@user) || current_user.has_role?(:admin) || current_user.has_role?(:supervisor))
+    redirect_to (edit_user_path(@user)) unless (current_user?(@user) || current_user.has_role?(:admin) || current_user.has_role?(:supervisor))
 
 		end
 end

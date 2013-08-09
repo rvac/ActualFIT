@@ -1,22 +1,30 @@
 <%= content_tag :div, id: "remarks", class: "ArtifactComments span6 pull-left"  do -%>
+
+    <%= render partial: 'inspections/status_bar', locals: {inspection: inspection} %>
+    <%= render partial: 'inspections/deadline_bar', locals: {inspection: inspection} %>
+
     <div class="ArtifactCommentsInner">
       <%= content_tag :div, class: "row-fluid" do -%>
           <table class="table table-striped table-hover">
             <caption class="CommentsHeader">
-              <h5>Remarks Table</h5>
+              <h3>Remarks Table</h3>
             </caption>
             <thead>
             <tr>
-              <th>Location</th>
               <th>Object</th>
+              <th>Location</th>
               <th>Remark</th>
               <th>Level</th>
               <th>Author</th>
+              <th>Created_at</th>
+              <th>Updated_at</th>
               <th></th>
             </tr>
             </thead>
+
             <%= content_tag :tbody, class: "RemarksTable", id: "RemarksTable", data: { url: inspection_remarks_url(inspection)} do -%>
-                <% remarks_html = render partial: 'remarks/remark', collection: @inspection.remarks, as: :remark, locals: {inspection: inspection }  %>
+
+                <% remarks_html = render partial: 'remarks/remark', collection: inspection.remarks, as: :remark, locals: {inspection: inspection }  %>
                 <%= remarks_html || '' %>
             <% end -%>
           </table>

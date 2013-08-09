@@ -8,13 +8,6 @@
 .ArtifactPreview{
    //min-height: 450px;
  }
-/*body{
-	margin-top:4em;
-}
-.NavigationHeader{
-	position: absolute;
-	top:0px;
-}*/
 
 .Artifact{
 	border: 1px solid #a4b1c9;
@@ -65,21 +58,13 @@
 	height:34px;
 
 }
-/*.Artifact-onhover>ul{
-	list-style: none;
-	list-style-type: none; 
-
-}*/
-
 .ArtifactName{
-	
 	word-wrap: break-word;
 	-moz-text-align:justify;
 	-ms-word-wrap: break-word;
 	word-wrap: break-word;
 	word-break: break-all;
 }
-
 .ArtifactActionPanel{
 	.ActionElement {
       img {
@@ -92,7 +77,6 @@
       }
 	}
 }
-
 .Footer{
 	background-color: #8F0000;
 	color: white;
@@ -119,32 +103,10 @@
 .ArtifactResposible:hover{
 	overflow-y:auto;
 }
-.Responsible, .Responsible-Selected{
-/*	padding: 0px 0px 2px 2px;*/
-	/*border: 2px solid transparent;*/
-	/*max-height: */
-
-}
-
-.Responsible:hover{
-	background-color: rgba(92,81,79,0.5);
-	/*color:orange;*/
-}
-.Responsible-Selected{
-	background-color: rgba(92,201,79,0.5);
-}
-.ResponsibleConfirmation{
-	line-height: 2em;
-	text-align: center;
-}
-.ResponsibleConfirmation>span:hover{
-	color:orange;
-}
 .InspectionSelected{
 	min-height: 600px;
 
 }
-
 .ArtifactIcon {
 	
 }

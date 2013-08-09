@@ -14,22 +14,27 @@
 
 class Deadline < ActiveRecord::Base
   resourcify
-  attr_accessible :comment, :endDate, :name, :startDate
+  attr_accessible :comment, :dueDate, :name
   belongs_to :inspection
 
-  VALID_NAME_REGEX = /\A(active)|(archived)|(preparation)|(inspection)|(rework)|(finished)|(closed)\z/
+  VALID_NAME_REGEX = /\A(setup)|(upload)|(prepare)|(summary)|(inspection)|(rework)|(finished)|(closed)\z/
 
   validates :name, presence: true, format: {with: VALID_NAME_REGEX}
-  validates :endDate, presence: true
-  validates :startDate, presence: true
-  validate :possible_deadline?
-
-  def possible_deadline?
-    if !(self.startDate.nil? || self.endDate.nil?)
-      if self.endDate < self.startDate
-        errors.add(:base, 'The start date must precede the end date')
-      end
+  validates :dueDate, presence: true
+  #validate :possible_deadline?
+  #
+  #def possible_deadline?
+  #  if !(self.startDate.nil? || self.endDate.nil?)
+  #    if self.endDate < self.startDate
+  #      errors.add(:base, 'The start date must precede the end date')
+  #    end
+  #  end
+  #end
+  def missedDeadline?
+    if self.closeDate.nil?
+      self.dueDate.to_date < Date.today
+    else
+      self.dueDate.to_date < self.closeDate.to_date
     end
   end
-
 end

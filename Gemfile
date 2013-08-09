@@ -9,6 +9,7 @@ gem 'rolify', '3.2.0'
 gem 'thin', '1.5.1'
 gem 'roo' #it should include spreadsheet gem?
 gem 'bootstrap-datepicker-rails'
+gem 'kaminari'
 # Bundle edge Rails instead:
 
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

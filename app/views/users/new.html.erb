@@ -4,10 +4,10 @@
 		<%= form_for(@user) do |f| %>
 			<%= render 'shared/error_messages' %>
 			<%= f.label :name %>
-			<%= f.text_field :name %>
+			<%= f.text_field :name, placeholder: "FirstName LastName" %>
 
 			<%= f.label :email %>
-			<%= f.text_field :email %>
+			<%= f.text_field :email, placeholder: "your_email@example.com" %>
 
 			<%= f.label :password %>
 			<%= f.password_field :password %>

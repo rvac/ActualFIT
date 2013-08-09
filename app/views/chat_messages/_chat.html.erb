@@ -1,4 +1,5 @@
 <%= content_tag :div, id: "chat", class: "ChatContainer span3 pull-right"  do -%>
+    <h3 style="text-align: center">Chat</h3>
     <div class="ChatInner">
       <div class="row-fluid MessageWindow">
         <%= content_tag :div, class: "span12 well MessageWindowInner" do -%>
@@ -14,7 +15,7 @@
             <div class="span12 SendMessageInner">
               <%= form_for [inspection, inspection.chat_messages.build], remote: true do |f| %>
                   <div class="row-fluid ChatTypeBoxRow">
-                    <%= f.text_area :content, id: "ChatTypeBox", class: "ChatTypeBox pull-right", rows: 2, placeholder: "Type your answer" %>
+                    <%= f.text_area :content, id: "ChatTypeBox", class: "ChatTypeBox pull-right", rows: 2, placeholder: "Type your chat message here" %>
 
 
                   </div>

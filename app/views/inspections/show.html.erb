@@ -1,16 +1,14 @@
 <div id="openedInspection"class="row-fluid InspectionSelected">
     <div class="span12">
-        <div class="row-fluid"  style="text-align: center;">
-          <h3 style="margin: 0px;">
-            <% if can? :edit, @inspection %>
-                <%= link_to "Inspection #{@inspection.fullname }", edit_inspection_path(@inspection) %>
-            <% else %>
-                <%= "Inspection #{@inspection.fullname }" %>
-            <% end %>
-          </h3>
-        </div>
-      <%= render partial: 'inspections/status_bar', locals: {inspection: @inspection} %>
-      <%= render partial: 'inspections/deadline_bar', locals: {inspection: @inspection} %>
+      <div class="row-fluid"  style="text-align: center;">
+        <h3 style="margin: 0px;">
+          <% if can? :edit, @inspection %>
+              <%= link_to "Inspection #{@inspection.fullname }", edit_inspection_path(@inspection) %>
+          <% else %>
+              <%= "Inspection #{@inspection.fullname }" %>
+          <% end %>
+        </h3>
+      </div>
       <div class="row-fluid">
             <%= render partial: 'artifacts/artifacts_list', locals: {inspection: @inspection} %>
             <%= render partial: 'remarks/remarks_table', locals: {inspection: @inspection} %>

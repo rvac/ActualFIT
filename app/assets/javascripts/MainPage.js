@@ -49,7 +49,7 @@ $(document).ready(function(){
 
 
 //    setInterval(refreshPartial, 3000);
-    $('#dprework, #dppreparation, #dpfinished, #dpinspection').datepicker()
+    $('#dsetup, #dpupload, #dpprepare, #dpsummary, #dpinspection, #dprework, #dpfinished').datepicker()
         .on('changeDate', function(e){
             var y = e.date.getFullYear(),
                 _m = e.date.getMonth() + 1,
@@ -57,8 +57,8 @@ $(document).ready(function(){
                 _d = e.date.getDate(),
                 d = (_d > 9 ? _d : '0'+_d);
             $(this).text(y + '-' + m + '-' + d);
-            $(this).next("#endDate").val(y + '-' + m + '-' + d);
-            $(this).next("#endDate").next("#submitDeadline").show();
+            $(this).next("#dueDate").val(y + '-' + m + '-' + d);
+            $(this).next("#dueDate").next("#submitDeadline").show();
         });
 	var propsTimeout;
 	var ChatShown = true;

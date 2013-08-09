@@ -1,12 +1,12 @@
 
 <%= content_tag :tr, class: "ACTR", data: { id: remark.id } do -%>
     <td>
-
-        <%=remark.location %>
+      <%= Artifact.find(remark.artifact_id).name if !remark.artifact_id.nil?%>
     </td>
     <td>
-        <%= Artifact.find(remark.artifact_id).name if !remark.artifact_id.nil?%>
+        <%=remark.location %>
     </td>
+
     <td>
         <%= remark.content %>
     </td>
@@ -17,6 +17,12 @@
           <%  author =  User.find(remark.user_id) if !remark.user_id.nil? %>
           <%= author.name %>
 
+    </td>
+    <td>
+      <%= remark.created_at.localtime %>
+    </td>
+    <td>
+      <%= remark.updated_at.localtime %>
     </td>
     <td>
           <% if can? :destroy, remark %>

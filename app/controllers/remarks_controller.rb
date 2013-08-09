@@ -4,7 +4,7 @@ class RemarksController < ApplicationController
   load_and_authorize_resource :remark, :through => :inspection
 
 	respond_to :html, :js
-	
+
 	def create
     # we dont need this shit, since it is created in the view??
     #@inspection = current_inspection
@@ -27,11 +27,11 @@ class RemarksController < ApplicationController
 	end
 
   def index
-    #@inspection = self.current_inspection
+    @inspection = self.current_inspection
     if params[:after].empty?
-      @remarks= @inspection.remarks
+      @remarks = @inspection.remarks
     else
-      @remarks= @inspection.remarks.where("id > ?", params[:after].to_i) if params[:after].to_i > 0
+      @remarks = @inspection.remarks.where("id > ?", params[:after].to_i) if params[:after].to_i > 0
     end
   end
 

@@ -1,6 +1,6 @@
 <% if user.inspections.any? %>
-    <%= content_tag :h5, 'Inspections' %>
-    <%= content_tag :ul, style: "list-style: none;" do -%>
+    <strong>Inspections</strong>
+    <%= content_tag :ul do -%>
         <% user.inspections.each do |insp| %>
             <%= content_tag :li do -%>
                 <%= insp.fullname %>
