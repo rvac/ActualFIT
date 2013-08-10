@@ -60,3 +60,29 @@
     list-style: none;
   }
 }
+.UserPartial{
+  .UserProfileAttibutes{
+    padding-top: 0px;
+    margin-left: 0.5em;
+    max-width: 18em;
+  }
+  .ProfilePicture{
+    max-width: 10em;
+  }
+  .thumbnail{
+    border-color: #a4b1c9;
+    background-color: whitesmoke;
+    width: 29em;
+    height: 11em;
+    overflow-y: hidden;
+    &:hover{
+      overflow-y: auto;
+    }
+  }
+  .GrantUserRoles{
+    select{
+      width: auto;
+      max-width: 10em;
+    }
+  }
+}

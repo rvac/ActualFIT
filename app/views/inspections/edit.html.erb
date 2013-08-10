@@ -1,55 +1,41 @@
 <div class="row-fluid" id="InspectionEdit">
-    <div class="span6 offset3">
+    <div class="span12">
       <div class="row-fluid">
-          <%= content_tag :h2, link_to(@inspection.fullname, @inspection) %>
-          <% if can? :change_status, @inspection %>
-              <% if ((current_user.has_role?(:admin, @inspection)) || (current_user.has_role?(:supervisor, @inspection)))%>
-                <% status_list = Inspection.admin_status_list %>
-              <% else %>
-                <% status_list = Inspection.status_list  %>
-              <% end %>
-              <div class="dropdown">
-                <!-- Link or button to toggle dropdown -->
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">
-                  <%= content_tag :span, @inspection.status, id: "InspectionStatus" %>
-                  <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                  <% status_list.each do |status| %>
-                    <%= content_tag(:li, link_to(status, change_status_inspection_path(@inspection, status: status), confirm: "Change #{@inspection.name} status from #{@inspection.status} to #{status}?", method: :put, remote: true)) %>
-                  <% end %>
-                </ul>
-              </div>
-          <% else %>
-              <%= @inspection.status %>
-          <% end %>
+          <%= content_tag :h2, link_to(@inspection.fullname, @inspection), style: "text-align: center;" %>
+          <%= render partial: 'inspections/status_bar', locals: {inspection: @inspection} %>
+          <%= render partial: 'inspections/deadline_bar', locals: {inspection: @inspection} %>
       </div>
       <% if @inspection.users.any? %>
-          <%= content_tag :h3, "Inspection participants" %>
-          <%= content_tag :div, class: "InspectionParticipantsList", id: "InspectionParticipantsList" do -%>
-              <ul class="UserList" id="UserList" style="list-style: none;" >
-                <%= render partial: 'users/user', collection: @inspection.users, as: :user, spacer_template: 'users/user_divider' %>
+          <%= content_tag :h3, "Inspection Participants", style: "text-align: center;"  %>
+          <%= content_tag :div, class: "InspectionParticipantsList" do -%>
+              <ul class="thumbnails" id="InspectionParticipants"  >
+                <%= render partial: 'users/user', collection: @inspection.users, as: :user %>
               </ul>
           <% end -%>
       <% else %>
-          <strong>There is no users</strong>
+          <strong>There are no participants</strong>
       <% end %>
 
       <div class="AddUserToInspectionList" id="AddUserToInspectionList">
-
-        <h3 class="AddUserToInspectionToggle">Add Users</h3>
+        <%= content_tag :div, class: "well well-small Artifact AddUserToInspection" do -%>
+            <%= content_tag :div, class: "row-fluid ArtifactBody AddUserToInspectionToggle" do -%>
+                <%= image_tag('icon_32/plus_32.png', alt:"Add Participant") %>
+                <%= content_tag(:strong, "Add Participant", class:"ArtifactName") %>
+            <% end -%>
+        <% end -%>
         <div class="AddUserToInspectionListInner" id="AddUserToInspectionListInner">
           <% inspection_users = @inspection.users.map(&:id) %>
           <% users = User.all.reject{|u| inspection_users.include?(u.id)} %>
           <% if !users.nil? && users.any? %>
-              <ul class="UserList" id="UserList" style="list-style: none;" >
-                <%= render partial: 'users/user', collection: users, as: :user, spacer_template: 'users/user_divider' %>
+              <%= content_tag :h3, "Users" , style: "text-align: center;" %>
+              <ul class="thumbnails" id="UserList" >
+                <%= render partial: 'users/user', collection: users, as: :user %>
               </ul>
           <% else %>
               <strong>No users were found, even you do not exist. Something wierd has just happen</strong>
           <% end %>
         </div>
       </div>
-      <%= content_tag(:h3, link_to('Delete Inspection', inspection_path(@inspection), method: :delete, confirm: "Do you want to delete #{@inspection.name}?"))  if can? :destroy, @inspection%>
+      <%= content_tag(:h3, link_to('Delete Inspection', inspection_path(@inspection), method: :delete, confirm: "Do you want to delete #{@inspection.name}?"), style: "text-align: center;")  if can? :destroy, @inspection%>
     </div>
 </div>

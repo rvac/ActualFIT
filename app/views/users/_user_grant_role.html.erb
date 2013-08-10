@@ -1,9 +1,9 @@
 <% if can? :grant_role, user %>
-    <h5>Add Role</h5>
+    <h5 class="pull-left" style="margin: 0.5em 1em 0em 1em;">Add Role</h5>
     <% campaigns = Campaign.all %>
     <% indep_insp = Inspection.where(campaign_id: nil) %>
 
-    <%= form_tag(grant_role_user_path(user), method: :put, remote: true, class: "form-inline") do %>
+    <%= form_tag(grant_role_user_path(user), method: :put, remote: true, class: "form-inline", style: "margin-bottom: 0.5em;") do %>
         <select class="RoleSelect" id="RoleSelect" name="role">
           <%= options_for_select(Role.possible_roles, Role.possible_roles.first) %>
         </select>

@@ -1,21 +1,17 @@
-
+<div class="row-fluid">
+  <%= content_tag :h1, link_to(campaign.name, campaign_path(campaign), class: "pull-left") %>
+  <% if can? :edit, campaign %>
+      <%= content_tag(:h3, link_to('delete', campaign_path(campaign), method: :delete, confirm: "Do you want to delete #{campaign.name}?"), class: "pull-right", style: "margin-left:1em; margin-right:1em;") %>
+      <%= content_tag(:h3, link_to('edit', edit_campaign_path(campaign)), class: "pull-right", style: "margin-left:1em; margin-right:1em;") %>
+  <% end %>
+</div>
 <% if campaign.inspections.any? %>
-    <% if can? :edit, campaign %>
-        <%= content_tag(:h1, link_to(campaign.name, edit_campaign_path(campaign))) %>
-    <% else %>
-        <%= content_tag :h1, campaign.name %>
-    <% end %>
     <ul class="thumbnails">
       <% inspections_html = render partial: 'inspections/inspection', collection: campaign.inspections, as: :insp %>
       <%= inspections_html || 'there is no inspections'%>
 
     </ul>
 <% else %>
-    <% if can? :edit, campaign %>
-        <%= content_tag(:h1, link_to(campaign.name, edit_campaign_path(campaign))) %>
-    <% else %>
-        <%= content_tag :h1, campaign.name %>
-    <% end %>
     <h3>The campaign does not have any inspection</h3>
     <%= content_tag(:h3, link_to('Create Inspection', new_inspection_path)) %>
 <% end %>

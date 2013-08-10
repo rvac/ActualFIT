@@ -1,5 +1,5 @@
-<div class="row-fluid ArtifactsRowContainer">
-  <div class="span12 Artifacts">
+<div class="row-fluid">
+  <div class="span12">
 
     <% if @campaigns.any? %>
 
@@ -10,6 +10,11 @@
 
             <% end %>
         <% end %>
+    <% else %>
+        <%= content_tag :h3, "There are no campaigns yet"%>
+        <% if can? :create, Campaign %>
+            <%= content_tag :h3, link_to('Create campaign',new_campaign_path) %>
+        <% end %>
     <% end %>
-  </div> <!--span12-->
+  </div>
 </div>

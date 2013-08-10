@@ -1,10 +1,19 @@
 <% if can? :read, insp %>
     <%= content_tag :li do -%>
-        <%= content_tag :div, class: "thumbnail" do -%>
+        <% if insp.team_valid? %>
+           <% overviewClass = "InspectionOverview" %>
+        <% else %>
+           <% overviewClass = "ErrorInspectionOverview" %>
+        <% end %>
+        <%= content_tag :div, class: "thumbnail #{overviewClass}" do -%>
             <div class="row-fluid InspectionEdit">
               <%= content_tag :h5 do -%>
-                  <%= link_to("visit #{insp.name} inspection", inspection_path(insp)) %>
-                  <%= link_to('edit inspection', edit_inspection_path(insp)) %>
+                  <% if !insp.team_valid? %>
+                    <strong>Team assignment is wrong</strong>
+                  <% else %>
+                    <%= link_to("visit #{insp.name} inspection", inspection_path(insp), style: "margin-right: 2em;") %>
+                  <% end %>
+                  <%= link_to("edit #{insp.name} inspection", edit_inspection_path(insp)) if can? :edit, insp %>
               <% end -%>
             </div>
 

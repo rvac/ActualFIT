@@ -25,6 +25,7 @@
 }
 
 .AddUserToInspection{
+  margin-bottom: 1em;
 
 }
 
@@ -85,7 +86,18 @@
   border-left: 1em solid dimgray;
 
 }
+.InspectionOverview{
+  padding: 0em 1em 0.5em 0.5em;
+  border-color: transparent;
 
+}
+.ErrorInspectionOverview{
+  padding: 0em 1em 0.5em 0.5em;
+  border-color:#ee0f16;
+  strong{
+    color: #ee0f16;
+  }
+}
 
 .InspectionStatusBarContainer, .InspectionDeadlineBarContainer{
   height: 2em;

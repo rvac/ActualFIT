@@ -92,9 +92,7 @@ class Inspection < ActiveRecord::Base
   end
 
   def status_of_status(status)
-    puts self.class.status_list.index(status)
-    puts '<'
-    puts self.class.status_list.index(self.status)
+
     if self.class.status_list.index(status) < self.class.status_list.index(self.status)
       "done"
     elsif status == self.status

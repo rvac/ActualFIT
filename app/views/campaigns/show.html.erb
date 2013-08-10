@@ -1,8 +1,7 @@
-<div class="row-fluid ArtifactsRowContainer">
-  <div class="span12 Artifacts">
-      <% if can? :ream, @campaign %>
+<div class="row-fluid">
+  <div class="span12">
+      <% if can? :read, @campaign %>
             <%= render 'campaigns/campaign', campaign: @campaign %>
       <% end %>
-
-  </div> <!--span12-->
+  </div>
 </div>
