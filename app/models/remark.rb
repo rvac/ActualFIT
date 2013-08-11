@@ -2,33 +2,39 @@
 #
 # Table name: remarks
 #
-#  id            :integer          not null, primary key
-#  content       :string(255)
-#  user_id       :integer
-#  inspection_id :integer
-#  remark_type   :string(255)
-#  created_at    :datetime
-#  updated_at    :datetime
-#  artifact_id   :integer
+#  id             :integer          not null, primary key
+#  content        :string(255)
+#  user_id        :integer
+#  inspection_id  :integer
+#  remark_type    :string(255)
+#  created_at     :datetime
+#  updated_at     :datetime
+#  artifact_id    :integer
+#  duplicate_of   :integer
+#  has_duplicates :boolean
+#  location_type  :string(255)
+#  description    :string(255)
+#  element_type   :string(255)
+#  element_number :string(255)
+#  element_name   :string(255)
+#  diagram        :string(255)
+#  path           :string(255)
+#  line_number    :integer
 #
 
 class Remark < ActiveRecord::Base
   resourcify
-  attr_accessible :content, :location,
-  			 :remark_type
+  attr_accessible :content, :location_type, :remark_type, :description, :element_type, :element_number, :element_name, :line_number, :diagram, :path
   belongs_to :user
   belongs_to :inspection
   belongs_to :artifact
-  has_one :location
 
-  VALID_LOCATION_REGEX = /\A((line)|(diagram)|(picture)|(figure)|(inspection))\s?\d*\z/i
-
+  VALID_LOCATION_TYPE_REGEX = /\A((code)|(document)|(model))\z/
+  validates :location_type, presence: true, format: {with: VALID_LOCATION_TYPE_REGEX}
+  validate :location_valid?
   validates :inspection_id, presence: true
-  # validates :remark_type, presence: true
   validates :user_id, presence: true
   validates :content, presence: true
-  validates :location, presence: true,
-            format: { with: VALID_LOCATION_REGEX }
   validates :remark_type, presence: true
 
   def self.parse_excel(file, inspection)
@@ -62,6 +68,62 @@ class Remark < ActiveRecord::Base
   end
   def self.possible_remark_type
     return ['minor', 'major', 'comment']
+  end
+
+  def self.document_element_type
+    ['page', 'section','table','figure','footnote','line']
+  end
+  def self.location_type_list
+    ['code', 'document','model']
+  end
+  def location_valid?
+    case self.location_type
+      when 'code'
+        return true if !self.line_number.nil?
+        errors.add(:base, "Line number should not be empty for type code")
+        return false
+      when 'document'
+        return true if !self.element_type.nil? && !self.element_name.nil?
+        errors.add(:base, "Element type and element name should not be empty for type document")
+        return false
+      when 'model'
+        return true if !self.path.nil? || (!self.diagram.nil?) || (!self.element_type.nil? && !self.element_name.nil?)
+        errors.add(:base, "Either path, diagram or element type and name should not be empty for type model")
+        return false
+      else
+        errors.add(:base, "Wrong location type")
+        return false
+    end
+        #if smth go wrong
+    return false
+  end
+
+  #overwriting to_s method to our needs
+  def location_to_s
+    case self.location_type
+      when 'code'
+        return "line #{self.line_number}"
+      when 'document'
+        if self.element_number.nil?
+          return "#{self.element_type} #{self.element_name}"
+        else
+          return "#{self.element_type} #{self.element_name} #{self.element_number}"
+        end
+      when 'model'
+        if !self.diagram.nil?
+             return "#{self.diagram}"
+        elsif self.path.nil?
+          if self.element_number.nil?
+            return "#{self.element_type} #{self.element_name}"
+          else
+            return "#{self.element_type} #{self.element_name} #{self.element_number}"
+          end
+        else
+          return "#{self.path}"
+        end
+      else
+        return ''
+    end
   end
   private
     def self.open_spreadsheet(file)

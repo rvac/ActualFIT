@@ -10,9 +10,17 @@
         </h3>
       </div>
       <div class="row-fluid">
+        <div class="span2 ArtifactsPanel pull-left">
             <%= render partial: 'artifacts/artifacts_list', locals: {inspection: @inspection} %>
-            <%= render partial: 'remarks/remarks_table', locals: {inspection: @inspection} %>
-            <%= render partial: 'chat_messages/chat', locals: {inspection: @inspection} %>
         </div>
+        <div class="span10 CentralPanel pull-left">
+          <div class="span9 RemarksPanel pull-left">
+            <%= render partial: 'remarks/remarks_table', locals: {inspection: @inspection} %>
+          </div>
+          <div class="span3 ChatPanel pull-right">
+            <%= render partial: 'chat_messages/chat', locals: {inspection: @inspection} %>
+          </div>
+        </div>
+      </div>
     </div>
 </div>

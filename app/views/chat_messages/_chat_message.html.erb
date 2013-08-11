@@ -3,7 +3,7 @@
 
 <% if current_user?(imAuthor) %>
   <div class="row-fluid AuthorDigest UserDigest">
-    <span class="text-info IMTimestamp"><%= chat_message.created_at.localtime %> </span>
+    <span class="text-info IMTimestamp"><%= chat_message.created_at.localtime.to_s.split("+").first %> </span>
     <strong class="IMAuthor">
       <%= imAuthor.name %>
     </strong>
@@ -13,7 +13,7 @@
     <strong class="IMAuthor">
       <%= imAuthor.name %>
     </strong>
-    <span class="text-info IMTimestamp"><%= chat_message.created_at.localtime %> </span>
+    <span class="text-info IMTimestamp"><%= chat_message.created_at.localtime.to_s.split("+").first %> </span>
   </div>
 <% end %>
 

@@ -2,14 +2,24 @@
 #
 # Table name: remarks
 #
-#  id            :integer          not null, primary key
-#  content       :string(255)
-#  user_id       :integer
-#  inspection_id :integer
-#  remark_type   :string(255)
-#  created_at    :datetime
-#  updated_at    :datetime
-#  artifact_id   :integer
+#  id             :integer          not null, primary key
+#  content        :string(255)
+#  user_id        :integer
+#  inspection_id  :integer
+#  remark_type    :string(255)
+#  created_at     :datetime
+#  updated_at     :datetime
+#  artifact_id    :integer
+#  duplicate_of   :integer
+#  has_duplicates :boolean
+#  location_type  :string(255)
+#  description    :string(255)
+#  element_type   :string(255)
+#  element_number :string(255)
+#  element_name   :string(255)
+#  diagram        :string(255)
+#  path           :string(255)
+#  line_number    :integer
 #
 
 require 'spec_helper'

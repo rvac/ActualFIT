@@ -33,8 +33,8 @@ RemarkTypeBox{
 }
 
 .CommentsHeader{
-  position:relative;
-  margin-top: 3em;
+  text-align: center;
+  margin-top: 2em;
 }
 .CommentsClose{
   display: none;
@@ -72,10 +72,73 @@ RemarkTypeBox{
   //background-color: rgba(40,29,35,0.5);
 
   //height:100%;
-  width: 40px;
+  width: 16px;
   text-align: center;
   //border-radius:0px 2px 2px 0px;
 }
 .CommentTable{
   //min-height: 450px;
+}
+//.RemarkField{
+//  width: auto;
+//  max-width: 10em;
+//}
+#remark_line_number{
+   width: 6em;
+}
+#remark_element_name{
+   width: 8em;
+}
+#remark_element_number{
+   width: 6em;
+}
+#remark_element_type{
+   width: 7em;
+}
+#remark_diagram{
+   width: 10em;
+}
+#remark_path{
+   width: 25em;
+}
+#remark_type{
+   width: 8em;
+}
+#remark_location_type{
+  width: auto;
+}
+#artifact_id{
+  width: 8em;
+}
+#remark_content{
+  width: 23em;
+}
+.table{
+  th{
+    padding: 0.2em;
+  }
+  td{
+    padding: 0.2em;
+  }
+}
+.RemarkCreatedAt, .RemarkUpdatedAt{
+  //max-width: 5em;
+}
+.RemarkLocation{
+  min-width: 5.5em;
+}
+.RemarkObject{
+    min-width: 4.5em;
+    word-wrap: break-word;
+    -moz-text-align:justify;
+    -ms-word-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+.RemarkContent{
+  word-wrap: break-word;
+  -moz-text-align:justify;
+  -ms-word-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-all;
 }

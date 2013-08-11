@@ -1,16 +1,31 @@
 <% if can? :create, Remark, inspection_id: inspection.id %>
     <div class="row-fluid">
-      <%= form_for [inspection, inspection.remarks.build], remote: true, class: "form-inline" do |f| %>
-          <%= f.text_field :location, class: "span2 RemarkField", id: "appendedInputButton" %>
+      <%= form_for  [inspection, inspection.remarks.build], remote: true, class: "form-inline" do |f| %>
+
           <select id="artifact_id" name="artifact_id" class="ArtifactSelector">
             <option value="">Inspection</option>
             <%= options_for_select(inspection.artifacts.all.collect{ |c| [c.name, c.id] }) if inspection.artifacts.all.any? %>
           </select>
-          <%= f.text_field :content, style: "width:auto;", class: "RemarkField" %>
+          <%= f.select :location_type, options_for_select(Remark.location_type_list), class: "RemarkField"  %>
+
+          <%= f.text_field :element_type, class: "RemarkField", placeholder: "element type"  %>
+
+          <%= f.text_field :element_name, class: "RemarkField", placeholder: "element name"  %>
+
+          <%= f.text_field :element_number, class: "RemarkField", placeholder: "element №"  %>
+
+          <%= f.text_field :path, class: "RemarkField", placeholder: "path"  %>
+
+          <%= f.text_field :line_number, class: "RemarkField", placeholder: "line №"  %>
+
+          <%= f.text_field :diagram, class: "RemarkField", placeholder: "diagram"  %>
+
+          <%= f.text_field :content, class: "RemarkField", placeholder: "remark content" %>
+
           <select id="remark_type" name="remark[remark_type]" class="RemarkTypeSelector">
             <%= options_for_select(Remark.possible_remark_type) %>
           </select>
-          <%= f.submit "Submit", class: "btn" %>
+          <%= f.submit "Submit", class: "btn", style: "margin-bottom: 10px;" %>
       <% end %>
     </div>
 <% end %>

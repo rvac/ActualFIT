@@ -18,12 +18,13 @@ class RemarksController < ApplicationController
     end
     @remark.user_id = current_user.id
 		if @remark.save
-			#flash.now[:success] = "Yahoo, we did it"
+			flash[:success] = "Yahoo, we did it"
 			# respond_with root_url
 		else
-			flash.now[:error] = @remark.errors.full_messages.join(" ");
+			flash[:error] = @remark.errors.full_messages.join(" ");
 			# redirect_to root_url
-		end
+    end
+    redirect_to root_url
 	end
 
   def index

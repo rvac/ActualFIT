@@ -9,7 +9,7 @@
 }
 .ChatContainer{
 	position: relative;
-	height: 400px;
+	height: 28em;
 	/*max-width: 300px;*/
 	/*min-width: 200px;*/
 	/*min-width: 10px;*/
@@ -20,7 +20,6 @@
 	border-radius:5px;
 	/*right:0px;*/
 	/*top:0px;*/
-	z-index: 2;
 }
 .MessageWindowInner{
 	height: 100%; /*don forget to substract border of parent*/

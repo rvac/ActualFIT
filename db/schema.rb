@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130809223929) do
+ActiveRecord::Schema.define(:version => 20130811113055) do
 
   create_table "artifacts", :force => true do |t|
     t.string   "name"
@@ -66,19 +66,6 @@ ActiveRecord::Schema.define(:version => 20130809223929) do
 
   add_index "inspections", ["name"], :name => "index_inspections_on_name"
 
-  create_table "locations", :force => true do |t|
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-    t.integer  "remark_id"
-    t.string   "description"
-    t.string   "element_type"
-    t.string   "element_number"
-    t.string   "element_name"
-    t.string   "diagram"
-    t.string   "path"
-    t.integer  "line_number"
-  end
-
   create_table "participations", :force => true do |t|
     t.integer  "user_id"
     t.datetime "created_at",    :null => false
@@ -97,6 +84,14 @@ ActiveRecord::Schema.define(:version => 20130809223929) do
     t.integer  "artifact_id"
     t.integer  "duplicate_of"
     t.boolean  "has_duplicates"
+    t.string   "location_type"
+    t.string   "description"
+    t.string   "element_type"
+    t.string   "element_number"
+    t.string   "element_name"
+    t.string   "diagram"
+    t.string   "path"
+    t.integer  "line_number"
   end
 
   create_table "roles", :force => true do |t|

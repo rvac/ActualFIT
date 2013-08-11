@@ -13,6 +13,7 @@
 #  diagram        :string(255)
 #  path           :string(255)
 #  line_number    :integer
+#  type           :string(255)
 #
 
 require 'spec_helper'

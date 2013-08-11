@@ -13,12 +13,18 @@
 	border: 1px solid #a4b1c9;
 	/*margin: 0px 0px 10px 0px;*/
 	width: 12em;
-	padding: 5px;
+	padding: 0.3em;
 	/*height: 4em;*/
 	position: relative;
 	margin-bottom: 0px; /*overriding bootstrap properties for well, since or artifact also well*/
 }
 .Artifacts {
+    .thumbnails{
+      li{
+        margin-left: 0.8em;
+        margin-bottom: 0.8em;
+      }
+    }
 	/*For mozilla does not work without this statement((*/
 	//max-height: 450px;
 	
@@ -27,27 +33,13 @@
 	border-color: transparent;
 	padding: 0px;
 }
-.ArtifactsPanel{
-	/*padding: 10px;*/
-	min-width: 15em;
-	/*width: 31%;*/
-	/*max-width: 31%;*/
-/*	overflow-x: none;
-	overflow-y: hidden;*/
-	/*background:#dddddd;*/
-	/*border: 1px solid #cccccc;*/
-	-moz-border-radius:5px 5px 5px 5px;
-	-webkit-border-radius:5px 5px 5px 5px;
-	border-radius:5px;
 
-}
 .ArtifactsRowContainer{
 	/*max-width: 410px; */
 	//max-height: 500px;
-	overflow-x: none;
 	overflow-y: hidden;
+	overflow-x: none;
 	&:hover{
-		overflow-x: none;
 		overflow-y: auto;
 	}
 }
@@ -86,17 +78,6 @@
 }
 
 
-.ArtifactResposible{
-
-	z-index: 1;
-	background-color: rgba(40,29,35,0.9);
-	color:white;
-	max-height: 430px;
-    max-width: 430px;
-	overflow-y:hidden;
-	//border-radius: 0px 5px 5px 0px;
-}
-
 .ArtifactsPanel{
 	position:relative;
 }
@@ -104,7 +85,7 @@
 	overflow-y:auto;
 }
 .InspectionSelected{
-	min-height: 600px;
+	min-height: 40em;
 
 }
 .ArtifactIcon {

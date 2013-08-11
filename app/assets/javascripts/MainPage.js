@@ -60,6 +60,39 @@ $(document).ready(function(){
             $(this).next("#dueDate").val(y + '-' + m + '-' + d);
             $(this).next("#dueDate").next("#submitDeadline").show();
         });
+
+
+    $("#remark_location_type")
+        .change(function () {
+            switch ($(this).val()) {
+                case 'code':
+                    $("#remark_line_number").show();
+                    $("#remark_element_name").hide();
+                    $("#remark_element_number").hide();
+                    $("#remark_element_type").hide();
+                    $("#remark_diagram").hide();
+                    $("#remark_path").hide();
+                    break; //end Timeless Hotel
+                case 'document':
+                    $("#remark_line_number").hide();
+                    $("#remark_element_name").show();
+                    $("#remark_element_number").show();
+                    $("#remark_element_type").show();
+                    $("#remark_diagram").hide();
+                    $("#remark_path").hide();
+                    break; //end Timeless Hotel
+                case 'model':
+                    $("#remark_line_number").hide();
+                    $("#remark_element_name").show();
+                    $("#remark_element_number").hide();
+                    $("#remark_element_type").show();
+                    $("#remark_diagram").show();
+                    $("#remark_path").show();
+                    break; //end Timeless Hotel
+            }
+        })
+        .change();
+
 	var propsTimeout;
 	var ChatShown = true;
 	$("div.ArtifactBody").click(function(){
