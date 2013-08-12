@@ -21,7 +21,8 @@ class ApplicationController < ActionController::Base
         #there are no inspections bound to the user.
 
     rescue ActiveRecord::RecordNotFound
-      puts "Oops, old cookies, something was deleted" # do a smart stuff here, some message or better handle it other way
+      flash[:error] = "Record not found. You are doing something very wrong!!!"
+      redirect_to root_url
     end
 
     def current_inspection= (inspection)

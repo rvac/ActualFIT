@@ -5,30 +5,22 @@ class CampaignsController < ApplicationController
   def new
     @campaign = Campaign.new
     #may be add some filter that is only active teams/or not assigned to inspection or something like this
-
   end
 
-
+  def download_template
+    send_file Rails.public_path + "/templates/group_assignment_template.xls"
+  end
   def create
     #@campaign = Campaign.new(params[:campaign])
     #insp_names = params[:insp_names].split(',')
 
     if @campaign.save
-      #if params[:assignments]
-      # @campaign.import params[:assignments]
-      #end
-      #insp_names.each do |n|
-      #  i = @campaign.inspections.build(name: "#{@campaign.name} #{n}", comment: "Inspection for group #{n}", status: "active")
-      #  if i.save
-      #    # cool
-      #  else
-      #    #not-cool
-      #  end
-      #
-      #end
+      flash[:notice] = @campaign.errors.full_messages.join(' ') if @campaign.errors.any?
+      @campaign.errors.clear
       redirect_to @campaign
     else
       flash[:error] = @campaign.errors.full_messages.join(' ')
+      @campaign.errors.clear
       render 'new'
     end
   end
@@ -41,7 +33,8 @@ class CampaignsController < ApplicationController
         @campaign.destroy
         redirect_back_or action: :index
       else
-        flash.now[:success] = "Looks like you don't have right to do that"
+        flash[:error] = "Looks like you don't have right to do that"
+        redirec_to root_url
       end
     end
   end

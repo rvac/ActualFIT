@@ -17,7 +17,7 @@ class Campaign < ActiveRecord::Base
   attr_accessible :comment, :name, :assignments
   has_many :inspections, :dependent => :destroy
 
-  validate :name, presence: true
+  validates :name, presence: true
   VALID_STATUS_REGEX = /\A(open)|(closed)\z/
 
   validates :status, presence: true,
@@ -33,49 +33,64 @@ class Campaign < ActiveRecord::Base
         row = Hash[[header, spreadsheet.row(i)].transpose]
         #user creation
         if !row["S-number"].nil?
-          user = s_user_find_or_create row["S-number"]
+          user = User.s_user_find_or_create row["S-number"]
           if user.new_record?
             user = User.new
             user.assign_attributes ({name: "#{row["First name"]} #{row["Last name"]}", email: "#{row["S-number"]}@student.dtu.dk",
                                       password: row["S-number"], password_confirmation: row["S-number"]})
-            user.save          # may be make user.save! and rescue from exception
+            errors.add(:base, "User from row #{i} can not be created") if !user.save # may be make user.save! and rescue from exception
           end
         else
           user = User.new #add regexp for searching email field, name field, etc that search user with that email, etc
           #user.name = "#{row["First name"]}#{row["Last name"]}"
-
         end
-
         #inspection creation
-        inspection = self.inspections.find_by_name(row["Group"]) || self.inspections.build(name: row["Group"])
-        inspection.active!
-        #user.inspections << inspection
-        #inspection.users << user
-        #create participation
-        #give permissions
-        case row["Role"]
-          when "I" then
-            Participation.create user: user, inspection: inspection, role: "inspector"
-            puts "#{user.name} #{inspection.id} inspector"
-            puts inspection
-            user.grant :inspector, inspection  #apply regexp later here
-          when "M" then
-            Participation.create user: user, inspection: inspection, role: "moderator"
-            puts "#{user.name} #{inspection.id} moderator"
-            puts inspection
-            user.grant :moderator, inspection  #apply regexp later here
-          when "A" then
-            Participation.create user: user, inspection: inspection, role: "author"
-            puts "#{user.name} #{inspection.id} author"
-            puts inspection
-            user.grant :author, inspection  #apply regexp later here
-          else  puts "oops expect some kind of warning here"
-        end
+        if !row["Group"].nil?
+          inspection = self.inspections.find_by_name(row["Group"]) || self.inspections.build(name: row["Group"])
+          inspection.active!
+          #if user for that inspection exist, than update his rights
+          if !user.new_record? && inspection.valid?
+            inspection.remove_user(user) if inspection.users.include?(user)
+            case row["Role"]
+              when /\A((i)|(inspector))\z/i then
+                if inspection.team_valid? "inspector"
+                  inspection.add_user user, "inspector"
 
+                  #user.grant :inspector, inspection  #apply regexp later here
+                else
+                  puts "ERROR #{user.name} #{inspection.id} inspector"
+                  puts inspection
+                  errors.add(:base, "Wrong role #{row["Role"]} for #{user.name} in row #{i}")
+                end
+              when /\A((m)|(moderator))\z/i then
+                if inspection.team_valid? "moderator"
+                  inspection.add_user user,  "moderator"
+
+                  #user.grant :moderator, inspection  #apply regexp later here
+                else
+                  puts "ERROR #{user.name} #{inspection.id} moderator"
+                  puts inspection
+                  errors.add(:base, "Possible duplicate role #{row["Role"]} in inspection #{inspection.name}, row #{i}")
+                end
+              when /\A((a)|(author))\z/i then
+                if inspection.team_valid? "author"
+                  inspection.add_user user,  "author"
+                  #user.grant :author, inspection  #apply regexp later here
+                else
+                  puts "ERROR! #{user.name} #{inspection.id} author"
+                  puts inspection
+                  errors.add(:base, "Possible duplicate role #{row["Role"]} in inspection #{inspection.name}, row #{i}")
+                end
+              else
+                errors.add(:base, "Wrong role #{row["Role"]} for #{user.name} in row #{i}")
+            end
+          end
+        else
+          errors.add(:base, "Group column is empty in row #{i}")
+        end
       end
     end
   end
-
   private
     def open_spreadsheet(file)
       #make something smart afterwards
@@ -87,11 +102,6 @@ class Campaign < ActiveRecord::Base
         when ".xlsx" then Roo::Excelx.new(@new_file_link)
         else raise "Unknown file type: #{file.original_filename}"
       end
-
-    end
-
-    def s_user_find_or_create(s_number)
-      user = User.find_by_email("#{s_number}@student.dtu.dk") || User.new
 
     end
 

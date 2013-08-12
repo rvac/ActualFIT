@@ -11,7 +11,6 @@ ActualFIT::Application.routes.draw do
     get 'download_artifacts', on: :member
     get 'upload_remarks', on: :member
     get 'download_remarks', on: :member
-    get 'download_remarks_template', on: :member
     post 'upload_remarks', on: :member
     put 'change_status', on: :member
     put 'add_user', on: :member
@@ -23,6 +22,8 @@ ActualFIT::Application.routes.draw do
   end
   resources :campaigns
   root to: 'main_page#home'
+  match '/remarks_template', to: 'inspections#download_remarks_template', via: :get
+  match '/assignments_template', to: 'campaigns#download_template', via: :get
   match '/new_inspection', to: 'inspections#new'
   match '/new_campaign', to: 'campaigns#new'
   match '/signup', to: 'users#new'

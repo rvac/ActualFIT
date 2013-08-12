@@ -14,14 +14,13 @@ class InspectionsController < ApplicationController
       send_data a.file, filename: a.filename,
                 type: a.content_type
     end
-
   end
   def download_remarks
     @inspection = Inspection.find(params[:id])
     remarks = @inspection.remarks
   end
   def download_remarks_template
-
+    send_file Rails.public_path + "/templates/remarks_template.xlsx"
   end
   def upload_remarks
     if request.post?
@@ -149,38 +148,24 @@ class InspectionsController < ApplicationController
   end
   def add_user
     @inspection = Inspection.find(params[:id])
-    if !current_user.nil?
-      #we don't think here about roles, they are controlled in abilities,
-      # moderator can not use this action when status in 'archived' or 'closed'
-      @user = User.find(params[:user_id])
-      if Role.possible_roles.include? params[:role]
-        @user.grant params[:role], @inspection
-        Participation.create user: @user, inspection: @inspection, role: params[:role]
-      end
-    end
+
+    @user = User.find(params[:user_id])
+    flash.now[:error] = "can not add user" unless @inspection.add_user(@user, params[:role])
     respond_to do |format|
       format.js  {}
     end
   end
   def remove_user
     @inspection = Inspection.find(params[:id])
-    if !current_user.nil?
-      #we don't think here about roles, they are controlled in abilities,
-      # moderator can not use this action when status in 'archived' or 'closed'
-      @user = User.find(params[:user_id])
 
-      #remove all roles from user that are relevant to that inspection
-      Role.possible_roles do |r|
-        @user.revoke r, @inspection
-      end
+    @user = User.find(params[:user_id])
+    flash[:error] = "Can not remove user from #{@inspection.fullname}" unless @inspection.remove_user @user
 
-      #removing users bu any of these methods
-      Participation.find_by_user_id_and_inspection_id(@user.id, @inspection.id).destroy
-      respond_to do |format|
-        format.js  {}
-      end
-      #@inspection.participations.select{|p| p.user_id == user.id}.each{|p| p.destroy}
+    respond_to do |format|
+      format.js  {}
     end
+      #@inspection.participations.select{|p| p.user_id == user.id}.each{|p| p.destroy}
+
   end
   def update
     @inspection = Inspection.find(params[:id])

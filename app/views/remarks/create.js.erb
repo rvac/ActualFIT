@@ -1,2 +1,5 @@
 $("#RemarksTable").html("<%= j render partial: 'remarks/remark', collection: @inspection.remarks, as: :remark, locals: {inspection: @inspection }  %>");
 $(".RemarkField").val('');
+$("#Remarks").dataTable
+    sPaginationType: "bootstrap"
+    bjQueryUI: true;

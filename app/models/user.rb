@@ -49,6 +49,10 @@ class User < ActiveRecord::Base
       errors.add(:profile_picture, 'should be a png, jpg or gif image')
     end
   end
+
+  def self.s_user_find_or_create(s_number)
+    user = User.find_by_email("#{s_number}@student.dtu.dk") || User.new
+  end
   #def initialize(attributes = nil, options = {})
   #  self.initialize(attributes, options)
   #end

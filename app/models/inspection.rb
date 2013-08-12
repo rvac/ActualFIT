@@ -126,8 +126,29 @@ class Inspection < ActiveRecord::Base
     end
   end
 
+  def add_user(user, role)
+    if (Role.possible_roles.include? role) && (user.class == User)
+      Participation.create user: user, inspection: self, role: role
+      user.grant role, self
 
+      puts "#{user.name} #{self.id} #{role}"
+      puts self
+      true
+    end
+    false
+  end
 
+  def remove_user(user)
+    if user.class == User && self.users.include?(user)
+      Role.possible_roles do |r|
+        user.revoke r, @inspection
+      end
+      Participation.find_by_user_id_and_inspection_id(user.id, self.id).destroy
+      true
+    else
+      false
+    end
+  end
   def self.status_list
     ['setup', 'upload', 'prepare', 'summary', 'inspection', 'rework', 'finished']
   end
