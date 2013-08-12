@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
 
     rescue ActiveRecord::RecordNotFound
       flash[:error] = "Record not found. You are doing something very wrong!!!"
-      redirect_to root_url
+      #redirect_to root_url
     end
 
     def current_inspection= (inspection)

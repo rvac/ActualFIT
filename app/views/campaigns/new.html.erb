@@ -2,7 +2,7 @@
     <div class="row-fluid">
       <div class="span6 offset3">
         <h1>Create new campaign</h1>
-        <%= link_to "Get assignment template", assignments_template_url %><!--make something with shared errors, since this is is inpection, user stuff does not work anymore-->
+        <!--make something with shared errors, since this is is inpection, user stuff does not work anymore-->
         <%= form_for @campaign, multipart: true do |c| %>
             <%= c.label :name %>
             <%= c.text_field :name, placeholder: "place campaign name here" %>
@@ -11,7 +11,8 @@
             <%= c.text_field :comment, placeholder: "add comment if you want" %>
 
             <%= c.label :assignments, "Group assignment" %>
-            <%= c.file_field :assignments %>
+            <%= link_to "Get assignment template", assignments_template_url %> <br/>
+            <%= c.file_field :assignments %> <br/>
 
             <%= c.submit "Create", class: "btn btn-large btn-primary" %>
         <% end %>

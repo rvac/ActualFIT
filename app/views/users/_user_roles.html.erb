@@ -1,5 +1,4 @@
 <% if user.roles.any? %>
-    <strong>Roles</strong>
     <%= content_tag :ul do -%>
         <% user.roles.each do |r| %>
             <%= content_tag :li do -%>

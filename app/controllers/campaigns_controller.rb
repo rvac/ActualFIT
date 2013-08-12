@@ -31,10 +31,10 @@ class CampaignsController < ApplicationController
     if !current_user.nil?
       if ((current_user.has_role? :supervisor) || ( current_user.has_role? :admin ))
         @campaign.destroy
-        redirect_back_or action: :index
+        redirect_to action: :index
       else
         flash[:error] = "Looks like you don't have right to do that"
-        redirec_to root_url
+        redirect_to root_url
       end
     end
   end

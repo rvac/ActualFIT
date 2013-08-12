@@ -110,10 +110,10 @@ class Remark < ActiveRecord::Base
           return "#{self.element_type} #{self.element_name} #{self.element_number}"
         end
       when 'model'
-        if !self.diagram.nil?
+        if !self.diagram.nil? && !self.diagram.empty?
              return "#{self.diagram}"
-        elsif self.path.nil?
-          if self.element_number.nil?
+        elsif self.path.nil? || self.path.empty?
+          if self.element_number.nil? || self.element_number.empty?
             return "#{self.element_type} #{self.element_name}"
           else
             return "#{self.element_type} #{self.element_name} #{self.element_number}"
