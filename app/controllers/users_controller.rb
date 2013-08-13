@@ -106,7 +106,6 @@ class UsersController < ApplicationController
 	# Function to be modified. Taken from SAMPLEAPP
 	def update
     @user = User.find(params[:id])
-
     if @user.update_attributes(params[:user])
       #handle a successful update
       flash[:success] = "Profile updated"
