@@ -5,8 +5,8 @@ class ApplicationController < ActionController::Base
     flash[:error] = exception.message
     redirect_to main_app.root_url
   end
-  rescue ActiveRecord::RecordNotFound
-    flash[:error] = "Record not found. You are doing something very wrong!!!"
+  rescue_from ActiveRecord::RecordNotFound  do |exception|
+    flash[:error] = exception.message
     redirect_to main_app.root_url
   end
   def handle_unverified_request
@@ -23,10 +23,6 @@ class ApplicationController < ActionController::Base
         return current_user.inspections.first
         #flash[:error] = "Record not found. You are doing something very wrong!!!"
     end
-
-#redirect_to root_url
-      #there are no inspections bound to the user.
-
 
 
     def current_inspection= (inspection)
