@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-	before_filter   :signed_in_user, only: [:new, :create]
+	before_filter   :signed_in_user, except: [:new, :create]
   #fix this stuff!!   if not work
 	before_filter   :correct_user, only: [:edit, :update]
   #load_and_authorize_resource
