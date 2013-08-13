@@ -3,9 +3,12 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   rescue_from CanCan::AccessDenied do |exception|
     flash[:error] = exception.message
-    redirect_back_or main_app.root_url
+    redirect_to main_app.root_url
   end
-
+  rescue ActiveRecord::RecordNotFound
+    flash[:error] = "Record not found. You are doing something very wrong!!!"
+    redirect_to main_app.root_url
+  end
   def handle_unverified_request
   	sign_out
   	super
@@ -14,16 +17,17 @@ class ApplicationController < ActionController::Base
   protected
     def current_inspection
       cur_insp = Inspection.find(cookies[:current_inspection_id])
+
       return cur_insp if !cur_insp.nil?
-
-      return current_user.inspections.first
-
-        #there are no inspections bound to the user.
-
-    rescue ActiveRecord::RecordNotFound
-      flash[:error] = "Record not found. You are doing something very wrong!!!"
-      #redirect_to root_url
+      rescue ActiveRecord::RecordNotFound
+        return current_user.inspections.first
+        #flash[:error] = "Record not found. You are doing something very wrong!!!"
     end
+
+#redirect_to root_url
+      #there are no inspections bound to the user.
+
+
 
     def current_inspection= (inspection)
        # add check up if inspection is a correct instance if Inspection.class
