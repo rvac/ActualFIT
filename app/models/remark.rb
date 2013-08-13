@@ -36,35 +36,44 @@ class Remark < ActiveRecord::Base
   validates :user_id, presence: true
   validates :content, presence: true
   validates :remark_type, presence: true
-
-  def self.parse_excel(file, inspection)
-    if !file.nil?
+  after_validation :cleanup_location
+  def self.parse_excel(file, inspection, current_user = nil)
+    if !file.nil? && inspection.class == Inspection && !current_user.nil?
       spreadsheet = open_spreadsheet(file)
-      header = spreadsheet.row(1)
       #deal with headers here
+      header = spreadsheet.row(1)
+      #put into hash all artifact names, so save a little if have a lot of remarks
+      duplicates = 0
+      new_remarks = 0
+      artifact = Hash[inspection.artifacts.map{|a| [a.name, a.id]}]
       (2..spreadsheet.last_row).each do |i|
-
         row = Hash[[header, spreadsheet.row(i)].transpose]
         #user creation
-        if !row["s-number"].nil?
-          user = self.s_user_find row["s-number"]
-        elsif !row["email"].nil?
-          user = User.find_by_email(row["email"]) || User.new#try something else. Write factory for user
+        if current_user.has_role?(:moderator, inspection) && !row["s-number"].nil?
+          user = self.s_user_find(row["s-number"]) || current_user
+        elsif
+          user = current_user
         end
-
-        if !user.new_record?
-          remark = inspection.remarks.build( content: row["remark"], location: row["location"], remark_type: row["type"] )
-          remark.user_id = user.id
-          # look for artifact with row["artifact"] name, if found - assign artifact_id, otherwise nill
-          # do something smart with map inspection.artifacts (e.g. get names into hash(name, id) array
-          # and search in array) and than assign id or nil
-          remark.save
-          # write check up if saved? many checkups
+        remark = Remark.new(content: row["content"], location_type: row["location_type"], remark_type: row["remark_level"], element_type: row["element_type"], element_number: row["element_number"], element_name: row["element_name"], line_number: row["line_number"], diagram: row["diagram"], path: row["path"] )
+        remark.artifact_id = artifact[row["object"]]
+        if inspection.remarks.map {|r| remark.duplicate_of?(r)}.include?(true)
+          duplicates += 1
         else
+          remark.user_id = user.id
+          remark.inspection_id = inspection.id
+          if remark.save
+             new_remarks += 1
+          else
+            inspection.errors.add(:base, "Remark on line #{i} is corrupted")#bad situation, remark unsaved
+          end
           #write to error message this line number, no user
         end
       end
+      inspection.errors.add(:base, "#{duplicates} duplicates not imported") unless duplicates == 0
+      inspection.errors.add(:base, "#{new_remarks} remarks created") unless duplicates == 0
+      return true
     end
+    return false
   end
   def self.possible_remark_type
     return ['minor', 'major', 'comment']
@@ -75,6 +84,43 @@ class Remark < ActiveRecord::Base
   end
   def self.location_type_list
     ['code', 'document','model']
+  end
+
+  def same_location?(remark)
+    return false unless remark.class == Remark
+    if ( self.artifact_id == remark.artifact_id ) && ( self.location_type == remark.location_type )
+      case self.location_type
+        when 'code'
+          return true if self.line_number == remark.line_number
+          return false
+        when 'document'
+          return true if (self.element_type == remark.element_type) && (self.element_number == remark.element_number) && (self.element_name == remark.element_name)
+          return false
+        when 'model'
+          return true if (self.element_type == remark.element_type) && (self.diagram == remark.diagram) && (self.element_name == remark.element_name) && (self.path == remark.path)
+          return false
+        else
+          return false
+      end
+    else
+      return false
+    end
+  end
+
+  def duplicate_of?(remark)
+    return false unless remark.class == Remark
+    if self.same_location?(remark) && (self.content == remark.content)
+      remark.has_duplicates = true
+      self.duplicate_of = remark.id
+      # do we need this check up?
+      if remark.duplicate_of == self.id
+        self.has_duplicates = nil
+        remark.duplicate_of = nil
+      end
+      return true
+    else
+      return false
+    end
   end
   def location_valid?
     case self.location_type
@@ -138,9 +184,26 @@ class Remark < ActiveRecord::Base
       end
 
     end
-
+    def cleanup_location
+      case self.location_type
+        when 'code'
+          self.element_type = nil
+          self.element_name = nil
+          self.element_number = nil
+          self.path = nil
+          self.diagram = nil
+        when 'document'
+          self.line_number = nil
+          self.path = nil
+          self.diagram = nil
+        when 'model'
+          self.line_number = nil
+          self.element_number = nil
+        else
+          return
+      end
+    end
     def self.s_user_find(s_number)
-      user = User.find_by_email("#{s_number}@student.dtu.dk") || User.new
-
+      user = User.find_by_email("#{s_number}@student.dtu.dk")
     end
 end

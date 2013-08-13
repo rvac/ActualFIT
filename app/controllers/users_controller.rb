@@ -123,9 +123,7 @@ class UsersController < ApplicationController
     if !@user.profile_picture.nil? && !@user.content_type.nil?
       send_data @user.profile_picture, type: @user.content_type, :disposition => 'inline'
     else
-      #data = File.open("#{Rails.root}/app/assets/images/profile-pics/av-8714.jpg", "rb") {|io| io.read}
-      #File.read("#{Rails.root}/app/assets/images/profile-pics/", :mode => "rb"), :filename => 'av-8714.jpg'
-      #send_file data, type: 'image/jpeg', :disposition => 'inline'
+      #zalupa
     end
   end
 	private

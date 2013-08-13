@@ -11,11 +11,9 @@
         <% end -%>
         <div class="row-fluid">
           <div class="ProfilePicture pull-left">
-            <% if !user.profile_picture.nil? %>
-                <%= image_tag get_profile_picture_user_url(user), size: "100x100", alt: "Profile picture", style: "padding: 5px;" %>
-            <% else %>
-                <%= image_tag 'profile-pics/av-8714.jpg', size: "100x100", style: "padding: 5px;" %>
-            <% end %>
+
+                <%= image_tag 'profile-pics/av-8714.jpg', style: "max-width: 8em; max-height: 8em; padding: 5px;" %>
+
           </div>
           <div class="UserProfileAttibutes pull-left">
             <%= content_tag :div, class: "UserRoles pull-left", user_id: user.id  do -%>

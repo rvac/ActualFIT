@@ -10,10 +10,11 @@ class InspectionsController < ApplicationController
 
   def download_artifacts
     @inspection = Inspection.find(params[:id])
-    @inspection.artifacts.each do |a|
-      send_data a.file, filename: a.filename,
-                type: a.content_type
-    end
+    #@inspection.artifacts.each do |a|
+    #  send_data a.file, filename: a.filename,
+    #            type: a.content_type
+    #end
+    redirect_to @inspection
   end
   def download_remarks
     @inspection = Inspection.find(params[:id])
@@ -26,11 +27,13 @@ class InspectionsController < ApplicationController
     if request.post?
       @inspection = Inspection.find(params[:id])
 
-      if Remark.parse_excel( params[:remarks_file], @inspection )
-        flash.now[:success] = "Remarks were successfully uploaded"
-        redirect_back_or @inspection
+      if Remark.parse_excel( params[:remarks_file], @inspection, current_user )
+        flash[:alert] ||= []
+        flash[:alert] << @inspection.errors.full_messages.join()
+        @inspection.errors.clear
+        redirect_to @inspection
       else
-        flash.now[:error] = "Can not upload #{}"
+        flash.now[:error] = "Can not upload remarks. Try again"
         render 'upload_remarks'
       end
     else

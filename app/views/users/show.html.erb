@@ -22,11 +22,8 @@
               <div class="span12" style="">
                 <div class="row-fluid">
                   <div class="ProfilePicture pull-left">
-                    <% if !@user.profile_picture.nil? %>
-                        <%= image_tag get_profile_picture_user_url(@user), size: "250x250", alt: "Profile picture", style: "padding: 5px;" %>
-                    <% else %>
-                        <%= image_tag 'profile-pics/av-8714.jpg', size: "250x250", style: "padding: 5px;" %>
-                    <% end %>
+                     <%= image_tag get_profile_picture_user_url(@user), style: "max-width: 18em; max-height: 18em; padding: 5px;", alt: "Profile picture" %>
+
                   </div>
                   <div class="UserProfileAttibutes pull-left">
                     <div class=""><strong>Email</strong></div>

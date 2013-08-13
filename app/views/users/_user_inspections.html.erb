@@ -1,4 +1,5 @@
 <% if user.inspections.any? %>
+    <%= render partial: "user_divider" if user.roles.any?%>
     <%= content_tag :ul do -%>
         <% user.inspections.each do |insp| %>
             <%= content_tag :li do -%>

@@ -14,12 +14,21 @@ class CampaignsController < ApplicationController
     #@campaign = Campaign.new(params[:campaign])
     #insp_names = params[:insp_names].split(',')
 
+
     if @campaign.save
-      flash[:notice] = @campaign.errors.full_messages.join(' ') if @campaign.errors.any?
+      if @campaign.errors.any?
+        flash[:notice] ||= []
+        @campaign.errors.full_messages.each do |m|
+          flash[:notice] << m
+        end
+      end
       @campaign.errors.clear
       redirect_to @campaign
     else
-      flash[:error] = @campaign.errors.full_messages.join(' ')
+      flash[:error] ||= []
+      @campaign.errors.full_messages.each do |m|
+        flash[:error] << m
+      end
       @campaign.errors.clear
       render 'new'
     end

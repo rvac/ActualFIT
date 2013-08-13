@@ -39,6 +39,7 @@ class User < ActiveRecord::Base
 						uniqueness: { case_sensitive: false }
 	validates :password, presence: true, length: { minimum: 6 }
 	validates :password_confirmation, presence: true
+  after_create :default_profile_picture
 
   def datafile=(incoming_file)
     if ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-png', 'image/jpg'].include?(incoming_file.content_type)
@@ -57,6 +58,16 @@ class User < ActiveRecord::Base
   #  self.initialize(attributes, options)
   #end
   private
+    def default_profile_picture
+      if self.profile_picture.nil?
+        picture = File.open(Rails.public_path + "/templates/blank-profile-photo.jpg", "rb")
+        self.profile_picture = picture.read
+        self.content_type = "image/jpg"# code here
+        picture.close
+        self.save
+      end
+    end
+
     def sanitize_filename(filename)
       just_filename = File.basename(filename)
       just_filename.gsub(/[^\w\.\-]/, '_')
