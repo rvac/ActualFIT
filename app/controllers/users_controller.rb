@@ -130,7 +130,7 @@ class UsersController < ApplicationController
 
 		def correct_user
 		@user = User.find(params[:id])
-    redirect_to (edit_user_path(@user)) unless (current_user?(@user) || current_user.has_role?(:admin) || current_user.has_role?(:supervisor))
+    redirect_to (edit_user_path(current_user)) unless (current_user?(@user) || current_user.has_role?(:admin) || current_user.has_role?(:supervisor))
 
 		end
 end
