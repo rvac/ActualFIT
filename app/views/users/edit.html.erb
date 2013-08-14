@@ -1,8 +1,7 @@
-<div class="row-fluid">
-  <%= form_for @user do |user| %>
+<%= content_tag :div, class: "row-fluid" do -%>
+  <%= form_for @user, html: {class: "form-horizontal"} do |user| %>
       <%= render 'shared/error_messages' %>
-      <div class="span6 offset3">
-        <div class="UserProfileAttibutes">
+      <%= content_tag :div, class: "span6 offset3" do -%>
           <% if current_user?(@user) %>
               <h3 style="text-align: center; margin-bottom: 0px;">Update your profile</h3>
               <%= content_tag(:h5, link_to('Delete User', user_path(@user), method: :delete, confirm: "Do you want to permanently delete #{@user.name}?"), style: "text-align: center;")  if can? @user, :delete %>
@@ -10,40 +9,63 @@
               <h3 style="text-align: center; margin-bottom: 0px;">Update <%= @user.name %> profile</h3>
               <%= content_tag(:h5, link_to('Delete User', user_path(@user), method: :delete, confirm: "Do you want to permanently delete #{@user.name}?"), style: "text-align: center; margin-top: 0px;")  if can? @user, :delete %>
           <% end %>
-          <%= user.label :name, class: "pull-left" %>
-          <%= user.text_field :name %>
-
-          <%= user.label :email, class: "pull-left" %>
-          <%= user.text_field :email %>
-
-          <%= user.label :skype, class: "pull-left" %>
-          <%= user.text_field :skype %>
-
-          <%= user.label :phone, class: "pull-left" %>
-          <%= user.text_field :phone%>
-
-          <%= user.label :address, class: "pull-left" %>
-          <%= user.text_field :address, class: "pull-left" %>
-
-          <%= user.label :additional_info, class: "pull-left" %>
-          <%= user.text_field :additional_info %>
-
-          <%= user.label :profile_picture, class: "pull-left" %>
-          <%= user.file_field :datafile,  :accept => 'image/png,image/gif,image/jpeg' %>
-
-          <%= user.label :password, class: "pull-left" %>
-          <%= user.password_field :password %>
-
-          <%= user.label :password_confirmation, class: "pull-left" %>
-          <%= user.password_field :password_confirmation %>
-        </div>
+          <%= content_tag :div, class: "control-group" do -%>
+              <%= user.label :name, class: "control-label" %>
+              <%= content_tag :div, class: "controls" do -%>
+                <%= user.text_field :name %>
+              <% end -%>
+          <% end -%>
+          <%= content_tag :div, class: "control-group" do -%>
+            <%= user.label :email, class: "control-label" %>
+            <%= content_tag :div, class: "controls" do -%>
+                <%= user.text_field :email %>
+            <% end -%>
+          <% end -%>
+          <%= content_tag :div, class: "control-group" do -%>
+            <%= user.label :skype, class: "control-label" %>
+            <%= content_tag :div, class: "controls" do -%>
+                <%= user.text_field :skype %>
+            <% end -%>
+          <% end -%>
+          <%= content_tag :div, class: "control-group" do -%>
+            <%= user.label :phone, class: "control-label" %>
+            <%= content_tag :div, class: "controls" do -%>
+                <%= user.text_field :phone%>
+            <% end -%>
+          <% end -%>
+          <%= content_tag :div, class: "control-group" do -%>
+            <%= user.label :address, class: "control-label" %>
+            <%= content_tag :div, class: "controls" do -%>
+                <%= user.text_field :address %>
+            <% end -%>
+          <% end -%>
+          <%= content_tag :div, class: "control-group" do -%>
+            <%= user.label :additional_info, class: "control-label" %>
+            <%= content_tag :div, class: "controls" do -%>
+                <%= user.text_field :additional_info %>
+            <% end -%>
+          <% end -%>
+          <%= content_tag :div, class: "control-group" do -%>
+            <%= user.label :profile_picture, class: "control-label" %>
+            <%= content_tag :div, class: "controls" do -%>
+                <%= user.file_field :datafile,  :accept => 'image/png,image/gif,image/jpeg' %>
+            <% end -%>
+          <% end -%>
+          <%= content_tag :div, class: "control-group" do -%>
+            <%= user.label :password, class: "control-label" %>
+            <%= content_tag :div, class: "controls" do -%>
+                <%= user.password_field :password %>
+            <% end -%>
+          <% end -%>
+          <%= content_tag :div, class: "control-group" do -%>
+            <%= user.label :password_confirmation, class: "control-label" %>
+            <%= content_tag :div, class: "controls" do -%>
+                <%= user.password_field :password_confirmation %>
+            <% end -%>
+          <% end -%>
         <% attribute_button = user.submit "Save attributes", class: "btn btn-primary btn-large" %>
-        <%= content_tag(:div, attribute_button, style: "margin-bottom: 10px;") %>
-
-      </div>
-
-
+        <%= content_tag(:div, content_tag(:div, attribute_button, class: "controls"), class: "control-group") %>
+      <% end -%>
+  <% end %>
 <% end %>
 
-
-</div>

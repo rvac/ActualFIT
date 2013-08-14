@@ -111,9 +111,9 @@ class UsersController < ApplicationController
       flash[:success] = "Profile updated"
       sign_in @user if current_user?(@user)
       #redirect_to @user
-      redirect_back_or @user
+      redirect_to @user
     else
-       render 'edit'
+      render 'edit'
     end
     #redirect_to @user
 	end
