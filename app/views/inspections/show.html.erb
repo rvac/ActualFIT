@@ -2,12 +2,15 @@
     <div class="span12">
       <div class="row-fluid"  style="text-align: center;">
         <h3 style="margin: 0px;">
-          <% if can? :edit, @inspection %>
-              <%= link_to "Inspection #{@inspection.fullname }", edit_inspection_path(@inspection) %>
-          <% else %>
-              <%= "Inspection #{@inspection.fullname }" %>
-          <% end %>
+          <%= "Inspection #{@inspection.fullname }" %>
         </h3>
+        <% if can? :edit, @inspection %>
+          <%= content_tag :h5, style: "text-align: center; margin-top: 0em;" do -%>
+              <%= link_to 'edit', edit_inspection_path(@inspection) %>
+              <%= link_to('delete', inspection_path(@inspection), method: :delete, confirm: "Do you want to delete #{@inspection.fullname}?", style: "margin-left: 2em;") if can? :destroy, @inspection %>
+          <% end -%>
+        <% end %>
+
       </div>
       <div class="row-fluid">
         <div class="span2 ArtifactsPanel pull-left">

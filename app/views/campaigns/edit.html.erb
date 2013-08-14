@@ -1,20 +1,36 @@
-<div class="row-fluid">
-  <%= form_for @campaign do |c| %>
+<%= content_tag :div, class: "row-fluid" do -%>
+    <%= content_tag :h3, @campaign.name,  style: "text-align: center; margin-bottom: 0px;" %>
 
-      <div class="span6 offset3">
-        <%= c.label :name %>
-        <%= c.text_field :name %>
+    <%= content_tag :h5, style: "text-align: center;" do -%>
+            <%= link_to('Delete Campaign', campaign_path(@campaign), method: :delete, confirm: "Do you want to delete #{@campaign.name}?") if can? :destroy, @campaign %>
+            <%= link_to('Create Inspection', new_inspection_path, style: "margin-left: 2em;") %>
+    <% end -%>
+    <%= form_for @campaign, html: {class: "form-horizontal"} do |c| %>
+        <%= content_tag :div, class: "span6 offset3" do -%>
+            <%= content_tag :div, class: "control-group" do -%>
+                <%= c.label :name, class: "control-label" %>
+                <%= content_tag :div, class: "controls" do -%>
+                    <%= c.text_field :name %>
+                <% end -%>
+            <% end -%>
+            <%= content_tag :div, class: "control-group" do -%>
+                <%= c.label :comment, class: "control-label" %>
+                <%= content_tag :div, class: "controls" do -%>
+                    <%= c.text_field :comment %>
+                <% end -%>
+            <% end -%>
 
-        <%= c.label :comment %>
-        <%= c.text_field :comment %>
-
-        <%= c.label :assignments, "Group assignment" %>
-        <%= c.file_field :assignments %>
-
-        <%= c.submit 'Save changes', class: "btn btn-primary btn-large" %>
-
-        <%= content_tag(:h3, link_to('Create Inspection', new_inspection_path)) %>
-        <%= content_tag(:h3, link_to('Delete Campaign', campaign_path(@campaign), method: :delete, confirm: "Do you want to delete #{@campaign.name}?"))  if can? :destroy, @campaign%>
-      </div>
-<% end %>
- </div>
+            <%= content_tag :div, class: "control-group" do -%>
+                <%= c.label :assignments, "Group assignment", class: "control-label" %>
+                <%= content_tag :div, class: "controls" do -%>
+                    <%= c.file_field :assignments %>
+                <% end -%>
+            <% end -%>
+            <%= content_tag :div, class: "control-group" do -%>
+                <%= content_tag :div, class: "controls" do -%>
+                    <%= c.submit 'Save changes', class: "btn btn-primary btn-large" %>
+                <% end -%>
+            <% end -%>
+        <% end -%>
+    <% end %>
+<% end -%>

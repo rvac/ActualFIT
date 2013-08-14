@@ -1,7 +1,12 @@
 <div class="row-fluid" id="InspectionEdit">
     <div class="span12">
       <div class="row-fluid">
-          <%= content_tag :h2, link_to(@inspection.fullname, @inspection), style: "text-align: center;" %>
+          <%= content_tag :h3, @inspection.fullname, style: "text-align: center; margin-bottom: 0px;" %>
+            <% if can? :delete, @inspection %>
+                <%= content_tag :h5, style: "text-align: center; margin-top: 0em;" do -%>
+                    <%= link_to('delete', inspection_path(@inspection), method: :delete, confirm: "Do you want to delete #{@inspection.fullname}?")  %>
+                <% end -%>
+            <% end %>
           <%= render partial: 'inspections/status_bar', locals: {inspection: @inspection} %>
           <%= render partial: 'inspections/deadline_bar', locals: {inspection: @inspection} %>
       </div>
@@ -36,6 +41,5 @@
           <% end %>
         </div>
       </div>
-      <%= content_tag(:h3, link_to('Delete Inspection', inspection_path(@inspection), method: :delete, confirm: "Do you want to delete #{@inspection.name}?"), style: "text-align: center;")  if can? :destroy, @inspection%>
     </div>
 </div>
