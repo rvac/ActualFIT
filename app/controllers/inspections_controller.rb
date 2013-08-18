@@ -120,7 +120,7 @@ class InspectionsController < ApplicationController
       if !@inspection.errors.any? && @inspection.save
         @inspection.close_deadline(old_status)
         flash.now[:success] ||= []
-        flash.now[:success] << "Inspection status is now #{@inspection.status}"
+        flash.now[:success] << "#{@inspection.fullname} status has been changed to #{@inspection.status.titleize}"
         respond_to do |format|
           format.js  {}
         end
@@ -143,14 +143,15 @@ class InspectionsController < ApplicationController
       #if current_user.has_role?(:moderator, Inspection) && (params[:status] != 'archived')
       #  #there should be a checkup on validity of inspection )
         if @inspection.update_deadline(params[:status], Date.strptime(params[:dueDate], '%Y-%m-%d'))
-          respond_to do |format|
-            format.js  {}
-          end
+          @inspection.reload
         else
           flash.now[:error] ||= []
           @inspection.errors.full_messages.each {|m| flash.now[:error] << m}
           @inspection.errors.clear
         end
+        #respond_to do |format|
+        #  format.js  {}
+        #end
       #else
       #  if @inspection.update_deadline(params[:status], Date.strptime(params[:dueDate], '%Y-%m-%d'))
       #    @inspection.reload

@@ -52,11 +52,8 @@ class Inspection < ActiveRecord::Base
     end
   end
 
-  def dueDates_to_hash
-    Hash[self.deadlines.map{|d| [d.name, d.dueDate]}]
-    end
-  def closeDates_to_hash
-    Hash[self.deadlines.map{|d| [d.name, d.closeDate]}]
+  def deadlines_to_hash
+    Hash[self.deadlines.map{|d| [d.name, [d.dueDate, d.missed_deadline?]]}]
   end
   def deadlines_valid?
     if ((self.class.status_list | self.deadlines.map(&:name)) - (self.class.status_list & self.deadlines.map(&:name))).empty?
@@ -69,7 +66,7 @@ class Inspection < ActiveRecord::Base
   def deadline_valid?(name, endDate)
         #!self.deadlines.each_cons(2).map {|a, b| a.dueDate <= b.startDate }.include?(false)
       false if !self.class.status_list.include?(name) || !endDate.class.to_s == "Date"
-      deadlines = self.dueDates_to_hash
+      deadlines =  Hash[self.deadlines_to_hash.map {|k,v| [k, v.first]} ]
       deadlines[name] = endDate
       !deadlines.values.each_cons(2).map {|a, b| a <= b }.include?(false)
   end
@@ -83,7 +80,16 @@ class Inspection < ActiveRecord::Base
       end
   end
   def close_deadline(old_status)
-      #for range between old and new status change closeDate of a corresponding deadline
+      self.deadlines.select {|d| self.status_of_status(d.name) == 'done' && d.closeDate.nil?}.each do |d|
+        d.closeDate = Date.today
+        d.save
+        #for range between old and new status change closeDate of a corresponding deadline
+      end
+      if self.status == 'finished'
+        d = self.deadlines.last
+        d.closeDate = Date.today
+        d.save
+      end
   end
   def default_deadline!
     self.deadlines.delete_all

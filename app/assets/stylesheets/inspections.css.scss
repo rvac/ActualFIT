@@ -133,15 +133,18 @@
         }
       }
       .errorStatusChevronFletching{
-        border-top: 1em solid #ee0f16;
-        border-bottom: 1em solid #ee0f16;
+        //border-top: 1em solid #ee0f16;
+        //border-bottom: 1em solid #ee0f16;
       }
       .errorStatusChevronHead{
-        border-left: 1em solid #ee0f16;
+        //border-left: 1em solid #ee0f16;
       }
       .errorStatusChevronBody{
-        background-color: #ee0f16;
-
+        //background-color: #ee0f16;
+        color: #ee0f16;
+        a{
+          color: #ee0f16;
+        }
       }
 
       form{

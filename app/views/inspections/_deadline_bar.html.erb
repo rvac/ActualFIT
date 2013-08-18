@@ -1,5 +1,5 @@
 <%= content_tag :div, class:"row-fluid InspectionDeadlineBarContainer", inspection_id: inspection.id do -%>
     <%= content_tag :div, class:"InspectionDeadlineBar", inspection_id: inspection.id do -%>
-        <%= render partial: "inspections/deadline", collection: Inspection.status_list, as: :status, locals: {inspection: inspection, deadlines: inspection.dueDates_to_hash} %>
+        <%= render partial: "inspections/deadline", collection: Inspection.status_list, as: :status, locals: {inspection: inspection, deadlines: inspection.deadlines_to_hash} %>
     <% end -%>
 <% end -%>

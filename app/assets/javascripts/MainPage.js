@@ -51,7 +51,7 @@ $(document).ready(function(){
 //        $('body').prepend('<div>' + $(window).width() + '</div>');
 //    });
 //    setInterval(refreshPartial, 3000);
-    $('#dsetup, #dpupload, #dpprepare, #dpinspection, #dprework, #dpfinished').datepicker()
+    $('#dpsetup, #dpupload, #dpprepare, #dpinspection, #dprework, #dpfinished').datepicker()
         .on('changeDate', function(e){
             var y = e.date.getFullYear(),
                 _m = e.date.getMonth() + 1,
@@ -121,6 +121,9 @@ $(document).ready(function(){
         $(this).parent().find('.ArtifactComment').slideDown();
     });
     $('.ArtifactComment').click(function(){
+        $(this).slideUp();
+    });
+    $("#InspectionHintMessage").click(function(){
         $(this).slideUp();
     });
 });

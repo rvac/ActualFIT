@@ -1,5 +1,5 @@
 $(".InspectionDeadlineBar[inspection_id=<%= @inspection.id %>]").html("<%= j render partial: 'inspections/deadline_bar', locals: {inspection: @inspection }  %>");
-$('#dsetup, #dpupload, #dpprepare, #dpinspection, #dprework, #dpfinished').datepicker().on('changeDate', function(e){
+$('#dpsetup, #dpupload, #dpprepare, #dpinspection, #dprework, #dpfinished').datepicker().on('changeDate', function(e){
     var y = e.date.getFullYear(),
             _m = e.date.getMonth() + 1,
             m = (_m > 9 ? _m : '0'+_m),

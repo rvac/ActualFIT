@@ -4,13 +4,13 @@
       <% if can? :change_deadline, inspection %>
           <%= form_tag(change_deadline_inspection_path(inspection), :method => :put, remote: true) do %>
               <%= hidden_field_tag :status, status %>
-              <%= link_to deadlines[status], '#', class: "chevron-body #{inspection.status_of_status(status)}StatusChevronBody hint--bottom hint--bounce hint--rounded",
-                          id: "dp#{status}", data: { date: deadlines[status], date_format: "yyyy-mm-dd", date_autoclose: "true", hint: "Change the deadline for #{status.titleize} " } %>
-              <%= hidden_field_tag :dueDate, deadlines[status], id: "dueDate" %>
+              <%= link_to deadlines[status].first, '#', class: "chevron-body #{inspection.status_of_status(status)}StatusChevronBody #{ 'errorStatusChevronBody' if deadlines[status].last} hint--bottom hint--bounce hint--rounded",
+                          id: "dp#{status}", data: { date: deadlines[status].first, date_format: "yyyy-mm-dd", date_autoclose: "true", hint: "Change the deadline for #{status.titleize} " } %>
+              <%= hidden_field_tag :dueDate, deadlines[status].first, id: "dueDate" %>
               <%= image_submit_tag("icon_32/save_32.png", class: "submitDeadline", id: "submitDeadline") %>
           <% end %>
       <% else %>
-          <%= content_tag(:div, deadlines[status], class: "chevron-body  #{inspection.status_of_status(status)}StatusChevronBody") %>
+          <%= content_tag(:div, deadlines[status].first, class: "chevron-body  #{inspection.status_of_status(status)}StatusChevronBody #{ 'errorStatusChevronBody' if deadlines[status].last}") %>
       <% end %>
       <div class="chevron-head <%= "#{inspection.status_of_status(status)}StatusChevronHead" %>"></div>
   <% end %>

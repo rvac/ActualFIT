@@ -7,7 +7,7 @@
 </div>
 <% if campaign.inspections.any? %>
     <ul class="thumbnails">
-      <% inspections_html = render partial: 'inspections/inspection', collection: campaign.inspections, as: :insp %>
+      <% inspections_html = render partial: 'inspections/inspection', collection: campaign.inspections.order(:name), as: :insp %>
       <%= inspections_html || 'there is no inspections'%>
 
     </ul>

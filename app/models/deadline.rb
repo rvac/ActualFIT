@@ -30,7 +30,7 @@ class Deadline < ActiveRecord::Base
   #    end
   #  end
   #end
-  def missedDeadline?
+  def missed_deadline?
     if self.closeDate.nil?
       self.dueDate.to_date < Date.today
     else

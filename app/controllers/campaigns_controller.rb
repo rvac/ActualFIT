@@ -53,11 +53,11 @@ class CampaignsController < ApplicationController
 
   def show
     @campaign = Campaign.find(params[:id])
-    @inspections = @campaign.inspections
+
   end
 
   def index
-    @campaigns = Campaign.all
+    @campaigns = Campaign.order(:name)
     store_location
   end
 

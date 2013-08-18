@@ -8,11 +8,12 @@
       <%= content_tag :div, class: "row-fluid" do -%>
           <% insp_hint = inspection_helper_message(current_user, inspection) || []%>
           <% if !insp_hint.empty? %>
-            <div class="alert alert-notice" style="margin: 1em 0em 0em 0em;">
+            <%= content_tag :div, id: "InspectionHintMessage", class:"alert alert-notice hint--bottom hint--bounce hint--rounded",
+                           data:{hint: "Click to hide the hint"} do -%>
                 <% insp_hint.each do |r| %>
                     <%= content_tag :span, r %>
                 <% end %>
-            </div>
+            <% end -%>
           <% end %>
           <%= content_tag :div, class: "row-fluid", style: "text-align: center;" do -%>
               <%= content_tag :h3, "Remarks Table", class: "CommentsHeader hint--bottom hint--bounce hint--rounded", data: {hint: "The table should contain remarks for uploaded artifacts"} %>
