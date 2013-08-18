@@ -1,10 +1,30 @@
 <div class="row-fluid">
   <div class="span6 offset3">
-    <h1>Upload remarks for inspection here</h1>
-    <%= form_tag 'upload_remarks', multipart: true do %>
-        <label for="file">Remarks to upload</label>
-        <%= file_field_tag :remarks_file %><br/>
-        <%= submit_tag 'Upload', class: "btn btn-primary btn-large" %>
+    <div class="row-fluid" style="text-align: center;">
+    <%= content_tag :h3, "Upload remarks for inspection #{@inspection.fullname}",
+                    class: "hint--bottom hint--bounce hint--rounded",
+                    data: {hint: "Select a spreadsheet file from your PC. Make sure it complies with provided template"} %>
+    </div>
+    <%= form_tag 'upload_remarks' , html: {class: "form-horizontal"},multipart: true do %>
+        <%= content_tag :div, class: "control-group" do -%>
+            <%= content_tag :div, class: "controls" do -%>
+                <%= link_to 'Download a template for remarks file', remarks_template_url, class: "hint--right hint--bounce hint--rounded", style: "margin-bottom: 1em;",
+                            data: {hint: "Uploaded remarks should comply to this template. Click on the link to get the template"} %>
+            <% end -%>
+        <% end -%>
+        <%= content_tag :div, class: "control-group" do -%>
+            <%= label_tag :file, "Remarks to upload", class: "control-label"  %>
+            <%= content_tag :div, class: "controls" do -%>
+                <%= file_field_tag :remarks_file %>
+            <% end -%>
+        <% end -%>
+        <%= content_tag :div, class: "control-group" do -%>
+            <%= content_tag :div, class: "controls" do -%>
+                <%= submit_tag 'Upload', class: "btn btn-primary btn-large" %>
+            <% end -%>
+        <% end -%>
+
+
     <% end %>
   </div>
 </div>

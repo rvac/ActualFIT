@@ -47,9 +47,11 @@ $(document).ready(function(){
 
         // will call refreshPartial every 3 seconds
 
-
+//    $(window).resize(function() {
+//        $('body').prepend('<div>' + $(window).width() + '</div>');
+//    });
 //    setInterval(refreshPartial, 3000);
-    $('#dsetup, #dpupload, #dpprepare, #dpsummary, #dpinspection, #dprework, #dpfinished').datepicker()
+    $('#dsetup, #dpupload, #dpprepare, #dpinspection, #dprework, #dpfinished').datepicker()
         .on('changeDate', function(e){
             var y = e.date.getFullYear(),
                 _m = e.date.getMonth() + 1,
@@ -114,5 +116,12 @@ $(document).ready(function(){
 	$(".CommentsClose").click(function(){
 		fadeOutContent($(".ArtifactComments"));
 	});
+
+    $('.ArtifactBody').click(function(){
+        $(this).parent().find('.ArtifactComment').slideDown();
+    });
+    $('.ArtifactComment').click(function(){
+        $(this).slideUp();
+    });
 });
 

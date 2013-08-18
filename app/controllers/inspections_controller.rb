@@ -2,7 +2,6 @@ class InspectionsController < ApplicationController
 	before_filter :signed_in_user
   load_and_authorize_resource
   respond_to :html, :js
-
 	def new
 		@inspection = Inspection.new
     #authorize! :create, @inspection
@@ -37,7 +36,7 @@ class InspectionsController < ApplicationController
         render 'upload_remarks'
       end
     else
-      #handle get. I.e. do nothing for now
+      @inspection = Inspection.find(params[:id])
     end
   end
 
@@ -46,7 +45,10 @@ class InspectionsController < ApplicationController
     #@remarks = @inspection.remarks.page(params[:page]).per(5)
 
     self.current_inspection= @inspection
-    flash.now[:notice] = "Ask author to add some artifacts" if @inspection.artifacts.empty?
+    flash.now[:error] ||= []
+    @inspection.errors.full_messages.each {|m| flash.now[:error] << m }
+    @inspection.errors.clear
+
     store_location
 	end
 
@@ -59,11 +61,14 @@ class InspectionsController < ApplicationController
       @inspection.campaign_id = params[:campaign_id]
     end
       if @inspection.save
-			flash[:success] = "inspection #{@inspection.name} created"
+      flash[:success] ||= []
+      flash[:success] << "Inspection #{@inspection.name} has been created"
 			redirect_to @inspection
     else
       errors = @inspection.errors.full_messages
-      flash[:error] = errors.join(" ")
+      flash.now[:error] ||= []
+      @inspection.errors.full_messages.each {|m| flash.now[:error] << m }
+      @inspection.errors.clear
 			render 'new'
 		end
   end
@@ -86,7 +91,9 @@ class InspectionsController < ApplicationController
         @inspection.destroy
         redirect_back_or action: :index
       else
-        flash.now[:error] = "Looks like you don't have right to do that"
+        flash[:error] ||= []
+        flash[:error] << "Looks like you don't have right to do that"
+        @inspection.errors.clear
       end
     end
   end
@@ -101,22 +108,27 @@ class InspectionsController < ApplicationController
     if !current_user.nil?
       #we don't think here about roles, they are controlled in abilities,
       # moderator can not use this action when status in 'archived' or 'closed'
+      roles = current_user.roles.map {|r| r.name if r.resource_id == @inspection.id }
+
       old_status = @inspection.status
       if current_user.has_role?(:moderator, Inspection) && (params[:status] != 'archived')
-        @inspection.status = params[:status]
+        @inspection.change_status params[:status]
       else
-        @inspection.status = params[:status]
+        @inspection.change_status params[:status]
       end
 
-      if @inspection.save
+      if !@inspection.errors.any? && @inspection.save
         @inspection.close_deadline(old_status)
-        flash.now[:success] = "Inspection status is now #{@inspection.status}"
+        flash.now[:success] ||= []
+        flash.now[:success] << "Inspection status is now #{@inspection.status}"
         respond_to do |format|
           format.js  {}
         end
         #render :edit
       else
-        flash.now[:error] = "Can not change inspection status, sorry!"
+        flash.now[:error] ||= []
+        @inspection.errors.full_messages.each {|m| flash.now[:error] << m }
+        @inspection.errors.clear
         #render :edit
       end
     end
@@ -128,32 +140,37 @@ class InspectionsController < ApplicationController
       #we don't think here about roles, they are controlled in abilities,
       # moderator can not use this action when status in 'archived' or 'closed'
 
-      if current_user.has_role?(:moderator, Inspection) && (params[:status] != 'archived') && (params[:status] != 'closed')
-        #there should be a checkup on validity of inspection )
+      #if current_user.has_role?(:moderator, Inspection) && (params[:status] != 'archived')
+      #  #there should be a checkup on validity of inspection )
         if @inspection.update_deadline(params[:status], Date.strptime(params[:dueDate], '%Y-%m-%d'))
           respond_to do |format|
             format.js  {}
           end
         else
-          flash.now[:error] = "Deadline for the inspection is not valid"
+          flash.now[:error] ||= []
+          @inspection.errors.full_messages.each {|m| flash.now[:error] << m}
+          @inspection.errors.clear
         end
-      else
-        if @inspection.update_deadline(params[:status], Date.strptime(params[:dueDate], '%Y-%m-%d'))
-          @inspection.reload
-          respond_to do |format|
-            format.js  {}
-          end
-        else
-          flash[:error] = "Deadline for the inspection is not valid"
-        end
-      end
+      #else
+      #  if @inspection.update_deadline(params[:status], Date.strptime(params[:dueDate], '%Y-%m-%d'))
+      #    @inspection.reload
+      #    respond_to do |format|
+      #      format.js  {}
+      #    end
+      #  else
+      #    flash.now[:error] ||= []
+      #    @inspection.errors.full_messages.each {|m| flash.now[:error] << m }
+      #    @inspection.errors.clear
+      #  end
+      #end
     end
   end
   def add_user
     @inspection = Inspection.find(params[:id])
 
     @user = User.find(params[:user_id])
-    flash.now[:error] = "can not add user" unless @inspection.add_user(@user, params[:role])
+    flash.now[:error] ||= []
+    flash.now[:error] << "can not add user" unless @inspection.add_user(@user, params[:role])
     respond_to do |format|
       format.js  {}
     end
@@ -162,7 +179,8 @@ class InspectionsController < ApplicationController
     @inspection = Inspection.find(params[:id])
 
     @user = User.find(params[:user_id])
-    flash[:error] = "Can not remove user from #{@inspection.fullname}" unless @inspection.remove_user @user
+    flash.now[:error] ||= []
+    flash.now[:error] << "Can not remove user from #{@inspection.fullname}" unless @inspection.remove_user @user
 
     respond_to do |format|
       format.js  {}

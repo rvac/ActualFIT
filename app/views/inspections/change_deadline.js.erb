@@ -1,5 +1,5 @@
 $(".InspectionDeadlineBar[inspection_id=<%= @inspection.id %>]").html("<%= j render partial: 'inspections/deadline_bar', locals: {inspection: @inspection }  %>");
-$('#dsetup, #dpupload, #dpprepare, #dpsummary, #dpinspection, #dprework, #dpfinished').datepicker().on('changeDate', function(e){
+$('#dsetup, #dpupload, #dpprepare, #dpinspection, #dprework, #dpfinished').datepicker().on('changeDate', function(e){
     var y = e.date.getFullYear(),
             _m = e.date.getMonth() + 1,
             m = (_m > 9 ? _m : '0'+_m),
@@ -9,3 +9,4 @@ $('#dsetup, #dpupload, #dpprepare, #dpsummary, #dpinspection, #dprework, #dpfini
     $(this).next("#dueDate").val(y + '-' + m + '-' + d);
     $(this).next("#dueDate").next("#submitDeadline").show();
 });
+$('#FlashMessages').html("<%= j render partial: 'shared/flash', locals: {flash: flash} %>");

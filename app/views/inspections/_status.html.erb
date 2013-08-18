@@ -2,7 +2,9 @@
   <%= content_tag :div, class: "chevron status#{status.titleize}", id: "status#{status.titleize}" do -%>
         <div class="chevron-fletching <%= "#{inspection.status_of_status(status)}StatusChevronFletching" %>"></div>
           <% if can? :change_status, inspection %>
-              <%= content_tag(:div, link_to(status, change_status_inspection_path(inspection, status: status), confirm: "Change #{inspection.name} status from #{inspection.status} to #{status}?", method: :put, remote: true), class: "chevron-body #{inspection.status_of_status(status)}StatusChevronBody") %>
+              <%= content_tag(:div, link_to(status, change_status_inspection_path(inspection, status: status), confirm: "Change #{inspection.name} status from #{inspection.status} to #{status}?", method: :put, remote: true),
+                              class: "chevron-body #{inspection.status_of_status(status)}StatusChevronBody hint--top hint--bounce hint--rounded",
+                              data:{hint: "Change the inspection status to #{status.titleize}"}) %>
           <% else %>
               <%= content_tag(:div, status, class: "chevron-body #{inspection.status_of_status(status)}StatusChevronBody") %>
           <% end %>

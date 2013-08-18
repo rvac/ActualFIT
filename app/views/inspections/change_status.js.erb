@@ -1,7 +1,7 @@
 $(".InspectionStatusBar[inspection_id=<%= @inspection.id %>]").html("<%= j render partial: 'inspections/status_bar', locals: {inspection: @inspection}  %>");
 $(".InspectionDeadlineBar[inspection_id=<%= @inspection.id %>]").html("<%= j render partial: 'inspections/deadline_bar', locals: {inspection: @inspection }  %>");
 $('#InspectionStatus').html("<%= j @inspection.status %>");
-$('#dsetup, #dpupload, #dpprepare, #dpsummary, #dpinspection, #dprework, #dpfinished').datepicker().on('changeDate', function(e){
+$('#dsetup, #dpupload, #dpprepare, #dpinspection, #dprework, #dpfinished').datepicker().on('changeDate', function(e){
     var y = e.date.getFullYear(),
             _m = e.date.getMonth() + 1,
             m = (_m > 9 ? _m : '0'+_m),
@@ -12,3 +12,4 @@ $('#dsetup, #dpupload, #dpprepare, #dpsummary, #dpinspection, #dprework, #dpfini
     $(this).next("#dueDate").next("#submitDeadline").show();
 });
 $('.dropdown.open .dropdown-toggle').dropdown('toggle');
+$('#FlashMessages').html("<%= j render partial: 'shared/flash', locals: {flash: flash} %>");

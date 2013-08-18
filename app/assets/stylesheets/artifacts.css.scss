@@ -35,13 +35,7 @@
 }
 
 .ArtifactsRowContainer{
-	/*max-width: 410px; */
-	//max-height: 500px;
-	overflow-y: hidden;
-	overflow-x: none;
-	&:hover{
-		overflow-y: auto;
-	}
+
 }
 .ArtifactActionPanel{
 	width:100%;
@@ -69,25 +63,15 @@
       }
 	}
 }
-.Footer{
-	background-color: #8F0000;
-	color: white;
-	text-align: center;
-	border-radius:5px;
-	margin: 10px 0px 0px 0px;
-}
-
 
 .ArtifactsPanel{
 	position:relative;
 }
-.ArtifactResposible:hover{
-	overflow-y:auto;
-}
-.InspectionSelected{
-	min-height: 40em;
 
-}
 .ArtifactIcon {
 	
 }
+.ArtifactComment{
+  display: none;
+}
+

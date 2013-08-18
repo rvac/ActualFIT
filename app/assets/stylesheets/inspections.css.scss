@@ -71,6 +71,7 @@
 
   text-align: center;
   line-height: 2em;
+  color: white;
   a{
     color: white;
   }
@@ -102,7 +103,7 @@
 .InspectionStatusBarContainer, .InspectionDeadlineBarContainer{
   height: 2em;
   .InspectionStatusBar, .InspectionDeadlineBar{
-    width: 49em;
+    width: 42em;
     margin: 0px auto 0px auto;
     .chevron{
       position: relative;
@@ -127,7 +128,9 @@
       .futureStatusChevronBody{
         background-color: lightgray;
         color: black;
-
+        a{
+          color: black;
+        }
       }
       .errorStatusChevronFletching{
         border-top: 1em solid #ee0f16;
@@ -170,18 +173,19 @@
     .statusPrepare{
       left: 14em;
     }
-    .statusSummary{
+    .statusInspection{
       left: 21em;
     }
-    .statusInspection{
+    .statusRework{
       left: 28em;
     }
-    .statusRework{
-      left: 35em;
-    }
     .statusFinished{
-      left: 42em;
+      left: 35em;
     }
   }
   text-align: center;
+}
+.InspectionSelected{
+  min-height: 40em;
+
 }

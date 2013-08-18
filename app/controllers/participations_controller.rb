@@ -9,12 +9,14 @@ class ParticipationsController < ApplicationController
   end
   def create
     @team = Participation.new(params[:inspection_team])
-
+    # WHAT THE FUCK?!??!?!? IS IT EVEN WORKING ?!
     if @inspection_team.save
-      flash[:success] = 'inspection team created'
+      flash[:success] ||= []
+      flash[:success] << 'inspection team created'
       redirect_to root_url
     else
-      flash[:error] = 'have problems with creating inspection team'
+      flash[:error] ||= []
+      flash[:error] << 'have problems with creating inspection team'
       render 'new'
     end
 

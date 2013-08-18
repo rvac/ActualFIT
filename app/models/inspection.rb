@@ -22,7 +22,7 @@ class Inspection < ActiveRecord::Base
   has_many :users, :through => :participations
   has_many :deadlines, :dependent => :destroy
 
-  VALID_STATUS_REGEX = /\A(setup)|(upload)|(prepare)|(summary)|(inspection)|(rework)|(finished)|(archived)\z/
+  VALID_STATUS_REGEX = /\A(setup)|(upload)|(prepare)|(inspection)|(rework)|(finished)|(archived)\z/
 
   before_validation { |i| i.active! if i.status.nil? }
   #after_create "puts 'inspection created'"
@@ -78,6 +78,7 @@ class Inspection < ActiveRecord::Base
         self.deadlines.find_by_name(name).update_attributes(dueDate: endDate)
         true
       else
+        self.errors.add(:base, "#{endDate} is incorrect deadline date for #{name.titleize} stage")
         false
       end
   end
@@ -100,6 +101,21 @@ class Inspection < ActiveRecord::Base
     else
       "future"
     end
+  end
+
+  def change_status(status)
+    if  ['prepare', 'inspection', 'rework', 'finished'].include?(status)
+      if self.artifacts.count < 1
+        errors.add(:base, "You should upload at least one artifact before going to #{status.titleize} stage")
+        return false
+      end
+    elsif ['rework', 'finished'].include?(status)
+      if self.remarks.count < 1
+        errors.add(:base, "You add some remarks before going to #{status.titleize} stage")
+        return false
+      end
+    end
+    self.status = status
   end
   def team_complete?
     (self.class.minimal_team - self.roles.map(&:name)).empty?
@@ -150,7 +166,7 @@ class Inspection < ActiveRecord::Base
     end
   end
   def self.status_list
-    ['setup', 'upload', 'prepare', 'summary', 'inspection', 'rework', 'finished']
+    ['setup', 'upload', 'prepare', 'inspection', 'rework', 'finished']
   end
   def self.admin_status_list
     self.status_list

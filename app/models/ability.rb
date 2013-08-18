@@ -42,6 +42,7 @@
     can :create, Remark, inspection_id: Inspection.with_role(:inspector, user).select {|i| !(['finished', 'archived'].include?(i.status))}.map(&:id).uniq
     can :upload_remarks, Inspection, id: Inspection.with_role(:inspector, user).select {|i| !(['finished', 'archived'].include?(i.status))}.map(&:id).uniq
     can :download_artifacts, Inspection, id: Inspection.with_role(:inspector, user).select {|i| !(['finished', 'archived'].include?(i.status))}.map(&:id).uniq
+    can :download_remarks_template, Inspection, id: Inspection.with_role(:inspector, user).select {|i| !(['finished', 'archived'].include?(i.status))}.map(&:id).uniq
     #this stuff is for writing abilities only with selected inspection statuses (for ordinary users of course
     # special action in controller - change status, moderator can do this only for active! isnpection
     #Inspection.with_role(:inspector).select {|i| !(['closed', 'archived'].include?(i.status))}.map(&:id).uniq
@@ -57,12 +58,15 @@
     #MODERATOR ABILITIES
     can :read, Inspection, id: Inspection.with_role(:moderator, user).select {|i| !i.archived?}.map(&:id).uniq
     can :destroy, Artifact, inspection_id: Inspection.with_role(:moderator, user).select {|i| !(['finished', 'archived'].include?(i.status))}.map(&:id).uniq
+    # can create upload a guide lines n "setup" phase
+    can :create, Artifact, inspection_id: Inspection.with_role(:moderator, user).select {|i| i.status == "setup" }.map(&:id).uniq
     can :create, ChatMessage, inspection_id: Inspection.with_role(:moderator, user).select {|i| !(['finished', 'archived'].include?(i.status))}.map(&:id).uniq
     can :crud, Remark, inspection_id: Inspection.with_role(:moderator, user).select {|i| !(['finished', 'archived'].include?(i.status))}.map(&:id).uniq
     can :change_status, Inspection, id: Inspection.with_role(:moderator, user).select {|i| i.active? }.map(&:id).uniq
     can :change_deadline, Inspection, id: Inspection.with_role(:moderator, user).select {|i| i.active? }.map(&:id).uniq
     can :upload_remarks, Inspection, id: Inspection.with_role(:moderator, user).select {|i| !(['finished', 'archived'].include?(i.status))}.map(&:id).uniq
     can :download_artifacts, Inspection, id: Inspection.with_role(:moderator, user).select {|i| !(['finished', 'archived'].include?(i.status))}.map(&:id).uniq
+    can :download_remarks_template, Inspection, id: Inspection.with_role(:moderator, user).select {|i| !(['finished', 'archived'].include?(i.status))}.map(&:id).uniq
     #Managing deadlines
     #can :crud, Deadline, inspection_id: Inspection.with_role(:moderator, user).map(&:id)
   end

@@ -1,1 +1,2 @@
 $('.UserRoles[user_id=<%= @user.id %>]').html("<%= j render( :partial => 'users/user_roles', locals: {user: @user}) %>");
+$('#FlashMessages').html("<%= j render partial: 'shared/flash', locals: {flash: flash} %>");

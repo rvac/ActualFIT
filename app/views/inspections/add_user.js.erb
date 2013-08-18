@@ -1,3 +1,4 @@
 $('.UserInspections').html("<%= j render( partial: 'users/user_inspections', locals: {user: @user}) %>");
 $('#InspectionParticipants').append("<%= j render( partial: 'users/user', locals: {user: @user})%>");
 $('#UserList').remove('.UserPartial[user_id=<%= @user.id %>]');
+$('#FlashMessages').html("<%= j render partial: 'shared/flash', locals: {flash: flash} %>");

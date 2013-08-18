@@ -23,7 +23,8 @@ class ChatMessagesController < ApplicationController
         # flash[:success] = "Yahoo, we did it"
         # respond_with root_url
       else
-        flash.now[:error] = "Still troubling with chat message creation"
+        flash.now[:error] ||= []
+        flash.now[:error] = "Can not create a chat message"
       end
     end
   end

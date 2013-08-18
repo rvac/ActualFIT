@@ -1,20 +1,43 @@
 <% if can? :create, Campaign %>
     <div class="row-fluid">
       <div class="span6 offset3">
-        <h1>Create new campaign</h1>
+        <div class="row-fluid" style="text-align: center;">
+          <%= content_tag :h3, "Create campaign", class: "hint--bottom hint--bounce hint--rounded",
+                          data: {hint: "Upload group assignments file and FIT will create inspections, assign roles and create users if necessary"} %>
+        </div>
         <!--make something with shared errors, since this is is inpection, user stuff does not work anymore-->
-        <%= form_for @campaign, multipart: true do |c| %>
-            <%= c.label :name %>
-            <%= c.text_field :name, placeholder: "place campaign name here" %>
+        <%= form_for @campaign, html: {class: "form-horizontal"}, multipart: true do |c| %>
+            <%= content_tag :div, class: "control-group" do -%>
+                <%= c.label :name, class: "control-label"  %>
+                <%= content_tag :div, class: "controls" do -%>
+                    <%= c.text_field :name, placeholder: "place campaign name here" %>
+                <% end -%>
+            <% end -%>
+            <%= content_tag :div, class: "control-group" do -%>
+                <%= c.label :comment, class: "control-label"  %>
+                <%= content_tag :div, class: "controls" do -%>
+                    <%= c.text_field :comment, placeholder: "add comment if you want" %>
+                <% end -%>
+            <% end -%>
+            <%= content_tag :div, class: "control-group" do -%>
+                <%= content_tag :div, class: "controls" do -%>
+                    <%= link_to "Download group assignment template", assignments_template_url,
+                                class: "hint--right hint--bounce hint--rounded",
+                                data: {hint: "Group assignment file should comply with this template. Click on the link to get the template"} %>
+                <% end -%>
+            <% end -%>
+            <%= content_tag :div, class: "control-group" do -%>
+                <%= c.label :assignments, "Group assignment", class: "control-label"  %>
 
-            <%= c.label :comment %>
-            <%= c.text_field :comment, placeholder: "add comment if you want" %>
-
-            <%= c.label :assignments, "Group assignment" %>
-            <%= link_to "Get assignment template", assignments_template_url %> <br/>
-            <%= c.file_field :assignments %> <br/>
-
-            <%= c.submit "Create", class: "btn btn-large btn-primary" %>
+                <%= content_tag :div, class: "controls" do -%>
+                    <%= c.file_field :assignments %> <br/>
+                <% end -%>
+            <% end -%>
+            <%= content_tag :div, class: "control-group" do -%>
+                <%= content_tag :div, class: "controls" do -%>
+                    <%= c.submit "Create", class: "btn btn-large btn-primary" %>
+                <% end -%>
+            <% end -%>
         <% end %>
       </div>
     </div>

@@ -63,7 +63,7 @@
                 <%= user.password_field :password_confirmation %>
             <% end -%>
           <% end -%>
-        <% attribute_button = user.submit "Save attributes", class: "btn btn-primary btn-large" %>
+        <% attribute_button = user.submit "Update Profile", class: "btn btn-primary btn-large" %>
         <%= content_tag(:div, content_tag(:div, attribute_button, class: "controls"), class: "control-group") %>
       <% end -%>
   <% end %>

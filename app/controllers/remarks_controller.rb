@@ -18,10 +18,12 @@ class RemarksController < ApplicationController
     end
     @remark.user_id = current_user.id
 		if @remark.save
-			flash[:success] = "Yahoo, we did it"
+      flash[:success] ||= []
+      flash[:success] <<"Yahoo, we did it"
 			# respond_with root_url
 		else
-			flash[:error] = @remark.errors.full_messages.join(" ");
+      flash[:error] ||= []
+      flash[:error] << @remark.errors.full_messages.join(" ")
 			# redirect_to root_url
     end
     redirect_to root_url
@@ -40,8 +42,10 @@ class RemarksController < ApplicationController
 		@remark = Remark.find(params[:id])
     #@inspection = current_inspection
 		if @remark.destroy
-			flash.now[:info] = "Remark deleted"
+      flash.now[:success] ||= []
+      flash.now[:success] << "Remark deleted"
 		else
+			flash.now[:error] ||= []
 			flash.now[:error] = "Remark can not be deleted"
 		end
 	    # redirect_back_or root_url

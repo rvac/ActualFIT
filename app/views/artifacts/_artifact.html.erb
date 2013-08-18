@@ -1,10 +1,13 @@
 <%= content_tag :li do -%>
     <%= content_tag :div, class: "thumbnail" do -%>
-        <%= content_tag :div, class: "well well-small Artifact" do -%>
+        <%= content_tag :div, class: "well well-small Artifact", date: {id: art.id} do -%>
             <%= artifactActionPanel(art) %>
-            <%= content_tag :div, class: "row-fluid ArtifactBody" do -%>
+            <%= content_tag :div, class: "row-fluid ArtifactBody hint--right hint--bounce hint--rounded", data:{hint: "Click to view the artifact comment"} do -%>
                 <% artifact_icon(art) %>
                 <%= content_tag(:strong, "#{art.name}", class:"ArtifactName") %>
+            <% end -%>
+            <%= content_tag :div, class: "row-fluid ArtifactComment hint--right hint--bounce hint--rounded", data:{hint: "Click to hide the comment"} do -%>
+                <%= (art.comment.nil? || art.comment.empty?) ? "Author left no comment" : art.comment %>
             <% end -%>
         <% end -%>
     <% end -%>

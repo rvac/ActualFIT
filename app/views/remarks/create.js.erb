@@ -1,5 +1,6 @@
 $("#RemarksTable").html("<%= j render partial: 'remarks/remark', collection: @inspection.remarks, as: :remark, locals: {inspection: @inspection }  %>");
 $(".RemarkField").val('');
+$('#FlashMessages').html("<%= j render partial: 'shared/flash', locals: {flash: flash} %>");
 $("#Remarks").dataTable
     sPaginationType: "bootstrap"
     bjQueryUI: true;

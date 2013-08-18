@@ -1,1 +1,2 @@
-$('.UserInspections[user_id=<%= @user.id %>]').html("<%= j render( :partial => 'users/user_inspections', locals: {user: @user}) %>");
+$('.UserInspections[user_id=<%= @user.id %>]').html("<%= j render( partial: 'users/user_inspections', locals: {user: @user}) %>");
+$('#FlashMessages').html("<%= j render partial: 'shared/flash', locals: {flash: flash} %>");
