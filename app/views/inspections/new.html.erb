@@ -1,7 +1,7 @@
 <% if can? :create, Inspection %>
 <div class="row-fluid">
       <div class="row-fluid" style="text-align: center;">
-        <%= content_tag :h3, "Create Inspection" %>
+        <%= content_tag :h1, "Create Inspection" %>
       </div>
 	<div class="span6 offset3">
 
@@ -31,7 +31,7 @@
 
           <%= content_tag :div, class: "control-group" do -%>
               <%= content_tag :div, class: "controls" do -%>
-                  <%= f.submit "Create inspection", class: "btn btn-large btn-primary" %>
+                  <%= f.submit "Create", class: "btn btn-large btn-primary" %>
               <% end -%>
           <% end -%>
 		<% end %>

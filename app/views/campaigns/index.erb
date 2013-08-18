@@ -2,7 +2,10 @@
   <div class="span12">
 
     <% if @campaigns.any? %>
-
+        <%= content_tag :div, class: "row-fluid", style: "text-align:center" do -%>
+            <%= content_tag( :h1, 'Campaigns List') %>
+            <%= content_tag :h5, link_to('Create Campaign', new_campaign_url) if can? :create, Campaign %>
+        <% end -%>
         <% @campaigns.each do |c| %>
             <% if can? :read, c %>
 
@@ -11,7 +14,7 @@
             <% end %>
         <% end %>
     <% else %>
-        <%= content_tag :h3, "There are no campaigns yet"%>
+        <%= content_tag :h3, "There are no campaigns"%>
         <% if can? :create, Campaign %>
             <%= content_tag :h3, link_to('Create campaign',new_campaign_path) %>
         <% end %>

@@ -1,20 +1,23 @@
 <div class="row-fluid">
   <div class="span12">
-    <div class="row-fluid">
-      <h3>
-        <%= link_to 'Create new inspection', new_inspection_url %>
-      </h3>
-    </div>
+
     <div class="row-fluid">
       <% if @inspections.any? %>
-          <%= content_tag :div, content_tag( :h1, 'List of inspections'), class: "row-fluid", style: "text-align:center" %>
+          <%= content_tag :div, class: "row-fluid", style: "text-align:center" do -%>
+              <%= content_tag( :h1, 'Inspections List') %>
+              <%= content_tag :h5, link_to('Create Inspection', new_inspection_url) if can? :create, Inspection  %>
+          <% end -%>
 
           <ul class="thumbnails">
             <% inspections_html = render partial: 'inspections/inspection', collection: @inspections, as: :insp %>
-            <%= inspections_html || 'there are no inspections'%>
+            <%= inspections_html %>
           </ul>
       <% else %>
-          <strong>There are no inspections</strong> <%= link_to 'Create new inspection', new_inspection_url %>
+          <div class="row-fluid" style="text-align:center">
+            <h3>
+              <%= link_to 'Create Inspection', new_inspection_url %>
+            </h3>
+          </div>
       <% end %>
     </div>
 
