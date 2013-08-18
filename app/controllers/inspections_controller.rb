@@ -28,7 +28,7 @@ class InspectionsController < ApplicationController
 
       if Remark.parse_excel( params[:remarks_file], @inspection, current_user )
         flash[:alert] ||= []
-        flash[:alert] << @inspection.errors.full_messages.join()
+        @inspection.errors.full_messages.each {|m| flash.now[:alert] << m }
         @inspection.errors.clear
         redirect_to @inspection
       else
@@ -92,7 +92,7 @@ class InspectionsController < ApplicationController
         redirect_back_or action: :index
       else
         flash[:error] ||= []
-        flash[:error] << "Looks like you don't have right to do that"
+        flash[:error] << "Looks like you don't have rights to do that"
         @inspection.errors.clear
       end
     end
@@ -120,7 +120,7 @@ class InspectionsController < ApplicationController
       if !@inspection.errors.any? && @inspection.save
         @inspection.close_deadline(old_status)
         flash.now[:success] ||= []
-        flash.now[:success] << "#{@inspection.fullname} status has been changed to #{@inspection.status.titleize}"
+        #flash.now[:success] << "#{@inspection.fullname} status has been changed to #{@inspection.status.titleize}"
         respond_to do |format|
           format.js  {}
         end
@@ -171,7 +171,7 @@ class InspectionsController < ApplicationController
 
     @user = User.find(params[:user_id])
     flash.now[:error] ||= []
-    flash.now[:error] << "can not add user" unless @inspection.add_user(@user, params[:role])
+    flash.now[:error] << "Can not add user" unless @inspection.add_user(@user, params[:role])
     respond_to do |format|
       format.js  {}
     end

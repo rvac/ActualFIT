@@ -1,23 +1,45 @@
 <div class="row-fluid">
 	<div class="span6 offset3">
-		<h1>Sign up</h1>
-		<%= form_for(@user) do |f| %>
-			<%= render 'shared/error_messages' %>
-			<%= f.label :name %>
-			<%= f.text_field :name, placeholder: "FirstName LastName" %>
+		<%= content_tag :div, content_tag( :h1, 'Sign up'), class: "row-fluid", style: "text-align: center;" %>
+		<%= form_for @user, html: {class: "form-horizontal"} do |f| %>
+          <%= content_tag :div, class: "control-group" do -%>
+              <%= f.label :name, class: "control-label" %>
+              <%= content_tag :div, class: "controls" do -%>
+                  <%= f.text_field :name, placeholder: "FirstName LastName" %>
+              <% end -%>
+          <% end -%>
+          <%= content_tag :div, class: "control-group" do -%>
+              <%= f.label :email, class: "control-label" %>
+              <%= content_tag :div, class: "controls" do -%>
+                  <%= f.text_field :email, placeholder: "s000000@student.dtu.dk" %>
+              <% end -%>
+          <% end -%>
 
-			<%= f.label :email %>
-			<%= f.text_field :email, placeholder: "your_email@example.com" %>
+          <%= content_tag :div, class: "control-group" do -%>
+              <%= f.label :password, class: "control-label" %>
+              <%= content_tag :div, class: "controls" do -%>
+                  <%= f.password_field :password, placeholder: "your password" %>
+              <% end -%>
+          <% end -%>
+          <%= content_tag :div, class: "control-group" do -%>
+              <%= f.label :password_confirmation, class: "control-label" %>
+              <%= content_tag :div, class: "controls" do -%>
+                  <%= f.password_field :password_confirmation, placeholder: "your password" %>
+              <% end -%>
+          <% end -%>
 
-			<%= f.label :password %>
-			<%= f.password_field :password %>
-
-			<%= f.label :password_confirmation, "Confirmation" %>
-			<%= f.password_field :password_confirmation %>
-
-			<%= f.submit "Create an account", class: "btn btn-large btn-primary" %>
+          <%= content_tag :div, class: "control-group" do -%>
+              <%= content_tag :div, class: "controls" do -%>
+                  <%= submit_tag "Create Account", class: "btn btn-primary btn-large" %>
+              <% end -%>
+          <% end -%>
+          <%= content_tag :div, class: "control-group" do -%>
+              <%= content_tag :div, class: "controls" do -%>
+                  <h3> or <%= link_to( "Log in", signin_path) %> </h3>
+              <% end -%>
+          <% end -%>
 		<% end %>
-		<h3>or <%= link_to "Log in", signin_path %></h3>
+
 		
 	</div>
 </div>

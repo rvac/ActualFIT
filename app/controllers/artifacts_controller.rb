@@ -21,7 +21,7 @@ class ArtifactsController < ApplicationController
       redirect_back_or root_url
     else
       flash.now[:error] ||= []
-      flash.now[:error] << "Artifact #{@artifact.name} was not uploaded. Try again"
+      @artifact.errors.full_messages {|m| flash.now[:error] << m}
       render 'new'
     end
   end
@@ -54,7 +54,7 @@ class ArtifactsController < ApplicationController
       redirect_back_or root_url
     else
       flash[:error] ||= []
-      flash[:error] << "A problem occured, artifact can not be edited. Try once more"
+      @artifact.errors.full_messages {|m| flash.now[:error] << m}
       render 'edit'
     end
   end

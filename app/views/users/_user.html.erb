@@ -11,7 +11,7 @@
         <% end -%>
         <div class="row-fluid">
           <div class="ProfilePicture pull-left">
-            <%= image_tag get_profile_picture_user_url(user), style: "max-width: 8em; max-height: 8em; padding: 5px;", alt: "Profile picture" %>
+            <%= image_tag get_profile_picture_user_url(user), style: "max-width: 6em; max-height: 6em; padding: 5px;", alt: "Profile picture" %>
           </div>
           <div class="UserProfileAttibutes pull-left">
             <%= content_tag :div, class: "UserRoles pull-left", user_id: user.id  do -%>

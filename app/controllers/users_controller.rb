@@ -14,11 +14,11 @@ class UsersController < ApplicationController
        if ((current_user.has_role? :supervisor) || ( current_user.has_role? :admin ))
          @user.destroy
          flash[:success] ||= []
-         flash[:success] = "User was deleted"
+         flash[:success] << "User was deleted"
          redirect_to action: :index
        else
          flash.now[:error] ||= []
-         flash.now[:error] = "Looks like you don't have right to do that"
+         flash.now[:error] << "Looks like you don't have right to do that"
        end
      end
   end
@@ -40,7 +40,7 @@ class UsersController < ApplicationController
 		@user = User.find(params[:id])
 		if @user.attributes.values.compact.count <= 10
       flash.now[:notice] ||= []
-      flash.now[:notice] = "Please add some information to your profile"  if current_user?(@user)
+      flash.now[:notice] << "Please add some information to your profile"  if current_user?(@user)
     end
 
 	end
@@ -49,13 +49,14 @@ class UsersController < ApplicationController
 		if @user.save
 	    	sign_in @user if current_user.nil?
 			flash[:success] ||= []
-			flash[:success] = "Welcome aboard!"
+			flash[:success] << "Welcome aboard!"
 			#redirect_to root_url
       flash[:notice] ||= []
-      flash[:notice] = "Please add some information to your profile"
+      flash[:notice] << "Please add some information to your profile"
 			redirect_to edit_user_path(@user)
     else
-      # PUT ALL THE SHIT SHOM USER_ERRORS TO FLASH NOTICE
+      flash.now[:error] ||= []
+      @user.errors.full_messages.each {|m| flash.now[:error] << m }
 			render 'new'
 		end
 	end
@@ -115,7 +116,7 @@ class UsersController < ApplicationController
     if @user.update_attributes(params[:user])
       #handle a successful update
       flash[:success] ||= []
-      flash[:success] = "Profile updated"
+      flash[:success] << "Profile updated"
       sign_in @user if current_user?(@user)
       #redirect_to @user
       redirect_to @user

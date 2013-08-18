@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
       #end
     else
       flash.now[:error] ||= []
-  		flash.now[:error] = 'Invalid email/password combination'
+  		flash.now[:error] << 'Invalid email/password combination'
   		render 'new'
   	end
   end

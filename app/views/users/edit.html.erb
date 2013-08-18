@@ -12,37 +12,37 @@
           <%= content_tag :div, class: "control-group" do -%>
               <%= user.label :name, class: "control-label" %>
               <%= content_tag :div, class: "controls" do -%>
-                <%= user.text_field :name %>
+                <%= user.text_field :name, placeholder: "FirstName LastName" %>
               <% end -%>
           <% end -%>
           <%= content_tag :div, class: "control-group" do -%>
             <%= user.label :email, class: "control-label" %>
             <%= content_tag :div, class: "controls" do -%>
-                <%= user.text_field :email %>
+                <%= user.text_field :email, placeholder: "new_email@somemailservice.com" %>
             <% end -%>
           <% end -%>
           <%= content_tag :div, class: "control-group" do -%>
             <%= user.label :skype, class: "control-label" %>
             <%= content_tag :div, class: "controls" do -%>
-                <%= user.text_field :skype %>
+                <%= user.text_field :skype, placeholder: "Your skype contact info" %>
             <% end -%>
           <% end -%>
           <%= content_tag :div, class: "control-group" do -%>
             <%= user.label :phone, class: "control-label" %>
             <%= content_tag :div, class: "controls" do -%>
-                <%= user.text_field :phone%>
+                <%= user.text_field :phone, placeholder: "Your phone number"%>
             <% end -%>
           <% end -%>
           <%= content_tag :div, class: "control-group" do -%>
             <%= user.label :address, class: "control-label" %>
             <%= content_tag :div, class: "controls" do -%>
-                <%= user.text_field :address %>
+                <%= user.text_field :address, placeholder: "Your address" %>
             <% end -%>
           <% end -%>
           <%= content_tag :div, class: "control-group" do -%>
             <%= user.label :additional_info, class: "control-label" %>
             <%= content_tag :div, class: "controls" do -%>
-                <%= user.text_field :additional_info %>
+                <%= user.text_field :additional_info, placeholder: "Any additional info you want to add" %>
             <% end -%>
           <% end -%>
           <%= content_tag :div, class: "control-group" do -%>
@@ -54,13 +54,13 @@
           <%= content_tag :div, class: "control-group" do -%>
             <%= user.label :password, class: "control-label" %>
             <%= content_tag :div, class: "controls" do -%>
-                <%= user.password_field :password %>
+                <%= user.password_field :password, placeholder: "To change password, type new one here" %>
             <% end -%>
           <% end -%>
           <%= content_tag :div, class: "control-group" do -%>
             <%= user.label :password_confirmation, class: "control-label" %>
             <%= content_tag :div, class: "controls" do -%>
-                <%= user.password_field :password_confirmation %>
+                <%= user.password_field :password_confirmation, placeholder: "To change password, type new one here" %>
             <% end -%>
           <% end -%>
         <% attribute_button = user.submit "Update Profile", class: "btn btn-primary btn-large" %>

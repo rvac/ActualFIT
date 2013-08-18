@@ -1,0 +1,11 @@
+<%= content_tag :div, class: "row-fluid", id: "InspectionHintMessage", style: "text-align: center;" do -%>
+    <% insp_hint = inspection_helper_message(current_user, inspection) || []%>
+    <% if !insp_hint.empty? %>
+        <%= content_tag :div, class: "InspectionHintMessage alert alert-notice hint--bottom hint--bounce hint--rounded",
+                        data:{hint: "Click to hide the hint"} do -%>
+        <% insp_hint.each do |r| %>
+            <%= content_tag :span, r %>
+        <% end %>
+        <% end -%>
+    <% end %>
+<% end -%>

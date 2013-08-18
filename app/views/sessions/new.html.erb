@@ -1,35 +1,32 @@
 
 
-<div class="row">
-	<div class="span6 offset3">
-		<h1>Log in</h1>
-		<% if false %>
-			<%= form_for(:session, url: sessions_path) do |f| %>
-			
-				<%= f.label :email %>
-				<%= f.text_field :email %>
+<div class="row-fluid">
+    <%= content_tag :div, content_tag( :h1, 'Log In'), class: "row-fluid", style: "text-align: center;" %>
+    <div class="span4 offset3">
 
-				<%= f.label :password %>
-				<%= f.password_field :password %>
+		<%= form_tag sessions_path, class: "form-horizontal" do %>
+          <%= content_tag :div, class: "control-group" do -%>
+              <%= label_tag :email, 'Email', class: "control-label" %>
+              <%= content_tag :div, class: "controls" do -%>
+                  <%= text_field_tag :email, params[:datafile], placeholder: "s000000@student.dtu.dk" %>
+              <% end -%>
+          <% end -%>
 
-				<%= f.submit "Log in", class: "btn btn-large btn-primary" %>
-			<% end %>
-		<% end %>
+          <%= content_tag :div, class: "control-group" do -%>
+              <%= label_tag :password, 'Password', class: "control-label" %>
+              <%= content_tag :div, class: "controls" do -%>
+                  <%= password_field_tag :password, params[:password], placeholder: "your password" %>
+              <% end -%>
+          <% end -%>
 
-		<%= form_tag sessions_path do %>
-			<div class="field">
-				<%= label_tag :email %>
-				<%= text_field_tag :email, params[:email] %>
-			</div> 
-
-			<div class="field">
-				<%= label_tag :password %>
-				<%= password_field_tag :password, params[:password] %>
-			</div> 
-			<div class="actions"><%= submit_tag "Sign in", class: 'btn btn-primary btn-large' %></div>
+		  <%= content_tag :div, class: "control-group" do -%>
+              <%= content_tag :div, class: "controls" do -%>
+                  <%= submit_tag "Log In", class: "btn btn-primary btn-large" %>
+              <% end -%>
+          <% end -%>
 		<% end %>
 
 
-		<p> New user? <%= link_to "Sign up now!", signup_path %></p>
+		<p style="text-align: center;"> New user? <%= link_to "Sign up now!", signup_path %></p>
 	</div>
 </div>

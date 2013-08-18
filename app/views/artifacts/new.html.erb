@@ -1,16 +1,36 @@
 <% if can? :create, Artifact %>
-<div class="row">
-	<div class="span6 offset3">
-		<h1>Upload a new artifact</h1>
-			<!--make something with shared errors, since this is is inpection, user stuff does not work anymore-->
-			<%= form_for [@inspection, @inspection.artifacts.build] do |f| %>
-	    			<%= f.file_field :datafile %>
-	    			<%= f.text_field :name, placeholder: "place a custom name" %>
+<div class="row-fluid">
+  <%= content_tag :div, content_tag( :h3, "Upload artifact for #{@inspection.fullname}", class: "ArtifactName"), class: "row-fluid", style: "text-align: center;" %>
+    <div class="span6 offset3">
+        <!--make something with shared errors, since this is is inpection, user stuff does not work anymore-->
+        <%= form_for [@inspection, @inspection.artifacts.build], html: {class: "form-horizontal"} do |f| %>
+          <%= content_tag :div, class: "control-group" do -%>
+              <%= label_tag :datafile, 'Artifact', class: "control-label" %>
+              <%= content_tag :div, class: "controls" do -%>
+                  <%= f.file_field :datafile %>
+              <% end -%>
+          <% end -%>
 
-                    <%= f.text_field :comment, placeholder: "add a comment if you want" %>
+          <%= content_tag :div, class: "control-group" do -%>
+              <%= f.label :name, class: "control-label"  %>
+              <%= content_tag :div, class: "controls" do -%>
+                  <%= f.text_field :name, placeholder: "Place a custom name" %>
+              <% end -%>
+          <% end -%>
 
-                    <%= f.submit "Upload", class: "btn btn-primary" %>
-			<% end %>
+          <%= content_tag :div, class: "control-group" do -%>
+              <%= f.label :comment, class: "control-label"  %>
+              <%= content_tag :div, class: "controls" do -%>
+                  <%= f.text_field :comment, placeholder: "Add a comment if you want" %>
+              <% end -%>
+          <% end -%>
+
+          <%= content_tag :div, class: "control-group" do -%>
+              <%= content_tag :div, class: "controls" do -%>
+                  <%= f.submit "Upload", class: "btn btn-primary" %>
+              <% end -%>
+          <% end -%>
+        <% end %>
 		
 	</div>
 </div>

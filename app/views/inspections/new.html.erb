@@ -1,21 +1,39 @@
 <% if can? :create, Inspection %>
 <div class="row-fluid">
+      <div class="row-fluid" style="text-align: center;">
+        <%= content_tag :h3, "Create Inspection" %>
+      </div>
 	<div class="span6 offset3">
-		<h1>Creating a new inspection</h1>
-		<%= form_for(@inspection) do |f| %>
 
-			<!--make something with shared errors, since this is is inpection, user stuff does not work anymore-->
-			<%= f.label :name %>
-			<%= f.text_field :name %>
+		<%= form_for @inspection, html: {class: "form-horizontal"} do |f| %>
+          <%= content_tag :div, class: "control-group" do -%>
+              <%= f.label :name, class: "control-label" %>
+              <%= content_tag :div, class: "controls" do -%>
+                  <%= f.text_field :name, placeholder: "Inspection name, e.g. 1A" %>
+              <% end -%>
+          <% end -%>
+          <%= content_tag :div, class: "control-group" do -%>
+              <%= f.label :comment, class: "control-label" %>
+              <%= content_tag :div, class: "controls" do -%>
+                  <%= f.text_field :comment, placeholder: "Small comment for the inspection" %>
+              <% end -%>
+          <% end -%>
 
-			<%= f.label :comment %>
-			<%= f.text_field :comment %>
+          <%= content_tag :div, class: "control-group" do -%>
+              <%= label_tag :campaign_id, "Select campaign", class: "control-label" %>
+              <%= content_tag :div, class: "controls" do -%>
+                  <select id="campaign_id" name="campaign_id">
+                    <option value="">Inspection with no campaign</option>
+                    <%= options_for_select(Campaign.all.collect{ |c| [c.name, c.id] }) if Campaign.all.any? %>
+                  </select>
+              <% end -%>
+          <% end -%>
 
-              <select id="campaign_id" name="campaign_id">
-                <option value="">Independent Inspection</option>
-                <%= options_for_select(Campaign.all.collect{ |c| [c.name, c.id] }) if Campaign.all.any? %>
-              </select>
-			<%= f.submit "Create inspection", class: "btn btn-large btn-primary" %>
+          <%= content_tag :div, class: "control-group" do -%>
+              <%= content_tag :div, class: "controls" do -%>
+                  <%= f.submit "Create inspection", class: "btn btn-large btn-primary" %>
+              <% end -%>
+          <% end -%>
 		<% end %>
 	</div>
 </div>

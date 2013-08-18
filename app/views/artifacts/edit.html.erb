@@ -1,14 +1,37 @@
 <% if can? :edit, @artifact %>
 <div class="row">
-	<div class="span6 offset3">
-		<h1>Edit <%= @artifact.name %></h1>
+  <%= content_tag :div, content_tag( :h3, "Edit #{@artifact.name} uploaded at #{@inspection.fullname}", class: "ArtifactName"), class: "row-fluid", style: "text-align: center;" %>
+    <div class="span6 offset3">
 			<!--make something with shared errors, since this is is inpection, user stuff does not work anymore-->
-			<%= form_for [@inspection, @artifact] do |f| %>
-	    			<%= f.file_field :datafile %>
-	    			<%= f.text_field :name, value: @artifact.name %>
-	    			<%= f.text_field :comment, value: @artifact.comment %>
-	    			<%= f.submit "Update Artifact", class: "btn btn-primary" %>
-			<% end %>
+			<%= form_for [@inspection, @artifact], html: {class: "form-horizontal"} do |f| %>
+
+              <%= content_tag :div, class: "control-group" do -%>
+                  <%= label_tag :datafile, "New artifact", class: "control-label" %>
+                  <%= content_tag :div, class: "controls" do -%>
+                        <%= f.file_field :datafile %>
+                  <% end -%>
+              <% end -%>
+
+              <%= content_tag :div, class: "control-group" do -%>
+	    			<%= f.label :comment, class: "control-label"  %>
+                    <%= content_tag :div, class: "controls" do -%>
+	    			    <%= f.text_field :comment, value: @artifact.comment, placeholder: "Add a comment if you want" %>
+                    <% end -%>
+              <% end -%>
+
+              <%= content_tag :div, class: "control-group" do -%>
+	    			<%= f.label :name, class: "control-label"  %>
+                    <%= content_tag :div, class: "controls" do -%>
+	    			    <%= f.text_field :name, value: @artifact.name, placeholder: 'Place a custom name'%>
+                    <% end -%>
+              <% end -%>
+
+              <%= content_tag :div, class: "control-group" do -%>
+                <%= content_tag :div, class: "controls" do -%>
+	    		    <%= f.submit "Update Artifact", class: "btn btn-primary" %>
+                <% end -%>
+              <% end -%>
+		  <% end %>
 	</div>
 </div>
 <% end %>

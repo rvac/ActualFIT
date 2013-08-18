@@ -22,7 +22,7 @@
       <% end %>
 
       <div class="AddUserToInspectionList" id="AddUserToInspectionList">
-        <%= content_tag :div, class: "well well-small Artifact AddUserToInspection" do -%>
+        <%= content_tag :div, class: "well well-small Artifact AddUserToInspection hint--right hint--bounce hint--rounded", data: {hint: 'Click to toggle user list'} do -%>
             <%= content_tag :div, class: "row-fluid ArtifactBody AddUserToInspectionToggle" do -%>
                 <%= image_tag('icon_32/plus_32.png', alt:"Add Participant") %>
                 <%= content_tag(:strong, "Add Participant", class:"ArtifactName") %>
