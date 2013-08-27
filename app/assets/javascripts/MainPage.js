@@ -48,7 +48,8 @@ $(document).ready(function(){
         // will call refreshPartial every 3 seconds
 
 //    $(window).resize(function() {
-//        $('body').prepend('<div>' + $(window).width() + '</div>');
+//        $("#Remarks").fnAdjustColumnSizing();
+////          $('body').prepend('<div>' + $(window).width() + '</div>');
 //    });
 //    setInterval(refreshPartial, 3000);
     $('#dpsetup, #dpupload, #dpprepare, #dpinspection, #dprework, #dpfinished').datepicker()
@@ -61,9 +62,14 @@ $(document).ready(function(){
             $(this).text(y + '-' + m + '-' + d);
             $(this).next("#dueDate").val(y + '-' + m + '-' + d);
             $(this).next("#dueDate").next("#submitDeadline").show();
+            $(this).next("#dueDate").next("#submitDeadline").next("#inspectionDeadline").show();
         });
 
-
+    $("#ChatTypeBox").keyup(function(event){
+            if (event.keyCode == 13 && !event.shiftKey) {
+                $('#new_chat_message').submit();
+            }
+    });
     $("#remark_location_type")
         .change(function () {
             switch ($(this).val()) {

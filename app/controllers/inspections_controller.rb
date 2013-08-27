@@ -6,18 +6,25 @@ class InspectionsController < ApplicationController
 		@inspection = Inspection.new
     #authorize! :create, @inspection
 	end
-
   def download_artifacts
     @inspection = Inspection.find(params[:id])
     #@inspection.artifacts.each do |a|
     #  send_data a.file, filename: a.filename,
     #            type: a.content_type
     #end
-    redirect_to @inspection
+    @inspection = Inspection.find(params[:id])
+    respond_to do |format|
+      format.csv { send_data @inspection.to_csv}
+      format.xls { send_data @inspection.to_csv(col_sep: "\t")}
+    end
+
   end
   def download_remarks
     @inspection = Inspection.find(params[:id])
-    remarks = @inspection.remarks
+    respond_to do |format|
+      format.csv { send_data @inspection.to_csv}
+      format.xls { send_data @inspection.to_csv(col_sep: "\t")}
+    end
   end
   def download_remarks_template
     send_file Rails.public_path + "/templates/remarks_template.xlsx"
@@ -39,7 +46,6 @@ class InspectionsController < ApplicationController
       @inspection = Inspection.find(params[:id])
     end
   end
-
 	def show
 		@inspection = Inspection.find(params[:id])
     #@remarks = @inspection.remarks.page(params[:page]).per(5)
@@ -51,7 +57,6 @@ class InspectionsController < ApplicationController
 
     store_location
 	end
-
 	def create
     #@inspection = Inspection.build(params[:inspection])
     @inspection.active!
@@ -72,8 +77,6 @@ class InspectionsController < ApplicationController
 			render 'new'
 		end
   end
-
-
   def index
     @inspections = Inspection.all
 
@@ -82,7 +85,6 @@ class InspectionsController < ApplicationController
   #    format.js
   #  end
   end
-
   def destroy
     #remove a roles connected to inspections when deleted
     @inspection = Inspection.find(params[:id])
@@ -97,8 +99,6 @@ class InspectionsController < ApplicationController
       end
     end
   end
-
-
   def edit
     @inspection = Inspection.find(params[:id])
 
@@ -133,7 +133,6 @@ class InspectionsController < ApplicationController
       end
     end
   end
-
   def change_deadline
     @inspection = Inspection.find(params[:id])
     if !current_user.nil?
@@ -142,7 +141,7 @@ class InspectionsController < ApplicationController
 
       #if current_user.has_role?(:moderator, Inspection) && (params[:status] != 'archived')
       #  #there should be a checkup on validity of inspection )
-        if @inspection.update_deadline(params[:status], Date.strptime(params[:dueDate], '%Y-%m-%d'))
+        if @inspection.update_deadline(params[:status], Date.strptime(params[:dueDate], '%Y-%m-%d'), params[:comment])
           @inspection.reload
         else
           flash.now[:error] ||= []

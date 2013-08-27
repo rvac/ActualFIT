@@ -8,5 +8,6 @@ $('#dpsetup, #dpupload, #dpprepare, #dpinspection, #dprework, #dpfinished').date
     $(this).text(y + '-' + m + '-' + d);
     $(this).next("#dueDate").val(y + '-' + m + '-' + d);
     $(this).next("#dueDate").next("#submitDeadline").show();
+    $(this).next("#dueDate").next("#submitDeadline").next("#inspectionDeadline").show();
 });
 $('#FlashMessages').html("<%= j render partial: 'shared/flash', locals: {flash: flash} %>");

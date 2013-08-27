@@ -1,7 +1,11 @@
 <div class="row-fluid">
   <div class="span12">
-  <h1 style="text-align: center;">Users List</h1>
-  <ul class="thumbnails" id="UserList"  >
+  <% if can? :grant_role, User %>
+    <h1 style="text-align: center;">Users List</h1>
+  <% else %>
+      <h1 style="text-align: center;">Inspection Team</h1>
+  <% end %>
+  <ul class="thumbnails" id="UserList">
     <%= render partial: 'users/user_compact', collection: @users, as: :user %>
   </ul>
   </div>

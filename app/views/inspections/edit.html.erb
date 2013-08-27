@@ -1,10 +1,13 @@
 <div class="row-fluid" id="InspectionEdit">
     <div class="span12">
       <div class="row-fluid">
-          <%= content_tag :h3, @inspection.fullname, style: "text-align: center; margin-bottom: 0px;" %>
+          <%= content_tag :h1, @inspection.fullname, style: "text-align: center; margin-bottom: 0px;" %>
             <% if can? :delete, @inspection %>
                 <%= content_tag :h5, style: "text-align: center; margin-top: 0em;" do -%>
-                    <%= link_to('delete', inspection_path(@inspection), method: :delete, confirm: "Do you want to delete #{@inspection.fullname}?")  %>
+                    <%= link_to('visit', inspection_path(@inspection), style: "margin-right: 2em;", class: "hint--left hint--bounce hint--rounded",
+                                data:{hint: "Visit #{@inspection.fullname}"})  %>
+                    <%= link_to('delete', inspection_path(@inspection), method: :delete, confirm: "Do you want to delete #{@inspection.fullname}?", class: "hint--right hint--bounce hint--rounded",
+                                data:{hint: "Delete #{@inspection.fullname}"})  if can? :destroy, @inspection %>
                 <% end -%>
             <% end %>
           <%= render partial: 'inspections/status_bar', locals: {inspection: @inspection} %>

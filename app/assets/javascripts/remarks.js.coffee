@@ -3,6 +3,9 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 jQuery ->
-  $("#Remarks").dataTable
+  dtable = $("#Remarks").dataTable
     sPaginationType: "bootstrap"
     bjQueryUI: true
+    iDisplayLength: 5,
+    aLengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]]
+  dtable.fnPageChange 'last'

@@ -1,4 +1,5 @@
-<% if can? :create, Remark, inspection_id: inspection.id %>
+<% if can? :upload_remarks, inspection %>
+<!--a little trick. SHould be can? :create, Remark, inspection_id: inspection.id but it does work due to cancan stuff ((-->
     <div class="row-fluid">
       <%= form_for  [inspection, inspection.remarks.build], remote: true, class: "form-inline" do |f| %>
 

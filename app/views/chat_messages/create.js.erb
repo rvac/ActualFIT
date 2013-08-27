@@ -2,3 +2,4 @@ $("#MessageContainer").html("<%= j render partial: 'chat_messages/chat_message',
 $(".MessageWindowInner").scrollTop($('.MessageContainer').height());
 $('#ChatTypeBox').val('');
 $('#FlashMessages').html("<%= j render partial: 'shared/flash', locals: {flash: flash} %>");
+

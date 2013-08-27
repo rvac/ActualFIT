@@ -1,11 +1,14 @@
 <div class="row-fluid" style="text-align: center;">
-  <%= content_tag :h3,campaign.name, style: "margin-bottom: 0.1em;" %>
+  <%= content_tag :h1,campaign.name, style: "margin-bottom: 0.1em;" %>
 </div>
 <div class="row-fluid" style="text-align: center;">
     <%= content_tag :h5, style: "margin-top: 0em;" do -%>
-      <%= link_to('visit', campaign_path(campaign)) if can? :read, campaign %>
-      <%= link_to('edit', edit_campaign_path(campaign), style: "margin-left:3em; margin-right:3em;") if can? :edit, campaign%>
-      <%= link_to('delete', campaign_path(campaign), method: :delete, confirm: "Do you want to delete #{campaign.name}?") if can? :destroy, campaign %>
+      <%= link_to('visit', campaign_path(campaign), class: "hint--left hint--bounce hint--rounded",
+                  data:{hint: "Visit #{campaign.name}"}) if can? :read, campaign %>
+      <%= link_to('edit', edit_campaign_path(campaign), style: "margin-left:3em; margin-right:3em;", class: "hint--bottom hint--bounce hint--rounded",
+                  data:{hint: "Edit campaign #{campaign.name}"}) if can? :edit, campaign%>
+      <%= link_to('delete', campaign_path(campaign), method: :delete, confirm: "Do you want to delete #{campaign.name}?", class: "hint--right hint--bounce hint--rounded",
+                  data:{hint: "Delete campaign #{@campaign.name}"}) if can? :destroy, campaign %>
     <% end -%>
 </div>
 

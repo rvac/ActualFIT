@@ -1,6 +1,6 @@
 <% if can? :create, Artifact %>
 <div class="row-fluid">
-  <%= content_tag :div, content_tag( :h3, "Upload artifact for #{@inspection.fullname}", class: "ArtifactName"), class: "row-fluid", style: "text-align: center;" %>
+  <%= content_tag :div, content_tag( :h1, "Upload artifact for #{@inspection.fullname}", class: "ArtifactName"), class: "row-fluid", style: "text-align: center;" %>
     <div class="span6 offset3">
         <!--make something with shared errors, since this is is inpection, user stuff does not work anymore-->
         <%= form_for [@inspection, @inspection.artifacts.build], html: {class: "form-horizontal"} do |f| %>

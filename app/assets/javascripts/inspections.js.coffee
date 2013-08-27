@@ -8,11 +8,9 @@
 #});
 @Poller =
   poll: ->
-    setTimeout @request, 15000
+    setTimeout @request, 5000
   request: ->
     $.get($("#MessageContainer").data('url'), after: $('.Message').last().data('id'));
-    $.get($("#RemarksTable").data('url'), after: $('.ACTR').last().data('id'));
-
 
 
 jQuery ->

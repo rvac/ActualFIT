@@ -32,7 +32,7 @@
                 <%= content_tag :div, class: "well well-small Artifact hint--right hint--bounce hint--rounded", data:{hint: "Click to download all artifacts as zip archive"} do -%>
                     <%= content_tag :div, class: "row-fluid ArtifactBody" do -%>
                         <%= image_tag('icon_32/down_32.png', alt:"download artifacts") %>
-                        <%= link_to(content_tag(:strong, "download artifacts", class:"ArtifactName"), download_artifacts_inspection_path(inspection.id), class: "ActionElement") %>
+                        <%= link_to(content_tag(:strong, "download artifacts", class:"ArtifactName"), download_artifacts_inspection_path(id: inspection.id, format: :xls), class: "ActionElement") %>
                     <% end -%>
                 <% end -%>
 

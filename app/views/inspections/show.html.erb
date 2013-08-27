@@ -1,8 +1,15 @@
 <div id="openedInspection"class="row-fluid InspectionSelected">
     <div class="span12">
       <div class="row-fluid"  style="text-align: center;">
-        <%=  content_tag :h3, "Inspection #{@inspection.fullname }", style: "margin: 0px;", class: "hint--bottom hint--bounce hint--rounded",
-                         data:{hint: @inspection.comment.nil? ? @inspection.fullname : @inspection.comment} %>
+        <%= render partial: "remarks/helper_message", locals: {inspection: @inspection} %>
+        <% if @inspection.status == "inspection" %>
+            <div class="pull-left" style="position: absolute;">
+              <% meeting_point = @inspection.deadlines[3].comment %>
+              <%= content_tag :h5, "Inspection Meeting #{meeting_point}" if ((meeting_point.class == String) && (!meeting_point.empty?))%>
+            </div>
+        <% end %>
+        <%=  content_tag :h1, "Inspection #{@inspection.fullname }", style: "margin: 0px;", class: "hint--bottom hint--bounce hint--rounded",
+                         data:{hint: (@inspection.comment.nil? || @inspection.comment.empty?) ? @inspection.fullname : @inspection.comment} %>
         <% if can? :edit, @inspection %>
           <%= content_tag :h5, style: "text-align: center; margin-top: 0em;" do -%>
               <%= link_to 'edit', edit_inspection_path(@inspection), class: "hint--left hint--bounce hint--rounded",

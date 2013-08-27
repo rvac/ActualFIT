@@ -70,9 +70,9 @@ class Inspection < ActiveRecord::Base
       deadlines[name] = endDate
       !deadlines.values.each_cons(2).map {|a, b| a <= b }.include?(false)
   end
-  def update_deadline(name, endDate)
+  def update_deadline(name, endDate, comment = nil)
       if self.deadline_valid?(name, endDate) && self.class.status_list.include?(name)
-        self.deadlines.find_by_name(name).update_attributes(dueDate: endDate)
+        self.deadlines.find_by_name(name).update_attributes(dueDate: endDate, comment: comment)
         true
       else
         self.errors.add(:base, "#{endDate} is incorrect deadline date for #{name.titleize} stage")
@@ -169,6 +169,39 @@ class Inspection < ActiveRecord::Base
       true
     else
       false
+    end
+  end
+
+  def to_csv(options = {})
+    CSV.generate(options) do |csv|
+      col_nam = Remark.column_names
+      #object	location_type	element_type	element_name	element_number	line_number	path	diagram	content	remark_level	s-number
+      #  content        :string(255)
+      #  user_id        :integer
+      #  inspection_id  :integer
+      #  remark_type    :string(255)
+      #  created_at     :datetime
+      #  updated_at     :datetime
+      #  artifact_id    :integer
+      #  duplicate_of   :integer
+      #  has_duplicates :boolean
+      #  location_type  :string(255)
+      #  description    :string(255)
+      #  element_type   :string(255)
+      #  element_number :string(255)
+      #  element_name   :string(255)
+      #  diagram        :string(255)
+      #  path           :string(255)
+      #  line_number    :integer
+      header = ['object', 'location_type', 'element_type', 'element_name', 'element_number', 'line_number', 'path', 'diagram', 'content', 'remark_level', 'email']
+      col_names = [ 'location_type', 'element_type', 'element_name', 'element_number', 'line_number', 'path', 'diagram', 'content', 'remark_type']
+      csv << header
+      self.remarks.each do |r|
+        row = r.attributes.values_at(*col_names)
+        r.artifact_id.nil? ? row.prepend("") : row.prepend(Artifact.find(r.artifact_id).name)
+        row.append(User.find(r.user_id).email)
+        csv << row
+      end
     end
   end
   def self.status_list

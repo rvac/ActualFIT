@@ -125,15 +125,15 @@ class Remark < ActiveRecord::Base
   def location_valid?
     case self.location_type
       when 'code'
-        return true if !self.line_number.nil?
+        return true if (!self.line_number.nil?)
         errors.add(:base, "Line number should not be empty for type code")
         return false
       when 'document'
-        return true if !self.element_type.nil? && !self.element_name.nil?
+        return true if (!self.element_type.nil? && !self.element_type.empty? )&& (!self.element_name.nil? && !self.element_name.empty?)
         errors.add(:base, "Element type and element name should not be empty for type document")
         return false
       when 'model'
-        return true if !self.path.nil? || (!self.diagram.nil?) || (!self.element_type.nil? && !self.element_name.nil?)
+        return true if (!self.path.nil? && !self.path.empty? )|| (!self.diagram.nil? && !self.diagram.empty?) || ((!self.element_type.nil? && !self.element_type.empty? ) && (!self.element_name.nil? && !self.element_name.empty?))
         errors.add(:base, "Either path, diagram or element type and name should not be empty for type model")
         return false
       else

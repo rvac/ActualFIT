@@ -8,8 +8,6 @@ class ArtifactsController < ApplicationController
   def new
     @artifact = @inspection.artifacts.build
   end
-
-
   def create
     redirect_back_or root_url if params[:artifact].blank?
     #@artifact.inspection_id = current_inspection.id
@@ -25,23 +23,19 @@ class ArtifactsController < ApplicationController
       render 'new'
     end
   end
-
   def show
     @artifact = Artifact.find(params[:id])
     send_data @artifact.file, filename: @artifact.filename, type: @artifact.content_type
   end
-
   def index
     @artifacts = Artifact.all
     #only admins have right to look here
     # group by campaign, that by inspection
   end
-
   def edit
     @artifact = Artifact.find(params[:id])
     @inspection = Inspection.find(@artifact.inspection_id)
   end
-
   def update
     #here and update happens. Probably some popup/modal, that says that we can edit name, comments or change the file itself
     @artifact = Artifact.find(params[:id])
@@ -58,8 +52,6 @@ class ArtifactsController < ApplicationController
       render 'edit'
     end
   end
-
-
   def destroy
       @artifact = Artifact.find(params[:id])
       if @artifact.destroy

@@ -11,6 +11,7 @@ class RemarksController < ApplicationController
     #@remark = current_user.remarks.build(params[:remark])
 
     #we don't know the id, so we
+    @inspection = Inspection.find(params[:inspection_id])
     if params[:artifact_id] == ""
       params[:artifact_id] = nil
     elsif Artifact.find(params[:artifact_id])
@@ -18,15 +19,15 @@ class RemarksController < ApplicationController
     end
     @remark.user_id = current_user.id
 		if @remark.save
-      flash[:success] ||= []
-      flash[:success] <<"Yahoo, we did it"
+      flash.now[:success] ||= []
+      #flash.now[:success] << "Yahoo, we did it"
 			# respond_with root_url
 		else
-      flash[:error] ||= []
-      flash[:error] << @remark.errors.full_messages.join(" ")
+      flash.now[:error] ||= []
+      @remark.errors.full_messages.each {|m| flash.now[:error] << m }
 			# redirect_to root_url
     end
-    redirect_to root_url
+    #redirect_to root_url
 	end
 
   def index
@@ -43,10 +44,10 @@ class RemarksController < ApplicationController
     #@inspection = current_inspection
 		if @remark.destroy
       flash.now[:success] ||= []
-      flash.now[:success] << "Remark deleted"
+      #flash.now[:success] << "Remark deleted"
 		else
 			flash.now[:error] ||= []
-			flash.now[:error] = "Remark can not be deleted"
+			flash.now[:error] << "Remark can not be deleted"
 		end
 	    # redirect_back_or root_url
 	end

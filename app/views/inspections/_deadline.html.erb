@@ -4,10 +4,12 @@
       <% if can? :change_deadline, inspection %>
           <%= form_tag(change_deadline_inspection_path(inspection), :method => :put, remote: true) do %>
               <%= hidden_field_tag :status, status %>
+
               <%= link_to deadlines[status].first, '#', class: "chevron-body #{inspection.status_of_status(status)}StatusChevronBody #{ 'errorStatusChevronBody' if deadlines[status].last} hint--bottom hint--bounce hint--rounded",
                           id: "dp#{status}", data: { date: deadlines[status].first, date_format: "yyyy-mm-dd", date_autoclose: "true", hint: "Change the deadline for #{status.titleize} " } %>
               <%= hidden_field_tag :dueDate, deadlines[status].first, id: "dueDate" %>
               <%= image_submit_tag("icon_32/save_32.png", class: "submitDeadline", id: "submitDeadline") %>
+              <%= text_field_tag :comment, nil,class: "DeadlineField  hint--bottom hint--bounce hint--rounded", id: "#{status}Deadline", placeholder: "301/11 @13:25",  data: { hint: "Set a meeting point and time" }, style: "display:none;"  %>
           <% end %>
       <% else %>
           <%= content_tag(:div, deadlines[status].first, class: "chevron-body  #{inspection.status_of_status(status)}StatusChevronBody #{ 'errorStatusChevronBody' if deadlines[status].last}") %>

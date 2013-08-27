@@ -14,7 +14,7 @@
             <% end %>
         <% end %>
     <% else %>
-        <%= content_tag :h3, "There are no campaigns"%>
+        <%= content_tag :h1, "There are no campaigns"%>
         <% if can? :create, Campaign %>
             <%= content_tag :h3, link_to('Create campaign',new_campaign_path) %>
         <% end %>

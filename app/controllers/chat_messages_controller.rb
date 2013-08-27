@@ -15,16 +15,13 @@ class ChatMessagesController < ApplicationController
   end
 
 	def create
-    @inspection = current_inspection
+    @inspection = Inspection.find(params[:inspection_id])
     if !@inspection.nil?
       @chat_message = @inspection.chat_messages.build(params[:chat_message])
       @chat_message.user_id = current_user.id
-      if @chat_message.save
-        # flash[:success] = "Yahoo, we did it"
-        # respond_with root_url
-      else
+      if !@chat_message.save
         flash.now[:error] ||= []
-        flash.now[:error] = "Can not create a chat message"
+        @chat_message.errors.full_messages.each {|m| flash.now[:error] << m}
       end
     end
   end

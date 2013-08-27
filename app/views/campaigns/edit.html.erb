@@ -1,5 +1,5 @@
 <%= content_tag :div, class: "row-fluid" do -%>
-    <%= content_tag :h3, @campaign.name,  style: "text-align: center; margin-bottom: 0px;" %>
+    <%= content_tag :h1, @campaign.name,  style: "text-align: center; margin-bottom: 0px;" %>
 
     <%= content_tag :h5, style: "text-align: center;" do -%>
             <%= link_to('Delete Campaign', campaign_path(@campaign), method: :delete, confirm: "Do you want to delete #{@campaign.name}?") if can? :destroy, @campaign %>
