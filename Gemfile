@@ -19,7 +19,7 @@ gem 'jquery-datatables-rails'
 group :development do
 	gem 'sqlite3', '1.3.7'
 	gem 'annotate', '~> 2.5'
-  gem 'railroady'
+  #gem 'railroady'
 end
 
 group :test, :development do

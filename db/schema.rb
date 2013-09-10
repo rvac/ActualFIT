@@ -79,8 +79,8 @@ ActiveRecord::Schema.define(:version => 20130811113055) do
     t.integer  "user_id"
     t.integer  "inspection_id"
     t.string   "remark_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
     t.integer  "artifact_id"
     t.integer  "duplicate_of"
     t.boolean  "has_duplicates"
