@@ -51,6 +51,7 @@ gem 'jquery-rails', '2.2.1'
 
 
 group :production do
+  gem 'ruby', '1.9.3'
 	gem 'pg', '0.14.1'
 end
 
