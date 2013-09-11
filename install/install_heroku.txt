@@ -1,0 +1,21 @@
+Author: Vlad Acretoaie
+Date: 10.09.2013
+Description: This document describes the procedure for deploying FIT on Heroku using a Windows local machine. To do so, follow the steps listed below.
+
+1. Create a GitHub account if you do not already have one.
+2. Install GitHub for Windows, including command line tools. It can be downloaded at "http://windows.github.com".
+3. Create a Heroku account if you do not already have one.
+4. Install Heroku Toolbelt for Windows. It can be downloaded at "https://toolbelt.heroku.com/".
+5. Fork the ActualFIT repository located at "https://github.com/AIEg0r0v/ActualFIT/", then clone it to a local directory refered to in what follows as <FIT_HOME>. For instructions on forking and cloning, see "https://help.github.com/articles/fork-a-repo".
+6. Open a command line and navigate to <FIT_HOME>.
+7. Log-in to Heroku by typing the following at the command line: "heroku login".
+8. Create an RSA public/private key pair to be used by heroku by typing the following at the command line: "ssh-keygen -t rsa". This will result in two files named "id_rsa" and "id_rsa.pub". Copy these two files to the $HOME/.ssh directory of your Windows installation (e.g. "C:\Users\Bob\.ssh").
+9. Upload the generated public key to Heroku by typing the following at the command line: "heroku keys:add ~/.ssh/id_rsa.pub". 
+10. Create a new app on Heroku by typing the following at the command line: "heroku create".
+11. Verify that the app has been created and git is aware of it by typing the following at the command line: "git remote". This should list two branches: "heroku" and "origin".
+12. Deploy the aplication to heroku by typing the following at the command line: "git push heroku".
+NOTE: If at this point you encounter authentication issues, see this post on StackOverflow: "http://stackoverflow.com/questions/15000662/git-heroku-permission-denied-public-key-after-adding-public-key". Generating the RSA private/public key pair manually and uploading the public key to Heroku as described in steps 8 and 9 above will very likely solve the problem.
+13. Verify that the application has been deployed and is ready to use by typing the following at the command line: "heroku open". This will open a browser window with the FIT Sign Up page.
+14. In the opened browser window, create the first FIT user account.
+15. Open the Rails Console by typing the following at the command line: "heroku run console".
+16. Assign the first user administrator privileges by typing the following in the Rails Console: "User.first.grant :admin". FIT is now deployed and ready to use.
