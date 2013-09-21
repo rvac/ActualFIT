@@ -69,10 +69,10 @@ class CampaignsController < ApplicationController
     @campaign = Campaign.find(params[:id])
     @campaign.update_attributes(params[:campaign])
     if @campaign.save
-      flash[:success] = "campaign #{@campaign.name} modified"
+      #flash[:success] = "campaign #{@campaign.name} modified"
       redirect_to @campaign
     else
-      flash[:error] = "failed to modify the campaign"
+      #flash[:error] = "failed to modify the campaign"
       render 'edit'
     end
   end
