@@ -65,10 +65,11 @@ class Inspection < ActiveRecord::Base
   end
   def deadline_valid?(name, endDate)
         #!self.deadlines.each_cons(2).map {|a, b| a.dueDate <= b.startDate }.include?(false)
-      false if !self.class.status_list.include?(name) || !endDate.class.to_s == "Date"
-      deadlines =  Hash[self.deadlines_to_hash.map {|k,v| [k, v.first]} ]
-      deadlines[name] = endDate
-      !deadlines.values.each_cons(2).map {|a, b| a <= b }.include?(false)
+      #false if !self.class.status_list.include?(name) || !endDate.class.to_s == "Date"
+      #deadlines =  Hash[self.deadlines_to_hash.map {|k,v| [k, v.first]} ]
+      #deadlines[name] = endDate
+      #!deadlines.values.each_cons(2).map {|a, b| a <= b }.include?(false)
+      true
   end
   def update_deadline(name, endDate, comment = nil)
       if self.deadline_valid?(name, endDate) && self.class.status_list.include?(name)
