@@ -9,11 +9,11 @@ module ArtifactsHelper
               data:{hint: "Edit the artifact"})
     end
 
-    if can? :read, artifact
+    #if can? :read, artifact
 		actionPanel_content << link_to(image_tag('icon_32/down_32.png', alt:"save on disk"),
 			inspection_artifact_path(artifact.inspection_id,artifact.id), class: "ActionElement hint--bottom hint--bounce hint--rounded",
               data:{hint: "Download the artifact"})
-    end
+    #end
 
     if can? :destroy, artifact
 		actionPanel_content << link_to(image_tag('icon_32/delete_32.png', alt:"delete"),
