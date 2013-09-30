@@ -20,6 +20,7 @@
 
 
     #INSPECTOR ABILITIES
+    can :read, Artifact, inspection_id: Inspection.with_role(:inspector, user).select {|i| !(['finished', 'archived'].include?(i.status))}.map(&:id).uniq
     can :read, Inspection, id: Inspection.with_role(:inspector, user).select {|i| !i.archived?}.map(&:id).uniq
     can :read, ChatMessage, inspection_id: Inspection.with_role(:inspector, user).select {|i| !(['finished', 'archived'].include?(i.status))}.map(&:id).uniq
     can :read, Remark, inspection_id: Inspection.with_role(:inspector, user).select {|i| !(['finished', 'archived'].include?(i.status))}.map(&:id).uniq
@@ -37,6 +38,7 @@
 
     #AUTHOR ABILITIES
     #can :create, Artifact, inspection_id: Inspection.with_role(:author, user).select {|i| !(['finished', 'closed', 'archived'].include?(i.status))}.map(&:id).uniq
+    can :read, Artifact, inspection_id: Inspection.with_role(:author, user).select {|i| !(['finished', 'archived'].include?(i.status))}.map(&:id).uniq
     can :read, Inspection, id: Inspection.with_role(:author, user).select {|i| !i.archived?}.map(&:id).uniq
     can :read, ChatMessage, inspection_id: Inspection.with_role(:author, user).select {|i| !(['finished', 'archived'].include?(i.status))}.map(&:id).uniq
     can :read, Remark, inspection_id: Inspection.with_role(:author, user).select {|i| !(['finished', 'archived'].include?(i.status))}.map(&:id).uniq
